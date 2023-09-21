@@ -26,13 +26,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Asistencia Laboral',
       theme: ThemeData(
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
       routes: _router,
-      initialRoute: HomeScreen.route,
+      initialRoute: LoginAdminScreen.route,
     );
   }
 }
