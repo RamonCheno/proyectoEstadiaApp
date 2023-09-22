@@ -1,4 +1,5 @@
 import 'package:control_asistencia_app/view/screen/worker_screens/checkin_complete_screen.dart';
+import 'package:control_asistencia_app/view/screen/worker_screens/checkin_method_screens/more_options_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:local_auth/local_auth.dart';
@@ -110,15 +111,18 @@ class _CheckInFingerPrintScreenState extends State<CheckInFingerPrintScreen> {
             const SizedBox(
               height: 100,
             ),
-            const ElevatedButton(
-              onPressed: null,
-              style: ButtonStyle(
+            ElevatedButton(
+              onPressed: () => Navigator.of(context)
+                  .pushReplacementNamed(MoreOptionsScreen.route),
+              style: const ButtonStyle(
                 backgroundColor: MaterialStatePropertyAll<Color>(
                   Color(0xff990303),
                 ),
               ),
-              child:
-                  Text("Más opciones", style: TextStyle(color: Colors.white)),
+              child: const Text(
+                "Más opciones",
+                style: TextStyle(color: Colors.white),
+              ),
             )
           ],
         ),

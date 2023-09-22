@@ -1,3 +1,5 @@
+import 'package:control_asistencia_app/view/screen/admin_screens/listworker_screen.dart';
+import 'package:control_asistencia_app/view/screen/admin_screens/login_admin_screen.dart';
 import 'package:flutter/material.dart';
 
 class HomeAdminScreen extends StatelessWidget {
@@ -78,7 +80,9 @@ class HomeAdminScreen extends StatelessWidget {
                             TextButton(
                               child: const Text('Aceptar'),
                               onPressed: () async {
-                                debugPrint("Cerrar Sesion presionado");
+                                Navigator.of(context).pop();
+                                Navigator.of(context).pushReplacementNamed(
+                                    LoginAdminScreen.route);
                               },
                             ),
                             TextButton(
@@ -239,8 +243,8 @@ class HomeAdminScreen extends StatelessWidget {
                           ),
                           icon: const Icon(Icons.groups_outlined,
                               size: 70, color: Colors.white),
-                          onPressed: () =>
-                              debugPrint("Boton Trabajadores presionado"),
+                          onPressed: () => Navigator.of(context)
+                              .pushNamed(ListWorkerScreen.route),
                         ),
                         const Text("Trabajadores",
                             style: TextStyle(fontSize: 16)),

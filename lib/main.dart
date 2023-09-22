@@ -1,9 +1,4 @@
-import 'package:control_asistencia_app/view/screen/admin_screens/home_admin_screen.dart';
-import 'package:control_asistencia_app/view/screen/admin_screens/login_admin_screen.dart';
-import 'package:control_asistencia_app/view/screen/home_screen.dart';
-import 'package:control_asistencia_app/view/screen/worker_screens/checkin_complete_screen.dart';
-import 'package:control_asistencia_app/view/screen/worker_screens/checkin_method_screens/checkin_fingerprint_screen.dart';
-import 'package:control_asistencia_app/view/screen/worker_screens/home_worker_screeen.dart';
+import 'package:control_asistencia_app/packages/packageslocal.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
@@ -19,7 +14,10 @@ class MyApp extends StatelessWidget {
     LoginAdminScreen.route: (_) => const LoginAdminScreen(),
     HomeAdminScreen.route: (_) => const HomeAdminScreen(),
     CheckInFingerPrintScreen.route: (_) => const CheckInFingerPrintScreen(),
-    CheckInComplete.route: (_) => const CheckInComplete()
+    CheckInComplete.route: (_) => const CheckInComplete(),
+    MoreOptionsScreen.route: (_) => const MoreOptionsScreen(),
+    ListWorkerScreen.route: (_) => const ListWorkerScreen(),
+    AddWorkerScreen.route: (_) => const AddWorkerScreen(),
   };
 
   // This widget is the root of your application.
@@ -32,7 +30,7 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       routes: _router,
-      initialRoute: LoginAdminScreen.route,
+      initialRoute: HomeScreen.route,
     );
   }
 }
