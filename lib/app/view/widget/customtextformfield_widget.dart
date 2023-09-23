@@ -3,18 +3,20 @@ import 'package:flutter/material.dart';
 class CustomTextFormWidget extends StatefulWidget {
   const CustomTextFormWidget(
       {super.key,
+      required this.controller,
       required this.hintName,
       required this.icon,
-      required this.isObscureText,
-      required this.inputType,
       required this.action,
-      required this.soloLeer});
+      this.inputType = TextInputType.text,
+      this.isObscureText = false,
+      this.soloLeer = false});
   final String hintName;
   final IconData icon;
   final bool isObscureText;
   final TextInputType inputType;
   final TextInputAction action;
   final bool soloLeer;
+  final TextEditingController controller;
 
   @override
   State<CustomTextFormWidget> createState() => _CustomTextFormWidgetState();

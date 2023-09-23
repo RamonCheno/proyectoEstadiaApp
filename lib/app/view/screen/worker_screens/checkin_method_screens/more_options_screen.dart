@@ -11,6 +11,8 @@ class MoreOptionsScreen extends StatefulWidget {
 }
 
 class _MoreOptionsScreenState extends State<MoreOptionsScreen> {
+  late TextEditingController _conNumWorker;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,13 +24,12 @@ class _MoreOptionsScreenState extends State<MoreOptionsScreen> {
           const Text("Registrar Entrada"),
           Row(
             children: [
-              const CustomTextFormWidget(
+              CustomTextFormWidget(
+                controller: _conNumWorker,
                 hintName: "Numero de trabajador",
                 icon: Icons.numbers,
                 action: TextInputAction.done,
                 inputType: TextInputType.number,
-                isObscureText: false,
-                soloLeer: false,
               ),
               IconButton(
                 onPressed: () {},

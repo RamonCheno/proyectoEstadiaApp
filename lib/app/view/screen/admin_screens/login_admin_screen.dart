@@ -3,9 +3,17 @@ import 'package:control_asistencia_app/app/view/screen/home_screen.dart';
 import 'package:control_asistencia_app/app/view/widget/customtextformfield_widget.dart';
 import 'package:flutter/material.dart';
 
-class LoginAdminScreen extends StatelessWidget {
+class LoginAdminScreen extends StatefulWidget {
   const LoginAdminScreen({super.key});
   static const route = "/loginAdminScreen";
+
+  @override
+  State<LoginAdminScreen> createState() => _LoginAdminScreenState();
+}
+
+class _LoginAdminScreenState extends State<LoginAdminScreen> {
+  late TextEditingController _conNumAdmin;
+  late TextEditingController _conPass;
 
   @override
   Widget build(BuildContext context) {
@@ -44,21 +52,21 @@ class LoginAdminScreen extends StatelessWidget {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    const CustomTextFormWidget(
+                    CustomTextFormWidget(
+                      controller: _conNumAdmin,
                       hintName: "Num Trabajador",
                       icon: Icons.numbers,
                       isObscureText: false,
                       inputType: TextInputType.number,
                       action: TextInputAction.next,
-                      soloLeer: false,
                     ),
-                    const CustomTextFormWidget(
+                    CustomTextFormWidget(
+                      controller: _conPass,
                       hintName: "Contraseña",
                       icon: Icons.numbers,
                       isObscureText: true,
                       inputType: TextInputType.number,
                       action: TextInputAction.done,
-                      soloLeer: false,
                     ),
                     Container(
                       margin: const EdgeInsets.symmetric(vertical: 10),

@@ -11,6 +11,25 @@ class AddWorkerScreen extends StatefulWidget {
 }
 
 class _AddWorkerScreenState extends State<AddWorkerScreen> {
+  late TextEditingController _conNumWorker;
+  late TextEditingController _conNameWorker;
+  late TextEditingController _conRFCWorker;
+  late TextEditingController _conCurpWorker;
+  late TextEditingController _conIMSSWorker;
+  late TextEditingController _conworkerPosition;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  void addWorker() async {
+    final FormState? form = _formKey.currentState;
+
+    String numWorker = _conNumWorker.text;
+    String nameWorker = _conNameWorker.text;
+    String rfcWorker = _conRFCWorker.text.toUpperCase();
+    String curpWorker = _conCurpWorker.text.toUpperCase();
+    String numIMSSWorker = _conIMSSWorker.text;
+    String workerPosition = _conworkerPosition.text;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +58,8 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
                 ],
               ),
             ),
-            const CustomTextFormWidget(
+            CustomTextFormWidget(
+              controller: _conNumWorker,
               hintName: "Num Trabajador",
               icon: Icons.numbers,
               isObscureText: false,
@@ -47,7 +67,8 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
               action: TextInputAction.next,
               soloLeer: false,
             ),
-            const CustomTextFormWidget(
+            CustomTextFormWidget(
+              controller: _conNameWorker,
               hintName: "Nombre Trabajador",
               icon: Icons.person_outline,
               isObscureText: false,
@@ -55,7 +76,8 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
               action: TextInputAction.next,
               soloLeer: false,
             ),
-            const CustomTextFormWidget(
+            CustomTextFormWidget(
+              controller: _conRFCWorker,
               hintName: "RFC",
               icon: Icons.person_outline,
               isObscureText: false,
@@ -63,7 +85,17 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
               action: TextInputAction.next,
               soloLeer: false,
             ),
-            const CustomTextFormWidget(
+            CustomTextFormWidget(
+              controller: _conCurpWorker,
+              hintName: "Curp",
+              icon: Icons.person_outline,
+              isObscureText: false,
+              inputType: TextInputType.text,
+              action: TextInputAction.next,
+              soloLeer: false,
+            ),
+            CustomTextFormWidget(
+              controller: _conIMSSWorker,
               hintName: "Num Imss",
               icon: Icons.numbers,
               isObscureText: false,
@@ -71,15 +103,8 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
               action: TextInputAction.next,
               soloLeer: false,
             ),
-            const CustomTextFormWidget(
-              hintName: "RFC",
-              icon: Icons.person_outline,
-              isObscureText: false,
-              inputType: TextInputType.text,
-              action: TextInputAction.next,
-              soloLeer: false,
-            ),
-            const CustomTextFormWidget(
+            CustomTextFormWidget(
+              controller: _conworkerPosition,
               hintName: "Puesto",
               icon: Icons.person_outline,
               isObscureText: false,
