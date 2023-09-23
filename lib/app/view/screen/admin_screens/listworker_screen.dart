@@ -1,4 +1,4 @@
-import 'package:control_asistencia_app/view/screen/admin_screens/addworker_screen.dart';
+import 'package:control_asistencia_app/app/view/screen/admin_screens/addworker_screen.dart';
 import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:flutter/material.dart';
 

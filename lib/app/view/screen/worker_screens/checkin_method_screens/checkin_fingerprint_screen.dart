@@ -1,5 +1,4 @@
-import 'package:control_asistencia_app/view/screen/worker_screens/checkin_complete_screen.dart';
-import 'package:control_asistencia_app/view/screen/worker_screens/checkin_method_screens/more_options_screen.dart';
+import 'package:control_asistencia_app/app/view/screen/worker_screens/checkin_method_screens/more_options_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:local_auth/local_auth.dart';
@@ -75,18 +74,18 @@ class _CheckInFingerPrintScreenState extends State<CheckInFingerPrintScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Size media = MediaQuery.of(context).size;
+    // Size media = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Asistencia Laboral"),
         centerTitle: true,
       ),
       body: Container(
-        width: media.width,
         margin: const EdgeInsets.symmetric(horizontal: 25, vertical: 50),
         child: Column(
           children: [
             IconButton(
+                //Encender sensor ya implementado
                 icon: const Icon(
                   Icons.fingerprint,
                   size: 96,
@@ -95,8 +94,32 @@ class _CheckInFingerPrintScreenState extends State<CheckInFingerPrintScreen> {
                   bool registrado = await _authenticate();
                   if (registrado) {
                     if (!mounted) return;
-                    Navigator.pushReplacementNamed(
-                        context, CheckInComplete.route);
+
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        Future.delayed(
+                          const Duration(seconds: 2),
+                          () {
+                            Navigator.of(context).pop();
+                          },
+                        );
+                        return const SimpleDialog(
+                          title: Column(
+                            children: [
+                              Icon(Icons.check_circle,
+                                  size: 32, color: Colors.green),
+                              Text("Entrada Registrada"),
+                            ],
+                          ),
+                          contentPadding: EdgeInsets.fromLTRB(10, 12, 10, 16),
+                          children: [
+                            Text("Nombre Trabajador"),
+                            Text("Hora de entrada: 12:00 pm"),
+                          ],
+                        );
+                      },
+                    );
                   }
                 }),
             const SizedBox(

@@ -1,4 +1,4 @@
-import 'package:control_asistencia_app/packages/packageslocal.dart';
+import 'package:control_asistencia_app/app/packages/packageslocal.dart';
 import 'package:flutter/material.dart';
 
 void main() async {

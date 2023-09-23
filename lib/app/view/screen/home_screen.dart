@@ -1,5 +1,5 @@
-import 'package:control_asistencia_app/view/screen/admin_screens/login_admin_screen.dart';
-import 'package:control_asistencia_app/view/screen/worker_screens/home_worker_screeen.dart';
+import 'package:control_asistencia_app/app/view/screen/admin_screens/login_admin_screen.dart';
+import 'package:control_asistencia_app/app/view/screen/worker_screens/home_worker_screeen.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {

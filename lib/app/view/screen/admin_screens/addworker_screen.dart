@@ -1,4 +1,5 @@
-import 'package:control_asistencia_app/view/widget/customtextformfield_widget.dart';
+import 'package:control_asistencia_app/app/view/screen/admin_screens/listworker_screen.dart';
+import 'package:control_asistencia_app/app/view/widget/customtextformfield_widget.dart';
 import 'package:flutter/material.dart';
 
 class AddWorkerScreen extends StatefulWidget {
@@ -95,14 +96,35 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
                     padding: const EdgeInsets.symmetric(horizontal: 24),
                     textStyle: const TextStyle(fontSize: 18),
                     backgroundColor: const Color(0xFFD9D9D9),
-                    foregroundColor: const Color(0xff000000),
+                    foregroundColor: const Color(0xFF000000),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
                     ),
                   ),
-                  onPressed: null,
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: const Text('Trabajador agregado'),
+                          content: const Text(
+                              'Trabajador (Nombre) fue agregado correctamente'),
+                          actions: [
+                            TextButton(
+                              child: const Text('Aceptar'),
+                              onPressed: () async {
+                                Navigator.of(context).pop();
+                                Navigator.of(context).pushReplacementNamed(
+                                    ListWorkerScreen.route);
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
                   child: const Text(
-                    'Entrar',
+                    'Registrar',
                   ),
                 ),
               ),

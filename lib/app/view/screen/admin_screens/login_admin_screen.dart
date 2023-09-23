@@ -1,6 +1,6 @@
-import 'package:control_asistencia_app/view/screen/admin_screens/home_admin_screen.dart';
-import 'package:control_asistencia_app/view/screen/home_screen.dart';
-import 'package:control_asistencia_app/view/widget/customtextformfield_widget.dart';
+import 'package:control_asistencia_app/app/view/screen/admin_screens/home_admin_screen.dart';
+import 'package:control_asistencia_app/app/view/screen/home_screen.dart';
+import 'package:control_asistencia_app/app/view/widget/customtextformfield_widget.dart';
 import 'package:flutter/material.dart';
 
 class LoginAdminScreen extends StatelessWidget {

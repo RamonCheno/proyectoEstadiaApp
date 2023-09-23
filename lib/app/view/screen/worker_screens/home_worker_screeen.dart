@@ -1,4 +1,4 @@
-import 'package:control_asistencia_app/view/screen/worker_screens/checkin_method_screens/checkin_fingerprint_screen.dart';
+import 'package:control_asistencia_app/app/view/screen/worker_screens/checkin_method_screens/checkin_fingerprint_screen.dart';
 import 'package:flutter/material.dart';
 
 class HomeWorkerScreen extends StatelessWidget {
