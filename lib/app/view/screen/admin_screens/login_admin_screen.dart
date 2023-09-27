@@ -16,6 +16,13 @@ class _LoginAdminScreenState extends State<LoginAdminScreen> {
   late TextEditingController _conPass;
 
   @override
+  void initState() {
+    super.initState();
+    _conNumAdmin = TextEditingController();
+    _conPass = TextEditingController();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

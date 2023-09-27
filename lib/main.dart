@@ -1,7 +1,9 @@
+import 'package:control_asistencia_app/app/model/api/http_request.dart';
 import 'package:control_asistencia_app/app/packages/packageslocal.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
+  HttpRequest.configureDio();
   runApp(MyApp());
 }
 

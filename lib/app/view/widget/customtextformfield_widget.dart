@@ -48,6 +48,7 @@ class _CustomTextFormWidgetState extends State<CustomTextFormWidget> {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 15),
       child: TextFormField(
+        controller: widget.controller,
         readOnly: widget.soloLeer,
         textInputAction: widget.action,
         focusNode: _focusNode,

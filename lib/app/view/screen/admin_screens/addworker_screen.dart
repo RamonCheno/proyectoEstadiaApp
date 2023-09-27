@@ -1,4 +1,4 @@
-import 'package:control_asistencia_app/app/controller/attendance_controllers/worker_controller.dart';
+import 'package:control_asistencia_app/app/controller/admin_controllers/worker_controller.dart';
 import 'package:control_asistencia_app/app/model/worker_model.dart';
 import 'package:control_asistencia_app/app/view/screen/admin_screens/listworker_screen.dart';
 import 'package:control_asistencia_app/app/view/widget/customtextformfield_widget.dart';
@@ -35,7 +35,7 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
     if (form != null) {
       if (form.validate()) {
         WorkerModel workerModel = WorkerModel(
-          numTrabajador: int.parse(numWorker),
+          numTrabajador: int.tryParse(numWorker),
           nombre: nameWorker.trim(),
           curp: curpWorker.trim(),
           rfc: rfcWorker.trim(),
@@ -51,14 +51,50 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
         showDialog(
           context: context,
           builder: (context) {
-            Future.delayed(const Duration(seconds: 3));
-            return AlertDialog(
-              content: Text(respuesta),
-            );
+            if (respuesta == "Trabajador agregado") {
+              Future.delayed(
+                const Duration(seconds: 2),
+                () {
+                  Navigator.of(context).pop();
+                  Navigator.of(context)
+                      .pushReplacementNamed(ListWorkerScreen.route);
+                },
+              );
+              return SimpleDialog(
+                title: const Column(
+                  children: [
+                    Icon(Icons.check_circle, size: 32, color: Colors.green),
+                    Text("Trabajador registrado con exito"),
+                  ],
+                ),
+                contentPadding: const EdgeInsets.fromLTRB(10, 12, 10, 16),
+                children: [
+                  Text(respuesta),
+                ],
+              );
+            } else {
+              Future.delayed(
+                const Duration(seconds: 2),
+                () {
+                  Navigator.of(context).pop();
+                },
+              );
+              return SimpleDialog(
+                title: const Column(
+                  children: [
+                    Icon(Icons.cancel_outlined, size: 32, color: Colors.red),
+                    Text("Error"),
+                  ],
+                ),
+                contentPadding: const EdgeInsets.fromLTRB(10, 12, 10, 16),
+                children: [
+                  Text(respuesta),
+                ],
+              );
+            }
           },
         );
-        Navigator.of(context).pop();
-        Navigator.of(context).pushReplacementNamed(ListWorkerScreen.route);
+        // Navigator.of(context).pushReplacementNamed(ListWorkerScreen.route);
       }
     }
   }
@@ -183,24 +219,7 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
                           borderRadius: BorderRadius.circular(20),
                         ),
                       ),
-                      onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                              title: const Text('Trabajador agregado'),
-                              content: const Text(
-                                  'Trabajador (Nombre) fue agregado correctamente'),
-                              actions: [
-                                TextButton(
-                                  onPressed: addWorker,
-                                  child: const Text('Aceptar'),
-                                ),
-                              ],
-                            );
-                          },
-                        );
-                      },
+                      onPressed: addWorker,
                       child: const Text(
                         'Registrar',
                       ),

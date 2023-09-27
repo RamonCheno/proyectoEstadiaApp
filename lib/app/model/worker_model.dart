@@ -1,5 +1,5 @@
 class WorkerModel {
-  final int numTrabajador;
+  final int? numTrabajador;
   final String nombre;
   final String curp;
   final int numImss;
@@ -7,7 +7,7 @@ class WorkerModel {
   final String puesto;
 
   WorkerModel({
-    required this.numTrabajador,
+    this.numTrabajador,
     required this.nombre,
     required this.curp,
     required this.numImss,
