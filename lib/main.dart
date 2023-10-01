@@ -1,10 +1,20 @@
+import 'package:control_asistencia_app/app/controller/settings_controllers/bluetooth_controller.dart';
 import 'package:control_asistencia_app/app/model/api/http_request.dart';
 import 'package:control_asistencia_app/app/packages/packageslocal.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'app/view/screen/scan_devices_bluetooth_screen.dart';
+import 'app/view/screen/settings_screen.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   HttpRequest.configureDio();
-  runApp(MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => BluetoothController(),
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -20,6 +30,10 @@ class MyApp extends StatelessWidget {
     MoreOptionsScreen.route: (_) => const MoreOptionsScreen(),
     ListWorkerScreen.route: (_) => const ListWorkerScreen(),
     AddWorkerScreen.route: (_) => const AddWorkerScreen(),
+    SettingsScreen.route: (_) => const SettingsScreen(),
+    // DevicesBluetoothSearchScreen.route: (_) =>
+    //     const DevicesBluetoothSearchScreen(),
+    ScanDevicesBluetoothScreen.route: (_) => const ScanDevicesBluetoothScreen(),
   };
 
   // This widget is the root of your application.

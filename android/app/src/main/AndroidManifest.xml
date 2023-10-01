@@ -12,7 +12,8 @@
     <application
         android:label="control_asistencia_app"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:screenOrientation="portrait">
         <activity
             android:name=".MainActivity"
             android:exported="true"
