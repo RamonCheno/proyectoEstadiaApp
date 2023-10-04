@@ -17,7 +17,6 @@ class BluetoothController with ChangeNotifier {
   final FlutterBluetoothSerial _bluetooth = FlutterBluetoothSerial.instance;
   late BluetoothConnection connection;
   List<BluetoothDevice> _devicesList = [];
-  bool _isVisible = false;
 
   List<Map<String, String>> inComingData = [];
   bool devicesLoad = false;
@@ -26,8 +25,6 @@ class BluetoothController with ChangeNotifier {
   // String textFieldText = "";
 
   String _sendSerialData = "";
-
-  bool get isVisible => _isVisible;
 
   String get sendSerialData => _sendSerialData;
 
@@ -83,9 +80,6 @@ class BluetoothController with ChangeNotifier {
       if (ascii.decode(data).contains('!')) {
         connection.finish();
         debugPrint('Disconnecting by local host');
-      }
-      if (serialData.contains("hola")) {
-        _isVisible = true;
       }
       notifyListeners();
     }).onDone(() {

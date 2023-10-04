@@ -5,14 +5,16 @@ class WorkerModel {
   final int numImss;
   final String rfc;
   final String puesto;
+  final int idHuella;
 
   WorkerModel({
-    this.numTrabajador,
+    required this.numTrabajador,
     required this.nombre,
     required this.curp,
     required this.numImss,
     required this.rfc,
     required this.puesto,
+    required this.idHuella,
   });
 
   WorkerModel copyWith({
@@ -22,6 +24,7 @@ class WorkerModel {
     int? numImss,
     String? rfc,
     String? puesto,
+    int? idHuella,
   }) =>
       WorkerModel(
         numTrabajador: numTrabajador ?? this.numTrabajador,
@@ -30,6 +33,7 @@ class WorkerModel {
         numImss: numImss ?? this.numImss,
         rfc: rfc ?? this.rfc,
         puesto: puesto ?? this.puesto,
+        idHuella: idHuella ?? this.idHuella,
       );
 
   factory WorkerModel.fromMap(Map<String, dynamic> json) => WorkerModel(
@@ -39,6 +43,7 @@ class WorkerModel {
         numImss: json["numIMSS"],
         rfc: json["RFC"],
         puesto: json["puesto"],
+        idHuella: json["idHuella"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -48,5 +53,6 @@ class WorkerModel {
         "numIMSS": numImss,
         "RFC": rfc,
         "puesto": puesto,
+        "idHuella": idHuella,
       };
 }

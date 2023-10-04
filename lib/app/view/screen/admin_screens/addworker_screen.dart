@@ -1,10 +1,10 @@
 import 'package:control_asistencia_app/app/controller/admin_controllers/worker_controller.dart';
 import 'package:control_asistencia_app/app/controller/settings_controllers/bluetooth_controller.dart';
 import 'package:control_asistencia_app/app/model/worker_model.dart';
+import 'package:control_asistencia_app/app/view/screen/admin_screens/fingerprintregister.dart';
 import 'package:control_asistencia_app/app/view/screen/admin_screens/listworker_screen.dart';
 import 'package:control_asistencia_app/app/view/widget/customtextformfield_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class AddWorkerScreen extends StatefulWidget {
   const AddWorkerScreen({super.key});
@@ -24,6 +24,7 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   WorkerController workerController = WorkerController();
   BluetoothController bluetoothController = BluetoothController();
+  int idWorker = 0;
 
   void addWorker() async {
     final FormState? form = _formKey.currentState;
@@ -38,13 +39,13 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
     if (form != null) {
       if (form.validate()) {
         WorkerModel workerModel = WorkerModel(
-          numTrabajador: int.tryParse(numWorker),
-          nombre: nameWorker.trim(),
-          curp: curpWorker.trim(),
-          rfc: rfcWorker.trim(),
-          numImss: int.parse(numIMSSWorker),
-          puesto: workerPosition.trim(),
-        );
+            numTrabajador: int.tryParse(numWorker),
+            nombre: nameWorker.trim(),
+            curp: curpWorker.trim(),
+            rfc: rfcWorker.trim(),
+            numImss: int.parse(numIMSSWorker),
+            puesto: workerPosition.trim(),
+            idHuella: idWorker);
         String respuesta = await workerController.addWorker(workerModel).then(
           (workerController) {
             return workerController;
@@ -101,26 +102,6 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
     }
   }
 
-  void _showAlertDialog(BuildContext context, String data) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Mensaje Especial'),
-          content: Text('Mensaje recibido: $data'),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('Aceptar'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   @override
   void initState() {
     super.initState();
@@ -150,8 +131,6 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final bluetoothProvider = Provider.of<BluetoothController>(context);
-    final data = bluetoothProvider.sendSerialData;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Registrar Trabajador"),
@@ -179,7 +158,6 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
                     ],
                   ),
                 ),
-                if (bluetoothProvider.isVisible) const Text("Mensaje recibido"),
                 CustomTextFormWidget(
                   controller: _conNumWorker,
                   hintName: "Num Trabajador",
@@ -249,8 +227,17 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
                         ),
                       ),
                       onPressed: () {
-                        bluetoothProvider.sendMessageBluetooth("a");
-                        _showAlertDialog(context, data);
+                        // _showAlertDialog(context, data);
+                        //Ir a la pantalla FingerPrintRegisterScreen
+                        Navigator.of(context)
+                            .pushNamed(FingerPrintRegisterScreen.route)
+                            .then((value) {
+                          // String idWorkerS = value.toString();
+                          setState(() {
+                            idWorker = value as int;
+                            debugPrint("$idWorker");
+                          });
+                        });
                       },
                       child: const Text(
                         'Registrar Huella Dactilar',
