@@ -1,20 +1,20 @@
 import 'package:control_asistencia_app/app/controller/settings_controllers/bluetooth_controller.dart';
-// import 'package:control_asistencia_app/app/model/api/http_request.dart';
+import 'package:control_asistencia_app/app/model/api/http_request.dart';
 import 'package:control_asistencia_app/app/packages/packageslocal.dart';
 import 'package:control_asistencia_app/app/view/screen/admin_screens/fingerprintregister.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'app/view/screen/scan_devices_bluetooth_screen.dart';
 import 'app/view/screen/settings_screen.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
+// import 'package:firebase_core/firebase_core.dart';
+// import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // HttpRequest.configureDio();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  HttpRequest.configureDio();
+  // await Firebase.initializeApp(
+  //   options: DefaultFirebaseOptions.currentPlatform,
+  // );
   runApp(
     ChangeNotifierProvider(
       create: (context) => BluetoothController(),
