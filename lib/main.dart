@@ -1,20 +1,13 @@
-import 'package:control_asistencia_app/app/controller/settings_controllers/bluetooth_controller.dart';
-import 'package:control_asistencia_app/app/model/api/http_request.dart';
-import 'package:control_asistencia_app/app/packages/packageslocal.dart';
-import 'package:control_asistencia_app/app/view/screen/admin_screens/fingerprintregister.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'app/view/screen/scan_devices_bluetooth_screen.dart';
-import 'app/view/screen/settings_screen.dart';
-// import 'package:firebase_core/firebase_core.dart';
-// import 'firebase_options.dart';
+import 'package:control_asistencia_app/app/packages/packagelocal_controller.dart';
+import 'package:control_asistencia_app/app/packages/packages_pub.dart';
+import 'package:control_asistencia_app/app/packages/packageslocal_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  HttpRequest.configureDio();
-  // await Firebase.initializeApp(
-  //   options: DefaultFirebaseOptions.currentPlatform,
-  // );
+  // HttpRequest.configureDio();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(
     ChangeNotifierProvider(
       create: (context) => BluetoothController(),
@@ -29,7 +22,9 @@ class MyApp extends StatelessWidget {
   final _router = {
     HomeScreen.route: (_) => const HomeScreen(),
     HomeWorkerScreen.route: (_) => const HomeWorkerScreen(),
+    TabBarLoginRegisterScreen.route: (_) => const TabBarLoginRegisterScreen(),
     LoginAdminScreen.route: (_) => const LoginAdminScreen(),
+    RegisterAdminScreen.route: (_) => const RegisterAdminScreen(),
     HomeAdminScreen.route: (_) => const HomeAdminScreen(),
     CheckInFingerPrintScreen.route: (_) => const CheckInFingerPrintScreen(),
     CheckInComplete.route: (_) => const CheckInComplete(),
@@ -37,8 +32,6 @@ class MyApp extends StatelessWidget {
     ListWorkerScreen.route: (_) => const ListWorkerScreen(),
     AddWorkerScreen.route: (_) => const AddWorkerScreen(),
     SettingsScreen.route: (_) => const SettingsScreen(),
-    // DevicesBluetoothSearchScreen.route: (_) =>
-    //     const DevicesBluetoothSearchScreen(),
     ScanDevicesBluetoothScreen.route: (_) => const ScanDevicesBluetoothScreen(),
     FingerPrintRegisterScreen.route: (_) => const FingerPrintRegisterScreen()
   };

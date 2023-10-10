@@ -1,5 +1,5 @@
 import 'package:control_asistencia_app/app/view/screen/admin_screens/listworker_screen.dart';
-import 'package:control_asistencia_app/app/view/screen/admin_screens/login_admin_screen.dart';
+import 'package:control_asistencia_app/app/view/screen/admin_screens/login_register_tabbar_screen.dart';
 import 'package:control_asistencia_app/app/view/screen/settings_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -85,7 +85,7 @@ class HomeAdminScreen extends StatelessWidget {
                               onPressed: () async {
                                 Navigator.of(context).pop();
                                 Navigator.of(context).pushReplacementNamed(
-                                    LoginAdminScreen.route);
+                                    TabBarLoginRegisterScreen.route);
                               },
                             ),
                             TextButton(

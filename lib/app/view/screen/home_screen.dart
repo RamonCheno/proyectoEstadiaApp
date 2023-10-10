@@ -1,6 +1,8 @@
-import 'package:control_asistencia_app/app/view/screen/admin_screens/login_admin_screen.dart';
+// import 'package:control_asistencia_app/app/view/screen/admin_screens/login_admin_screen.dart';
 import 'package:control_asistencia_app/app/view/screen/worker_screens/home_worker_screeen.dart';
 import 'package:flutter/material.dart';
+
+import 'admin_screens/login_register_tabbar_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -69,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             MaterialStatePropertyAll<Color>(Color(0xffD9D9D9))),
                     onPressed: () {
                       Navigator.of(context)
-                          .pushReplacementNamed(LoginAdminScreen.route);
+                          .pushNamed(TabBarLoginRegisterScreen.route);
                     },
                     child: const Text(
                       "Soy administrador",

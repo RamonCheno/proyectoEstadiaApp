@@ -1,5 +1,5 @@
+import 'package:control_asistencia_app/app/controller/admin_controllers/admin_controller.dart';
 import 'package:control_asistencia_app/app/view/screen/admin_screens/home_admin_screen.dart';
-import 'package:control_asistencia_app/app/view/screen/home_screen.dart';
 import 'package:control_asistencia_app/app/view/widget/customtextformfield_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -12,115 +12,86 @@ class LoginAdminScreen extends StatefulWidget {
 }
 
 class _LoginAdminScreenState extends State<LoginAdminScreen> {
-  late TextEditingController _conNumAdmin;
+  late TextEditingController _conEmailAdmin;
   late TextEditingController _conPass;
+  AdminController adminController = AdminController();
 
   @override
   void initState() {
     super.initState();
-    _conNumAdmin = TextEditingController();
+    _conEmailAdmin = TextEditingController();
     _conPass = TextEditingController();
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    _conEmailAdmin.dispose();
+    _conPass.dispose();
+  }
+
+  void login() async {
+    String email = _conEmailAdmin.text;
+    String pass = _conPass.text;
+
+    String response = await adminController
+        .loginAdmin(email, pass)
+        .then((responseMessagge) => responseMessagge);
+    if (response == "Sesion iniciada") {
+      //hacer autenticacion con local Auth
+    } else {
+      /*mostrar un customDialog donde muestre al usuario cual fue la falla*/
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color(0xffEBEBEB),
-      ),
-      backgroundColor: const Color(0xffEBEBEB),
-      body: Center(
+    return Container(
+      margin: const EdgeInsets.only(top: 15),
+      child: SingleChildScrollView(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 15),
+            Form(
               child: Column(
                 children: [
-                  CircleAvatar(
-                    backgroundColor: Colors.transparent,
-                    radius: 65,
-                    child: ClipOval(
-                        child: Image(
-                      image: AssetImage("assets/images/logo_grupo_mexico.png"),
-                      fit: BoxFit.cover,
-                      width: 130,
-                      height: 130,
-                    )),
+                  CustomTextFormWidget(
+                    controller: _conEmailAdmin,
+                    hintName: "Correo electronico",
+                    icon: Icons.email_outlined,
+                    isObscureText: false,
+                    inputType: TextInputType.emailAddress,
+                    action: TextInputAction.next,
                   ),
-                  SizedBox(
-                    height: 15,
+                  CustomTextFormWidget(
+                    controller: _conPass,
+                    hintName: "Contraseña",
+                    icon: Icons.numbers,
+                    isObscureText: true,
+                    inputType: TextInputType.number,
+                    action: TextInputAction.done,
                   ),
-                  Text("Iniciar Sesion"),
+                  Container(
+                    margin: const EdgeInsets.symmetric(vertical: 10),
+                    child: Center(
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          elevation: 1,
+                          padding: const EdgeInsets.symmetric(horizontal: 24),
+                          textStyle: const TextStyle(fontSize: 18),
+                          backgroundColor: const Color(0xFFD9D9D9),
+                          foregroundColor: const Color(0xff000000),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                        onPressed: login,
+                        child: const Text(
+                          'Entrar',
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
-              ),
-            ),
-            Form(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    CustomTextFormWidget(
-                      controller: _conNumAdmin,
-                      hintName: "Num Trabajador",
-                      icon: Icons.numbers,
-                      isObscureText: false,
-                      inputType: TextInputType.number,
-                      action: TextInputAction.next,
-                    ),
-                    CustomTextFormWidget(
-                      controller: _conPass,
-                      hintName: "Contraseña",
-                      icon: Icons.numbers,
-                      isObscureText: true,
-                      inputType: TextInputType.number,
-                      action: TextInputAction.done,
-                    ),
-                    Container(
-                      margin: const EdgeInsets.symmetric(vertical: 10),
-                      child: Center(
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            elevation: 1,
-                            padding: const EdgeInsets.symmetric(horizontal: 24),
-                            textStyle: const TextStyle(fontSize: 18),
-                            backgroundColor: const Color(0xFFD9D9D9),
-                            foregroundColor: const Color(0xff000000),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                          ),
-                          onPressed: () => Navigator.of(context)
-                              .pushReplacementNamed(HomeAdminScreen.route),
-                          child: const Text(
-                            'Entrar',
-                          ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.symmetric(vertical: 10),
-                      child: Center(
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            elevation: 1,
-                            padding: const EdgeInsets.symmetric(horizontal: 24),
-                            textStyle: const TextStyle(fontSize: 18),
-                            backgroundColor: const Color(0xFFD9D9D9),
-                            foregroundColor: const Color(0xff000000),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                          ),
-                          onPressed: () => Navigator.of(context)
-                              .pushReplacementNamed(HomeScreen.route),
-                          child: const Text(
-                            'Regresar',
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
               ),
             )
           ],

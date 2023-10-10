@@ -72,7 +72,7 @@ class _FingerPrintRegisterScreenState extends State<FingerPrintRegisterScreen> {
 
   Future<int> loadContIdPersistent() async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getInt("contId")!;
+    return prefs.getInt("contId") ?? 0;
   }
 
   @override

@@ -1,8 +1,10 @@
-import 'package:control_asistencia_app/app/controller/admin_controllers/worker_controller.dart';
+// import 'package:control_asistencia_app/app/controller/admin_controllers/worker_controller.dart';
 import 'package:control_asistencia_app/app/controller/settings_controllers/bluetooth_controller.dart';
+import 'package:control_asistencia_app/app/controller/worker_controllers/worker_controller.dart';
 import 'package:control_asistencia_app/app/model/worker_model.dart';
 import 'package:control_asistencia_app/app/view/screen/admin_screens/fingerprintregister.dart';
 import 'package:control_asistencia_app/app/view/screen/admin_screens/listworker_screen.dart';
+import 'package:control_asistencia_app/app/view/widget/customdialog_widget.dart';
 import 'package:control_asistencia_app/app/view/widget/customtextformfield_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +18,8 @@ class AddWorkerScreen extends StatefulWidget {
 
 class _AddWorkerScreenState extends State<AddWorkerScreen> {
   late TextEditingController _conNumWorker;
-  late TextEditingController _conNameWorker;
+  late TextEditingController _conFirstNameWorker;
+  late TextEditingController _conLastNameWorker;
   late TextEditingController _conRFCWorker;
   late TextEditingController _conCurpWorker;
   late TextEditingController _conIMSSWorker;
@@ -29,33 +32,36 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
   void addWorker() async {
     final FormState? form = _formKey.currentState;
 
-    String numWorker = _conNumWorker.text;
-    String nameWorker = _conNameWorker.text;
+    int numWorker = int.parse(_conNumWorker.text);
+    String firstNameWorker = _conFirstNameWorker.text;
+    String lastNameWorker = _conLastNameWorker.text;
     String rfcWorker = _conRFCWorker.text.toUpperCase();
     String curpWorker = _conCurpWorker.text.toUpperCase();
-    String numIMSSWorker = _conIMSSWorker.text;
+    int numIMSSWorker = int.parse(_conIMSSWorker.text);
     String workerPosition = _conworkerPosition.text;
 
     if (form != null) {
       if (form.validate()) {
+        form.save();
         WorkerModel workerModel = WorkerModel(
-            numTrabajador: int.tryParse(numWorker),
-            nombre: nameWorker.trim(),
+            numTrabajador: numWorker,
+            nombre: firstNameWorker.trim(),
+            apellido: lastNameWorker.trim(),
             curp: curpWorker.trim(),
             rfc: rfcWorker.trim(),
-            numImss: int.parse(numIMSSWorker),
+            numImss: numIMSSWorker,
             puesto: workerPosition.trim(),
             idHuella: idWorker);
-        String respuesta = await workerController.addWorker(workerModel).then(
-          (workerController) {
-            return workerController;
+        String response = await workerController.addWorker(workerModel).then(
+          (methodResponse) {
+            return methodResponse;
           },
         );
         if (!mounted) return;
-        showDialog(
-          context: context,
-          builder: (context) {
-            if (respuesta == "Trabajador agregado") {
+        if (response == "Trabajador agregado") {
+          showDialog(
+            context: context,
+            builder: (context) {
               Future.delayed(
                 const Duration(seconds: 2),
                 () {
@@ -64,40 +70,29 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
                       .pushReplacementNamed(ListWorkerScreen.route);
                 },
               );
-              return SimpleDialog(
-                title: const Column(
-                  children: [
-                    Icon(Icons.check_circle, size: 32, color: Colors.green),
-                    Text("Trabajador registrado con exito"),
-                  ],
-                ),
-                contentPadding: const EdgeInsets.fromLTRB(10, 12, 10, 16),
-                children: [
-                  Text(respuesta),
-                ],
+              return CustomDialogWidget(
+                messagge: response,
+                iconData: const Icon(Icons.check_circle, color: Colors.green),
               );
-            } else {
+            },
+          );
+        } else {
+          showDialog(
+            context: context,
+            builder: (context) {
               Future.delayed(
                 const Duration(seconds: 2),
                 () {
                   Navigator.of(context).pop();
                 },
               );
-              return SimpleDialog(
-                title: const Column(
-                  children: [
-                    Icon(Icons.cancel_outlined, size: 32, color: Colors.red),
-                    Text("Error"),
-                  ],
-                ),
-                contentPadding: const EdgeInsets.fromLTRB(10, 12, 10, 16),
-                children: [
-                  Text(respuesta),
-                ],
+              return CustomDialogWidget(
+                messagge: response,
+                iconData: const Icon(Icons.cancel, color: Colors.red),
               );
-            }
-          },
-        );
+            },
+          );
+        }
       }
     }
   }
@@ -106,7 +101,8 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
   void initState() {
     super.initState();
     _conNumWorker = TextEditingController();
-    _conNameWorker = TextEditingController();
+    _conFirstNameWorker = TextEditingController();
+    _conLastNameWorker = TextEditingController();
     _conRFCWorker = TextEditingController();
     _conCurpWorker = TextEditingController();
     _conIMSSWorker = TextEditingController();
@@ -122,7 +118,8 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
   void dispose() {
     super.dispose();
     _conNumWorker.dispose();
-    _conNameWorker.dispose();
+    _conFirstNameWorker.dispose();
+    _conLastNameWorker.dispose();
     _conRFCWorker.dispose();
     _conCurpWorker.dispose();
     _conIMSSWorker.dispose();
@@ -168,8 +165,17 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
                   soloLeer: false,
                 ),
                 CustomTextFormWidget(
-                  controller: _conNameWorker,
-                  hintName: "Nombre Trabajador",
+                  controller: _conFirstNameWorker,
+                  hintName: "Nombre",
+                  icon: Icons.person_outline,
+                  isObscureText: false,
+                  inputType: TextInputType.text,
+                  action: TextInputAction.next,
+                  soloLeer: false,
+                ),
+                CustomTextFormWidget(
+                  controller: _conLastNameWorker,
+                  hintName: "Apellido",
                   icon: Icons.person_outline,
                   isObscureText: false,
                   inputType: TextInputType.text,
@@ -232,9 +238,10 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
                         Navigator.of(context)
                             .pushNamed(FingerPrintRegisterScreen.route)
                             .then((value) {
-                          // String idWorkerS = value.toString();
                           setState(() {
-                            idWorker = value as int;
+                            if (value != null) {
+                              idWorker = value as int;
+                            }
                             debugPrint("$idWorker");
                           });
                         });

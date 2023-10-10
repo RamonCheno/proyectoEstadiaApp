@@ -1,4 +1,5 @@
-import 'package:control_asistencia_app/app/controller/admin_controllers/worker_controller.dart';
+// import 'package:control_asistencia_app/app/controller/admin_controllers/worker_controller.dart';
+import 'package:control_asistencia_app/app/controller/worker_controllers/worker_controller.dart';
 import 'package:control_asistencia_app/app/view/screen/admin_screens/addworker_screen.dart';
 import 'package:control_asistencia_app/app/view_models/worker_viewmodel.dart';
 import 'package:easy_search_bar/easy_search_bar.dart';
@@ -13,7 +14,7 @@ class ListWorkerScreen extends StatefulWidget {
 }
 
 class _ListWorkerScreenState extends State<ListWorkerScreen> {
-  late WorkerController workerController;
+  WorkerController workerController = WorkerController();
 
   List<WorkerViewModel> _workersViewModel = [];
 
@@ -26,7 +27,6 @@ class _ListWorkerScreenState extends State<ListWorkerScreen> {
   @override
   void initState() {
     super.initState();
-    workerController = WorkerController();
   }
 
   @override
