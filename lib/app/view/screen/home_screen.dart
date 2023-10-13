@@ -3,6 +3,7 @@ import 'package:control_asistencia_app/app/view/screen/worker_screens/home_worke
 import 'package:flutter/material.dart';
 
 import 'admin_screens/login_register_tabbar_screen.dart';
+import 'scan_devices_bluetooth_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -18,6 +19,13 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xffEBEBEB),
+        actions: [
+          IconButton(
+            onPressed: () => Navigator.of(context)
+                .pushNamed(ScanDevicesBluetoothScreen.route),
+            icon: const Icon(Icons.bluetooth, size: 34),
+          ),
+        ],
       ),
       backgroundColor: const Color(0xffEBEBEB),
       body: Center(

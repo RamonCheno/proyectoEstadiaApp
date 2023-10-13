@@ -27,7 +27,7 @@ class _RegisterAdminScreenState extends State<RegisterAdminScreen> {
 
   void register() async {
     final FormState? form = _formKey.currentState;
-    int numWorkerAdmin = int.parse(_conNumWorkerAdmin.text);
+    String numWorkerAdmin = _conNumWorkerAdmin.text;
     String firstName = _conFirtNameAdmin.text;
     String lastName = _conLastNameAdmin.text;
     String emailAdmin = _conEmailAdmin.text;
@@ -37,11 +37,9 @@ class _RegisterAdminScreenState extends State<RegisterAdminScreen> {
     if (form != null) {
       if (form.validate()) {
         if (password != confirmPassword) {
-          //Avisarle al usuario con un AlertDialog que no coincide la contraseña
         } else {
-          form.save();
           AdminModel adminModel = AdminModel(
-            numTrabajador: numWorkerAdmin,
+            numTrabajador: int.parse(numWorkerAdmin),
             nombre: firstName,
             apellido: lastName,
             email: emailAdmin,
@@ -63,7 +61,7 @@ class _RegisterAdminScreenState extends State<RegisterAdminScreen> {
                   },
                 );
                 return CustomDialogWidget(
-                  messagge: response,
+                  messagge: Text(response),
                   iconData: const Icon(
                     Icons.check_circle,
                     color: Colors.green,
@@ -82,7 +80,7 @@ class _RegisterAdminScreenState extends State<RegisterAdminScreen> {
                   },
                 );
                 return CustomDialogWidget(
-                  messagge: response,
+                  messagge: Text(response),
                   iconData: const Icon(
                     Icons.cancel_outlined,
                     color: Colors.red,
@@ -116,9 +114,9 @@ class _RegisterAdminScreenState extends State<RegisterAdminScreen> {
         centerTitle: true,
       ),
       backgroundColor: const Color(0xffEBEBEB),
-      body: Form(
-        key: _formKey,
-        child: SingleChildScrollView(
+      body: SingleChildScrollView(
+        child: Form(
+          key: _formKey,
           child: Column(
             children: <Widget>[
               CustomTextFormWidget(
@@ -189,7 +187,7 @@ class _RegisterAdminScreenState extends State<RegisterAdminScreen> {
                         borderRadius: BorderRadius.circular(20),
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: register,
                     child: const Text(
                       'Registrar',
                     ),

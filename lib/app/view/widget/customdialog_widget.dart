@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
 
 class CustomDialogWidget extends StatelessWidget {
-  final String messagge;
+  final Widget messagge;
+  final String? title;
   final Icon iconData;
   const CustomDialogWidget(
-      {required this.messagge, required this.iconData, super.key});
+      {this.title, required this.messagge, required this.iconData, super.key});
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      content: Center(
-        child: Column(
-          children: [
-            iconData,
-            Text(messagge),
-          ],
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          iconData,
+          if (title != null) Text(title!),
+        ],
+      ),
+      contentPadding: const EdgeInsets.fromLTRB(10, 12, 10, 16),
+      content: SingleChildScrollView(
+        child: Center(
+          child: messagge,
         ),
       ),
     );

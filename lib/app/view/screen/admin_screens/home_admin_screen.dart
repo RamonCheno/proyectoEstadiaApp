@@ -1,11 +1,24 @@
+import 'package:control_asistencia_app/app/controller/admin_controllers/admin_controller.dart';
 import 'package:control_asistencia_app/app/view/screen/admin_screens/listworker_screen.dart';
 import 'package:control_asistencia_app/app/view/screen/admin_screens/login_register_tabbar_screen.dart';
 import 'package:control_asistencia_app/app/view/screen/settings_screen.dart';
 import 'package:flutter/material.dart';
 
-class HomeAdminScreen extends StatelessWidget {
+class HomeAdminScreen extends StatefulWidget {
   const HomeAdminScreen({super.key});
   static const route = "/homeAdminScreen";
+
+  @override
+  State<HomeAdminScreen> createState() => _HomeAdminScreenState();
+}
+
+class _HomeAdminScreenState extends State<HomeAdminScreen> {
+  AdminController adminController = AdminController();
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,8 +95,9 @@ class HomeAdminScreen extends StatelessWidget {
                           actions: [
                             TextButton(
                               child: const Text('Aceptar'),
-                              onPressed: () async {
+                              onPressed: () {
                                 Navigator.of(context).pop();
+                                adminController.signOut();
                                 Navigator.of(context).pushReplacementNamed(
                                     TabBarLoginRegisterScreen.route);
                               },

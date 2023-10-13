@@ -15,12 +15,6 @@ class _ScanDevicesBluetoothScreenState
     extends State<ScanDevicesBluetoothScreen> {
   final BluetoothController _controller = BluetoothController();
 
-  // @override
-  // void dispose() {
-  //   _controller.dispose();
-  //   super.dispose();
-  // }
-
   @override
   void initState() {
     super.initState();
@@ -28,7 +22,6 @@ class _ScanDevicesBluetoothScreenState
 
   @override
   void dispose() {
-    // _controller.disponse();
     super.dispose();
   }
 

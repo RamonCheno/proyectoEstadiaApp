@@ -9,9 +9,10 @@ class WorkerViewModel {
 
   WorkerViewModel(WorkerModel workerModel) {
     _numWorker = workerModel.numTrabajador.toString().trim();
-    List<String> nameCompleteWorker = workerModel.nombre.split(' ');
-    _firstNameWorker = nameCompleteWorker[0];
-    _lastNameWorker = nameCompleteWorker[1];
+    List<String> firstNameWorker = workerModel.nombre.split(' ');
+    List<String> lastNameWorker = workerModel.apellido.split(' ');
+    _firstNameWorker = firstNameWorker[0];
+    _lastNameWorker = lastNameWorker[0];
   }
 
   String get numWorker => _numWorker;

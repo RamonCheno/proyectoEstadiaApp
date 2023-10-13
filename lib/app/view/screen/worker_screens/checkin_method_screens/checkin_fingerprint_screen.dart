@@ -1,10 +1,6 @@
 import 'package:control_asistencia_app/app/view/screen/worker_screens/checkin_method_screens/more_options_screen.dart';
+import 'package:control_asistencia_app/app/view/widget/customdialog_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:local_auth/local_auth.dart';
-// ignore: depend_on_referenced_packages
-import 'package:local_auth_android/local_auth_android.dart'
-    show AndroidAuthMessages, AuthMessages, AuthenticationOptions;
 
 class CheckInFingerPrintScreen extends StatefulWidget {
   const CheckInFingerPrintScreen({super.key});
@@ -16,60 +12,36 @@ class CheckInFingerPrintScreen extends StatefulWidget {
 }
 
 class _CheckInFingerPrintScreenState extends State<CheckInFingerPrintScreen> {
-  LocalAuthentication auth = LocalAuthentication();
-  bool canCheckBiometric = false;
-  List<BiometricType>? availableBiometric;
+  void messagge() {
+    if (!mounted) return;
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        Future.delayed(
+          const Duration(seconds: 2),
+          () {
+            Navigator.of(context).pop();
+          },
+        );
+        return const CustomDialogWidget(
+          messagge: Column(children: [
+            Text("Nombre Trabajador"),
+            Text("Hora de entrada: 12:00 pm"),
+          ]),
+          iconData: Icon(
+            Icons.check_circle,
+            color: Colors.green,
+            size: 42,
+          ),
+        );
+      },
+    );
+  }
 
   @override
   void initState() {
     super.initState();
-    _checkBiometric();
-    _getAvailableBiometric();
-  }
-
-  Future<void> _checkBiometric() async {
-    bool canCheckBiometric = false;
-
-    try {
-      canCheckBiometric = await auth.canCheckBiometrics;
-    } on PlatformException catch (e) {
-      debugPrint('$e');
-    }
-
-    if (!mounted) return;
-    setState(() => canCheckBiometric = canCheckBiometric);
-  }
-
-  Future<void> _getAvailableBiometric() async {
-    List<BiometricType> availableBiometric = [];
-
-    try {
-      availableBiometric = await auth.getAvailableBiometrics();
-    } on PlatformException catch (e) {
-      debugPrint('$e');
-    }
-
-    setState(() => availableBiometric = availableBiometric);
-  }
-
-  Future<bool> _authenticate() async {
-    bool autenticated = false;
-    try {
-      autenticated = await auth.authenticate(
-        localizedReason: 'Escanee su huella para continuar',
-        options: const AuthenticationOptions(
-            useErrorDialogs: true, stickyAuth: true, biometricOnly: true),
-        authMessages: const <AuthMessages>[
-          AndroidAuthMessages(
-            signInTitle: 'Lector biometrico para registrar entrada',
-            cancelButton: 'Cancelar',
-          )
-        ],
-      );
-    } on PlatformException catch (e) {
-      debugPrint('$e');
-    }
-    return autenticated;
   }
 
   @override
@@ -90,38 +62,7 @@ class _CheckInFingerPrintScreenState extends State<CheckInFingerPrintScreen> {
                   Icons.fingerprint,
                   size: 96,
                 ),
-                onPressed: () async {
-                  bool registrado = await _authenticate();
-                  if (registrado) {
-                    if (!mounted) return;
-
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        Future.delayed(
-                          const Duration(seconds: 2),
-                          () {
-                            Navigator.of(context).pop();
-                          },
-                        );
-                        return const SimpleDialog(
-                          title: Column(
-                            children: [
-                              Icon(Icons.check_circle,
-                                  size: 32, color: Colors.green),
-                              Text("Entrada Registrada"),
-                            ],
-                          ),
-                          contentPadding: EdgeInsets.fromLTRB(10, 12, 10, 16),
-                          children: [
-                            Text("Nombre Trabajador"),
-                            Text("Hora de entrada: 12:00 pm"),
-                          ],
-                        );
-                      },
-                    );
-                  }
-                }),
+                onPressed: () {}),
             const SizedBox(
               height: 25,
             ),

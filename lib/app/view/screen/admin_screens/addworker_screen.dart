@@ -3,7 +3,6 @@ import 'package:control_asistencia_app/app/controller/settings_controllers/bluet
 import 'package:control_asistencia_app/app/controller/worker_controllers/worker_controller.dart';
 import 'package:control_asistencia_app/app/model/worker_model.dart';
 import 'package:control_asistencia_app/app/view/screen/admin_screens/fingerprintregister.dart';
-import 'package:control_asistencia_app/app/view/screen/admin_screens/listworker_screen.dart';
 import 'package:control_asistencia_app/app/view/widget/customdialog_widget.dart';
 import 'package:control_asistencia_app/app/view/widget/customtextformfield_widget.dart';
 import 'package:flutter/material.dart';
@@ -66,12 +65,11 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
                 const Duration(seconds: 2),
                 () {
                   Navigator.of(context).pop();
-                  Navigator.of(context)
-                      .pushReplacementNamed(ListWorkerScreen.route);
+                  Navigator.of(context).pop();
                 },
               );
               return CustomDialogWidget(
-                messagge: response,
+                messagge: Text(response),
                 iconData: const Icon(Icons.check_circle, color: Colors.green),
               );
             },
@@ -87,7 +85,7 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
                 },
               );
               return CustomDialogWidget(
-                messagge: response,
+                messagge: Text(response),
                 iconData: const Icon(Icons.cancel, color: Colors.red),
               );
             },

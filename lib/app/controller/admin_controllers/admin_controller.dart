@@ -40,8 +40,13 @@ class AdminController {
       } else if (e.code == 'wrong-password') {
         return "Contraseña incorrecta.";
       } else {
-        return 'Ocurrió un error al iniciar sesión: $e';
+        debugPrint("$e");
+        return 'Ocurrió un error al iniciar sesión';
       }
     }
+  }
+
+  void signOut() async {
+    await firebaseAuth.signOut();
   }
 }

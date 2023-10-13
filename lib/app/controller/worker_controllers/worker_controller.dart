@@ -20,7 +20,7 @@ class WorkerController {
 
   Future<List<WorkerModel>> getListWokersModel() async {
     final QuerySnapshot querySnapshot =
-        await firestore.collection('trabajador').get();
+        await firestore.collection('Trabajador').get();
     List<WorkerModel> workerList = [];
     if (querySnapshot.docs.isNotEmpty) {
       for (var worker in querySnapshot.docs) {
@@ -35,8 +35,10 @@ class WorkerController {
   }
 
   Future<List<WorkerViewModel>> getListWokersViewModel() async {
-    final QuerySnapshot querySnapshot =
-        await firestore.collection('trabajador').get();
+    final QuerySnapshot querySnapshot = await firestore
+        .collection('Trabajador')
+        .orderBy("apellido", descending: false)
+        .get();
     List<WorkerViewModel> workerViewModelList = [];
     if (querySnapshot.docs.isNotEmpty) {
       for (var worker in querySnapshot.docs) {
@@ -53,7 +55,7 @@ class WorkerController {
 
   Future<WorkerModel> getWorkerData(int numWorker) async {
     QuerySnapshot userSnapshot = await firestore
-        .collection("trabajador")
+        .collection("Trabajador")
         .where("numTrabajador", isEqualTo: numWorker)
         .get();
     Map<String, dynamic> userData =

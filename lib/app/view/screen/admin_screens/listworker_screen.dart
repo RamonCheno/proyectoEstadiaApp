@@ -83,6 +83,9 @@ class _ListWorkerScreenState extends State<ListWorkerScreen> {
                   ],
                 );
               }
+              if (snapshot.data != null) {
+                _updateListWorker(snapshot.data);
+              }
               return ListView.separated(
                 itemBuilder: (context, index) {
                   final WorkerViewModel workerViewModel =
@@ -90,9 +93,6 @@ class _ListWorkerScreenState extends State<ListWorkerScreen> {
                   String numWorker = workerViewModel.numWorker;
                   String firstNameWorker = workerViewModel.firstNameWorker;
                   String lastNameWorker = workerViewModel.lastNameWorker;
-                  if (snapshot.data != null) {
-                    _updateListWorker(snapshot.data);
-                  }
                   return Container(
                     margin: const EdgeInsets.symmetric(horizontal: 10),
                     decoration: BoxDecoration(
@@ -124,7 +124,13 @@ class _ListWorkerScreenState extends State<ListWorkerScreen> {
       floatingActionButton: FloatingActionButton(
         shape: const CircleBorder(),
         backgroundColor: const Color(0xffD9D9D9),
-        onPressed: () => Navigator.of(context).pushNamed(AddWorkerScreen.route),
+        onPressed: () => Navigator.of(context)
+            .pushNamed(AddWorkerScreen.route)
+            .then((value) => _getListWorker().then((worker) {
+                  setState(() {
+                    _workersViewModel = worker;
+                  });
+                })),
         child: const Icon(
           Icons.person_add_outlined,
           size: 40,
