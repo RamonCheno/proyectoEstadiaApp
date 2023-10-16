@@ -26,14 +26,13 @@ class MyApp extends StatelessWidget {
     LoginAdminScreen.route: (_) => const LoginAdminScreen(),
     RegisterAdminScreen.route: (_) => const RegisterAdminScreen(),
     HomeAdminScreen.route: (_) => const HomeAdminScreen(),
-    CheckInFingerPrintScreen.route: (_) => const CheckInFingerPrintScreen(),
-    CheckInComplete.route: (_) => const CheckInComplete(),
+    // CheckInFingerPrintScreen.route: (_) => const CheckInFingerPrintScreen(),
     MoreOptionsScreen.route: (_) => const MoreOptionsScreen(),
     ListWorkerScreen.route: (_) => const ListWorkerScreen(),
     AddWorkerScreen.route: (_) => const AddWorkerScreen(),
     SettingsScreen.route: (_) => const SettingsScreen(),
-    ScanDevicesBluetoothScreen.route: (_) => const ScanDevicesBluetoothScreen(),
-    FingerPrintRegisterScreen.route: (_) => const FingerPrintRegisterScreen()
+    // ScanDevicesBluetoothScreen.route: (_) => const ScanDevicesBluetoothScreen(),
+    // FingerPrintRegisterScreen.route: (_) => const FingerPrintRegisterScreen()
   };
 
   // This widget is the root of your application.

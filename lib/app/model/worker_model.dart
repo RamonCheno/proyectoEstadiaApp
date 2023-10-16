@@ -1,9 +1,9 @@
 import 'user_model.dart';
 
 class WorkerModel extends UserModel {
-  late int _idHuella;
+  // late int _idHuella;
 
-  int get idHuella => _idHuella;
+  // int get idHuella => _idHuella;
 
   WorkerModel({
     int? numTrabajador,
@@ -13,7 +13,7 @@ class WorkerModel extends UserModel {
     required int numImss,
     required String rfc,
     required String puesto,
-    required int idHuella,
+    // required int idHuella,
   }) : super(
             numTrabajador: numTrabajador,
             nombre: nombre,
@@ -22,7 +22,7 @@ class WorkerModel extends UserModel {
             numImss: numImss,
             puesto: puesto,
             rfc: rfc) {
-    _idHuella = idHuella;
+    // _idHuella = idHuella;
   }
 
   @override
@@ -34,7 +34,7 @@ class WorkerModel extends UserModel {
     int? numImss,
     String? rfc,
     String? puesto,
-    int? idHuella,
+    // int? idHuella,
   }) =>
       WorkerModel(
         numTrabajador: numTrabajador ?? this.numTrabajador,
@@ -44,7 +44,7 @@ class WorkerModel extends UserModel {
         numImss: numImss ?? this.numImss!,
         rfc: rfc ?? this.rfc!,
         puesto: puesto ?? this.puesto!,
-        idHuella: idHuella ?? _idHuella,
+        // idHuella: idHuella ?? _idHuella,
       );
 
   factory WorkerModel.fromMap(Map<String, dynamic> json) => WorkerModel(
@@ -55,7 +55,7 @@ class WorkerModel extends UserModel {
         numImss: json["numIMSS"],
         rfc: json["RFC"],
         puesto: json["puesto"],
-        idHuella: json["idHuella"],
+        // idHuella: json["idHuella"],
       );
 
   @override
@@ -67,6 +67,6 @@ class WorkerModel extends UserModel {
         "numIMSS": numImss,
         "RFC": rfc,
         "puesto": puesto,
-        "idHuella": _idHuella,
+        // "idHuella": _idHuella,
       };
 }

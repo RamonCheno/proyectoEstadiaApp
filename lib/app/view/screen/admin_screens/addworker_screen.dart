@@ -2,7 +2,7 @@
 import 'package:control_asistencia_app/app/controller/settings_controllers/bluetooth_controller.dart';
 import 'package:control_asistencia_app/app/controller/worker_controllers/worker_controller.dart';
 import 'package:control_asistencia_app/app/model/worker_model.dart';
-import 'package:control_asistencia_app/app/view/screen/admin_screens/fingerprintregister.dart';
+// import 'package:control_asistencia_app/app/view/screen/admin_screens/fingerprintregister.dart';
 import 'package:control_asistencia_app/app/view/widget/customdialog_widget.dart';
 import 'package:control_asistencia_app/app/view/widget/customtextformfield_widget.dart';
 import 'package:flutter/material.dart';
@@ -43,14 +43,15 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
       if (form.validate()) {
         form.save();
         WorkerModel workerModel = WorkerModel(
-            numTrabajador: numWorker,
-            nombre: firstNameWorker.trim(),
-            apellido: lastNameWorker.trim(),
-            curp: curpWorker.trim(),
-            rfc: rfcWorker.trim(),
-            numImss: numIMSSWorker,
-            puesto: workerPosition.trim(),
-            idHuella: idWorker);
+          numTrabajador: numWorker,
+          nombre: firstNameWorker.trim(),
+          apellido: lastNameWorker.trim(),
+          curp: curpWorker.trim(),
+          rfc: rfcWorker.trim(),
+          numImss: numIMSSWorker,
+          puesto: workerPosition.trim(),
+          // idHuella: idWorker,
+        );
         String response = await workerController.addWorker(workerModel).then(
           (methodResponse) {
             return methodResponse;
@@ -216,40 +217,40 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
                   action: TextInputAction.done,
                   soloLeer: false,
                 ),
-                Container(
-                  margin: const EdgeInsets.symmetric(vertical: 10),
-                  child: Center(
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        elevation: 1,
-                        padding: const EdgeInsets.symmetric(horizontal: 24),
-                        textStyle: const TextStyle(fontSize: 18),
-                        backgroundColor: const Color(0xFFD9D9D9),
-                        foregroundColor: const Color(0xFF000000),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                      ),
-                      onPressed: () {
-                        // _showAlertDialog(context, data);
-                        //Ir a la pantalla FingerPrintRegisterScreen
-                        Navigator.of(context)
-                            .pushNamed(FingerPrintRegisterScreen.route)
-                            .then((value) {
-                          setState(() {
-                            if (value != null) {
-                              idWorker = value as int;
-                            }
-                            debugPrint("$idWorker");
-                          });
-                        });
-                      },
-                      child: const Text(
-                        'Registrar Huella Dactilar',
-                      ),
-                    ),
-                  ),
-                ),
+                // Container(
+                //   margin: const EdgeInsets.symmetric(vertical: 10),
+                //   child: Center(
+                //     child: ElevatedButton(
+                //       style: ElevatedButton.styleFrom(
+                //         elevation: 1,
+                //         padding: const EdgeInsets.symmetric(horizontal: 24),
+                //         textStyle: const TextStyle(fontSize: 18),
+                //         backgroundColor: const Color(0xFFD9D9D9),
+                //         foregroundColor: const Color(0xFF000000),
+                //         shape: RoundedRectangleBorder(
+                //           borderRadius: BorderRadius.circular(20),
+                //         ),
+                //       ),
+                //       onPressed: () {
+                //         // _showAlertDialog(context, data);
+                //         //Ir a la pantalla FingerPrintRegisterScreen
+                //         Navigator.of(context)
+                //             .pushNamed(FingerPrintRegisterScreen.route)
+                //             .then((value) {
+                //           setState(() {
+                //             if (value != null) {
+                //               idWorker = value as int;
+                //             }
+                //             debugPrint("$idWorker");
+                //           });
+                //         });
+                //       },
+                //       child: const Text(
+                //         'Registrar Huella Dactilar',
+                //       ),
+                //     ),
+                //   ),
+                // ),
                 Container(
                   margin: const EdgeInsets.symmetric(vertical: 10),
                   child: Center(
