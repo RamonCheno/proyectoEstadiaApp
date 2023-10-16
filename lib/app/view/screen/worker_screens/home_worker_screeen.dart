@@ -1,4 +1,4 @@
-import 'package:control_asistencia_app/view/screen/worker_screens/checkin_method_screens/checkin_fingerprint_screen.dart';
+// import 'package:control_asistencia_app/app/view/screen/worker_screens/checkin_method_screens/checkin_fingerprint_screen.dart';
 import 'package:flutter/material.dart';
 
 class HomeWorkerScreen extends StatelessWidget {
@@ -34,8 +34,9 @@ class HomeWorkerScreen extends StatelessWidget {
                             ),
                           ),
                           onPressed: () {
-                            Navigator.of(context)
-                                .pushNamed(CheckInFingerPrintScreen.route);
+                            // Navigator.of(context)
+                            //     .pushNamed(CheckInFingerPrintScreen.route);
+                            //Todo: Cambiar ruta hacar registro por NumeroTrabajador.
                           },
                           icon: const Icon(Icons.check,
                               color: Colors.white, size: 70),

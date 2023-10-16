@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "533988597570",
+    "project_id": "control-asistencia-app",
+    "storage_bucket": "control-asistencia-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:533988597570:android:c5a2d558626bd911ea72db",
+        "android_client_info": {
+          "package_name": "com.example.control_asistencia_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBzKcnnION22kMQg2ygqpxAygwASiOv9MQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
