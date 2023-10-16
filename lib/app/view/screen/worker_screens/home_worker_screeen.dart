@@ -1,5 +1,5 @@
-import 'package:control_asistencia_app/app/view/screen/worker_screens/checkin_method_screens/checkin_fingerprint_screen.dart';
 import 'package:flutter/material.dart';
+import 'checkin_method_screens/fingerprint_checkin_screen.dart';
 
 class HomeWorkerScreen extends StatelessWidget {
   const HomeWorkerScreen({super.key});
@@ -35,7 +35,7 @@ class HomeWorkerScreen extends StatelessWidget {
                           ),
                           onPressed: () {
                             Navigator.of(context)
-                                .pushNamed(CheckInFingerPrintScreen.route);
+                                .pushNamed(FingerPrintCheckinScreen.route);
                           },
                           icon: const Icon(Icons.check,
                               color: Colors.white, size: 70),

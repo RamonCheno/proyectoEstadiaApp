@@ -2,6 +2,8 @@ import 'package:control_asistencia_app/app/packages/packagelocal_controller.dart
 import 'package:control_asistencia_app/app/packages/packages_pub.dart';
 import 'package:control_asistencia_app/app/packages/packageslocal_view.dart';
 
+import 'app/view/screen/worker_screens/checkin_method_screens/fingerprint_checkin_screen.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // HttpRequest.configureDio();
@@ -26,14 +28,15 @@ class MyApp extends StatelessWidget {
     LoginAdminScreen.route: (_) => const LoginAdminScreen(),
     RegisterAdminScreen.route: (_) => const RegisterAdminScreen(),
     HomeAdminScreen.route: (_) => const HomeAdminScreen(),
-    CheckInFingerPrintScreen.route: (_) => const CheckInFingerPrintScreen(),
+    CheckInFingerprintScreen.route: (_) => const CheckInFingerprintScreen(),
     CheckInComplete.route: (_) => const CheckInComplete(),
     MoreOptionsScreen.route: (_) => const MoreOptionsScreen(),
     ListWorkerScreen.route: (_) => const ListWorkerScreen(),
     AddWorkerScreen.route: (_) => const AddWorkerScreen(),
     SettingsScreen.route: (_) => const SettingsScreen(),
     ScanDevicesBluetoothScreen.route: (_) => const ScanDevicesBluetoothScreen(),
-    FingerPrintRegisterScreen.route: (_) => const FingerPrintRegisterScreen()
+    FingerPrintRegisterScreen.route: (_) => const FingerPrintRegisterScreen(),
+    FingerPrintCheckinScreen.route: (_) => const FingerPrintCheckinScreen(),
   };
 
   // This widget is the root of your application.

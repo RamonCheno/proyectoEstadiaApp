@@ -1,3 +1,1 @@
-class AttendanceController {
-
-}
+class AttendanceController {}

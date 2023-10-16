@@ -2,7 +2,6 @@ import 'package:control_asistencia_app/app/controller/settings_controllers/bluet
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-// import 'package:provider/provider.dart';
 
 class FingerPrintRegisterScreen extends StatefulWidget {
   const FingerPrintRegisterScreen({super.key});
@@ -17,29 +16,25 @@ class _FingerPrintRegisterScreenState extends State<FingerPrintRegisterScreen> {
   BluetoothController bluetoothController = BluetoothController();
   int contId = 0;
   bool _isVisible = false;
-
+  String data = "";
   String messagge = "";
 
   void valueFingerPrintSensor(BuildContext context) async {
     final bluetoothProvider = Provider.of<BluetoothController>(context);
-    String data = bluetoothProvider.sendSerialData;
+    data = bluetoothProvider.sendSerialData;
     if (data.contains('ingrese')) {
       ++contId;
       bluetoothProvider.sendMessageBluetooth("$contId");
       await saveContId(contId);
       debugPrint("$contId");
       messagge = "Espere que responda el sensor";
-    }
-    if (data.contains('Primer')) {
+    } else if (data.contains('Primer')) {
       messagge = "Ponga su huella en el sensor";
-    }
-    if (data.contains('Retirar')) {
+    } else if (data.contains('Retirar')) {
       messagge = "Retire la huella";
-    }
-    if (data.contains('Segundo')) {
+    } else if (data.contains('Segundo')) {
       messagge = "Ponga su huella en el sensor otra vez";
-    }
-    if (data.contains('terminado')) {
+    } else if (data.contains('terminado')) {
       messagge = "Registro de huella Terminado";
       _isVisible = true;
     }
@@ -50,8 +45,13 @@ class _FingerPrintRegisterScreenState extends State<FingerPrintRegisterScreen> {
   @override
   void initState() {
     super.initState();
-    loadContId();
     bluetoothController.sendMessageBluetooth("a");
+    loadContId();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
   }
 
   @override
@@ -86,7 +86,7 @@ class _FingerPrintRegisterScreenState extends State<FingerPrintRegisterScreen> {
         child: Column(
           children: <Widget>[
             Text(messagge),
-            if (_isVisible == true)
+            if (_isVisible)
               ElevatedButton(
                 onPressed: () {
                   Navigator.pop(context, contId);

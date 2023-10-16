@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
@@ -18,11 +17,10 @@ class BluetoothController with ChangeNotifier {
   late BluetoothConnection connection;
   List<BluetoothDevice> _devicesList = [];
 
-  List<Map<String, String>> inComingData = [];
+  // List<Map<String, String>> inComingData = [];
   bool devicesLoad = false;
-  String _deviceMacAddress = "";
 
-  // String textFieldText = "";
+  String _deviceMacAddress = "";
 
   String _sendSerialData = "";
 
@@ -65,13 +63,13 @@ class BluetoothController with ChangeNotifier {
 
   void disconnectDevice() async {
     _deviceMacAddress = '';
-    inComingData = [];
+    // inComingData = [];
     connection.close();
     await clearDeviceMacAddress();
     notifyListeners();
   }
 
-  void listenForData() {
+  void listenForData() async {
     connection.input!.listen((Uint8List data) {
       String serialData = ascii.decode(data);
       debugPrint('Data incoming: $serialData');

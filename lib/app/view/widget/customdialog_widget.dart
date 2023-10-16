@@ -4,8 +4,13 @@ class CustomDialogWidget extends StatelessWidget {
   final Widget messagge;
   final String? title;
   final Icon iconData;
+  // final List<Widget>? action;
   const CustomDialogWidget(
-      {this.title, required this.messagge, required this.iconData, super.key});
+      {this.title,
+      required this.messagge,
+      required this.iconData,
+      // this.action,
+      super.key});
 
   @override
   Widget build(BuildContext context) {

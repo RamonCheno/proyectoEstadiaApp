@@ -39,7 +39,7 @@ class _MoreOptionsScreenState extends State<MoreOptionsScreen> {
           ),
           IconButton(
             onPressed: () => Navigator.of(context)
-                .pushReplacementNamed(CheckInFingerPrintScreen.route),
+                .pushReplacementNamed(CheckInFingerprintScreen.route),
             icon: const Icon(Icons.fingerprint),
           ),
         ],
