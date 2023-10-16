@@ -1,15 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CustomTextFormWidget extends StatefulWidget {
-  const CustomTextFormWidget(
-      {super.key,
-      required this.controller,
-      required this.hintName,
-      required this.icon,
-      required this.action,
-      this.inputType = TextInputType.text,
-      this.isObscureText = false,
-      this.soloLeer = false});
   final String hintName;
   final IconData icon;
   final bool isObscureText;
@@ -17,6 +9,18 @@ class CustomTextFormWidget extends StatefulWidget {
   final TextInputAction action;
   final bool soloLeer;
   final TextEditingController controller;
+  final int? lengthChar;
+
+  const CustomTextFormWidget(
+      {super.key,
+      required this.controller,
+      required this.hintName,
+      required this.icon,
+      required this.action,
+      this.lengthChar,
+      this.inputType = TextInputType.text,
+      this.isObscureText = false,
+      this.soloLeer = false});
 
   @override
   State<CustomTextFormWidget> createState() => _CustomTextFormWidgetState();
@@ -48,12 +52,31 @@ class _CustomTextFormWidgetState extends State<CustomTextFormWidget> {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 15),
       child: TextFormField(
+        buildCounter: (BuildContext context,
+            {required int currentLength,
+            required bool isFocused,
+            int? maxLength}) {
+          if (maxLength != null) {
+            return isFocused
+                ? Text(
+                    '$currentLength/$maxLength',
+                    style: const TextStyle(
+                      fontSize: 12.0,
+                    ),
+                    semanticsLabel: 'Input constraints',
+                  )
+                : null;
+          }
+          return null;
+        },
         controller: widget.controller,
         readOnly: widget.soloLeer,
         textInputAction: widget.action,
         focusNode: _focusNode,
         obscureText: widget.isObscureText,
         keyboardType: widget.inputType,
+        maxLength: widget.lengthChar,
+        maxLengthEnforcement: MaxLengthEnforcement.enforced,
         validator: (value) {
           if (value == null || value.isEmpty) {
             return 'Ingrese ${widget.hintName}';

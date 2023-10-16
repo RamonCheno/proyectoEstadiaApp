@@ -66,7 +66,7 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
                 const Duration(seconds: 2),
                 () {
                   Navigator.of(context).pop();
-                  Navigator.of(context).pop();
+                  Navigator.of(context).pop(true);
                 },
               );
               return CustomDialogWidget(
@@ -162,6 +162,7 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
                   inputType: TextInputType.number,
                   action: TextInputAction.next,
                   soloLeer: false,
+                  lengthChar: 8,
                 ),
                 CustomTextFormWidget(
                   controller: _conFirstNameWorker,
@@ -182,32 +183,32 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
                   soloLeer: false,
                 ),
                 CustomTextFormWidget(
-                  controller: _conRFCWorker,
-                  hintName: "RFC",
-                  icon: Icons.person_outline,
-                  isObscureText: false,
-                  inputType: TextInputType.text,
-                  action: TextInputAction.next,
-                  soloLeer: false,
-                ),
+                    controller: _conRFCWorker,
+                    hintName: "RFC",
+                    icon: Icons.person_outline,
+                    isObscureText: false,
+                    inputType: TextInputType.text,
+                    action: TextInputAction.next,
+                    soloLeer: false,
+                    lengthChar: 13),
                 CustomTextFormWidget(
-                  controller: _conCurpWorker,
-                  hintName: "Curp",
-                  icon: Icons.person_outline,
-                  isObscureText: false,
-                  inputType: TextInputType.text,
-                  action: TextInputAction.next,
-                  soloLeer: false,
-                ),
+                    controller: _conCurpWorker,
+                    hintName: "Curp",
+                    icon: Icons.person_outline,
+                    isObscureText: false,
+                    inputType: TextInputType.text,
+                    action: TextInputAction.next,
+                    soloLeer: false,
+                    lengthChar: 18),
                 CustomTextFormWidget(
-                  controller: _conIMSSWorker,
-                  hintName: "Num Imss",
-                  icon: Icons.numbers,
-                  isObscureText: false,
-                  inputType: TextInputType.number,
-                  action: TextInputAction.next,
-                  soloLeer: false,
-                ),
+                    controller: _conIMSSWorker,
+                    hintName: "Num Imss",
+                    icon: Icons.numbers,
+                    isObscureText: false,
+                    inputType: TextInputType.number,
+                    action: TextInputAction.next,
+                    soloLeer: false,
+                    lengthChar: 11),
                 CustomTextFormWidget(
                   controller: _conworkerPosition,
                   hintName: "Puesto",

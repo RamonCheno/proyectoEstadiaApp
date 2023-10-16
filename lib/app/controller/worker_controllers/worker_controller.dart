@@ -19,8 +19,10 @@ class WorkerController {
   }
 
   Future<List<WorkerModel>> getListWokersModel() async {
-    final QuerySnapshot querySnapshot =
-        await firestore.collection('Trabajador').get();
+    final QuerySnapshot querySnapshot = await firestore
+        .collection('Trabajador')
+        .orderBy("apellido", descending: false)
+        .get();
     List<WorkerModel> workerList = [];
     if (querySnapshot.docs.isNotEmpty) {
       for (var worker in querySnapshot.docs) {
