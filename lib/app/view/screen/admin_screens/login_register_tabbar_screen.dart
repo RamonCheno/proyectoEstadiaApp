@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'login_admin_screen.dart';
 import 'register_admin_screen.dart';
@@ -33,23 +34,24 @@ class _TabBarLoginRegisterScreenState extends State<TabBarLoginRegisterScreen>
       body: Center(
         child: Column(
           children: [
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 15),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 15.h),
               child: Column(
                 children: [
                   CircleAvatar(
                     backgroundColor: Colors.transparent,
-                    radius: 65,
+                    radius: 65.r,
                     child: ClipOval(
                         child: Image(
-                      image: AssetImage("assets/images/logo_grupo_mexico.png"),
+                      image: const AssetImage(
+                          "assets/images/logo_grupo_mexico.png"),
                       fit: BoxFit.cover,
-                      width: 130,
-                      height: 130,
+                      width: 130.w,
+                      height: 130.h,
                     )),
                   ),
                   SizedBox(
-                    height: 15,
+                    height: 15.h,
                   ),
                 ],
               ),
@@ -59,6 +61,7 @@ class _TabBarLoginRegisterScreenState extends State<TabBarLoginRegisterScreen>
               indicatorColor: const Color(0xff990303),
               unselectedLabelColor: const Color.fromARGB(255, 131, 131, 131),
               controller: _tabController,
+              labelStyle: TextStyle(fontSize: 14.sp),
               tabs: const [
                 Tab(text: "Iniciar Sesión"),
                 Tab(text: "Registro"),
@@ -70,17 +73,17 @@ class _TabBarLoginRegisterScreenState extends State<TabBarLoginRegisterScreen>
                 children: [
                   const LoginAdminScreen(),
                   Container(
-                    margin: const EdgeInsets.symmetric(vertical: 10),
+                    margin: EdgeInsets.symmetric(vertical: 10.w),
                     child: Center(
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           elevation: 1,
-                          padding: const EdgeInsets.symmetric(horizontal: 24),
-                          textStyle: const TextStyle(fontSize: 18),
+                          padding: EdgeInsets.symmetric(horizontal: 24.w),
+                          textStyle: TextStyle(fontSize: 18.sp),
                           backgroundColor: const Color(0xFFD9D9D9),
                           foregroundColor: const Color(0xFF000000),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
+                            borderRadius: BorderRadius.circular(20).w,
                           ),
                         ),
                         onPressed: () {

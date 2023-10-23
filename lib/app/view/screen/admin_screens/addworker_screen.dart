@@ -1,7 +1,7 @@
 // import 'package:control_asistencia_app/app/controller/admin_controllers/worker_controller.dart';
 import 'package:control_asistencia_app/app/controller/settings_controllers/bluetooth_controller.dart';
 import 'package:control_asistencia_app/app/controller/worker_controllers/worker_controller.dart';
-import 'package:control_asistencia_app/app/model/worker_model.dart';
+import 'package:control_asistencia_app/app/model/user/worker_model.dart';
 // import 'package:control_asistencia_app/app/view/screen/admin_screens/fingerprintregister.dart';
 import 'package:control_asistencia_app/app/view/widget/customdialog_widget.dart';
 import 'package:control_asistencia_app/app/view/widget/customtextformfield_widget.dart';
@@ -66,7 +66,7 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
                 const Duration(seconds: 2),
                 () {
                   Navigator.of(context).pop();
-                  Navigator.of(context).pop(true);
+                  Navigator.of(context).pop();
                 },
               );
               return CustomDialogWidget(

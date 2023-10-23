@@ -4,6 +4,7 @@ import 'package:control_asistencia_app/app/view/screen/admin_screens/addworker_s
 import 'package:control_asistencia_app/app/view_models/worker_viewmodel.dart';
 import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ListWorkerScreen extends StatefulWidget {
   const ListWorkerScreen({super.key});
@@ -14,14 +15,14 @@ class ListWorkerScreen extends StatefulWidget {
 }
 
 class _ListWorkerScreenState extends State<ListWorkerScreen> {
-  WorkerController workerController = WorkerController();
+  final WorkerController workerController = WorkerController();
 
-  List<WorkerViewModel> _workersViewModel = [];
+  List<WorkerViewModel> _workerViewModelList = [];
 
   Future<List<WorkerViewModel>> _getListWorker() async {
-    List<WorkerViewModel> workerViewModelList =
+    List<WorkerViewModel> listWorkerViewModel =
         await workerController.getListWokersViewModel();
-    return workerViewModelList;
+    return listWorkerViewModel;
   }
 
   @override
@@ -32,16 +33,17 @@ class _ListWorkerScreenState extends State<ListWorkerScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _getListWorker().then((worker) {
-      setState(() {
-        _workersViewModel = worker;
-      });
-    });
+    // _getListWorker().then((_) {
+    //   setState(() {});
+    // });
   }
 
-  Future<void> _updateListWorker(dynamic data) async {
-    _workersViewModel = data;
-    debugPrint('${_workersViewModel.toList()}');
+  Future<void> registerWorker() async {
+    Navigator.of(context).pushNamed(AddWorkerScreen.route).then((_) {
+      _getListWorker().then((_) {
+        setState(() {});
+      });
+    });
   }
 
   @override
@@ -50,6 +52,7 @@ class _ListWorkerScreenState extends State<ListWorkerScreen> {
       appBar: EasySearchBar(
         title: const Text(
           "Trabajadores",
+          style: TextStyle(fontWeight: FontWeight.w700),
           textAlign: TextAlign.center,
         ),
         onSearch: (value) => null,
@@ -58,83 +61,85 @@ class _ListWorkerScreenState extends State<ListWorkerScreen> {
       backgroundColor: const Color(0xffEBEBEB),
       body: Column(
         children: [
-          const SizedBox(
-            height: 10,
-          ),
+          10.verticalSpace,
           Expanded(
               child: FutureBuilder(
             future: _getListWorker(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.none ||
-                  (!snapshot.hasData || _workersViewModel.isEmpty)) {
-                return Column(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 10),
-                      child: const Text(
-                          'Presione el "botón +" para agregar un alumno a la lista',
-                          style:
-                              TextStyle(fontSize: 20, color: Colors.black45)),
-                    ),
-                    const Center(
-                      child:
-                          CircularProgressIndicator(color: Color(0xffF69100)),
-                    ),
-                  ],
+            builder: (BuildContext context,
+                AsyncSnapshot<List<WorkerViewModel>> snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(color: Color(0xffF69100)),
                 );
+              } else if (snapshot.hasError) {
+                return Center(child: Text('Error: ${snapshot.error}'));
+              } else {
+                _workerViewModelList = snapshot.data as List<WorkerViewModel>;
+                return _workerViewModelList.isEmpty
+                    ? Column(
+                        children: [
+                          Container(
+                            margin: EdgeInsets.symmetric(horizontal: 10.h),
+                            child: Text(
+                                'Presione el "botón +" para agregar un alumno a la lista',
+                                style: TextStyle(
+                                    fontSize: 20.sp, color: Colors.black45)),
+                          ),
+                          const Center(
+                            child: CircularProgressIndicator(
+                                color: Color(0xffF69100)),
+                          )
+                        ],
+                      )
+                    : ListView.separated(
+                        itemBuilder: (context, index) {
+                          final WorkerViewModel workerViewModel =
+                              _workerViewModelList[index];
+                          String numWorker = workerViewModel.numWorker;
+                          String firstNameWorker =
+                              workerViewModel.firstNameWorker;
+                          String lastNameWorker =
+                              workerViewModel.lastNameWorker;
+                          return Container(
+                            margin: EdgeInsets.symmetric(horizontal: 10.w),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15).r,
+                                color: const Color(0XFFF4F4F4),
+                                boxShadow: const [
+                                  BoxShadow(
+                                      color: Colors.black26,
+                                      offset: Offset(0.0, 3.0),
+                                      blurRadius: 1),
+                                ]),
+                            child: ListTile(
+                              title: Text("$firstNameWorker $lastNameWorker"),
+                              subtitle: Text(numWorker),
+                            ),
+                          );
+                        },
+                        itemCount: _workerViewModelList.length,
+                        separatorBuilder: (BuildContext context, int index) =>
+                            10.verticalSpace,
+                      );
               }
-              if (snapshot.data != null) {
-                _updateListWorker(snapshot.data);
-              }
-              return ListView.separated(
-                itemBuilder: (context, index) {
-                  final WorkerViewModel workerViewModel =
-                      _workersViewModel[index];
-                  String numWorker = workerViewModel.numWorker;
-                  String firstNameWorker = workerViewModel.firstNameWorker;
-                  String lastNameWorker = workerViewModel.lastNameWorker;
-                  return Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 10),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: const Color(0XFFF4F4F4),
-                        boxShadow: const [
-                          BoxShadow(
-                              color: Colors.black26,
-                              offset: Offset(0.0, 3.0),
-                              blurRadius: 1),
-                        ]),
-                    child: ListTile(
-                      title: Text("$firstNameWorker $lastNameWorker"),
-                      subtitle: Text(numWorker),
-                    ),
-                  );
-                },
-                itemCount: _workersViewModel.length,
-                separatorBuilder: (BuildContext context, int index) =>
-                    const SizedBox(
-                  height: 10,
-                ),
-              );
             },
           )),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      floatingActionButton: FloatingActionButton(
-        shape: const CircleBorder(),
-        backgroundColor: const Color(0xffD9D9D9),
-        onPressed: () => Navigator.of(context)
-            .pushNamed(AddWorkerScreen.route)
-            .then((value) => _getListWorker().then((worker) {
-                  setState(() {
-                    _workersViewModel = worker;
-                  });
-                })),
-        child: const Icon(
-          Icons.person_add_outlined,
-          size: 40,
-          color: Colors.black,
+      floatingActionButton: SizedBox(
+        height: 60.h,
+        child: FittedBox(
+          child: FloatingActionButton(
+            shape: const CircleBorder(),
+            backgroundColor: const Color(0xffD9D9D9),
+            onPressed: registerWorker,
+            child: Icon(
+              Icons.person_add_outlined,
+              size: 30.r,
+              color: Colors.black,
+            ),
+          ),
         ),
       ),
     );

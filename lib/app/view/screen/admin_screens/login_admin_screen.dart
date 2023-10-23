@@ -4,6 +4,7 @@ import 'package:control_asistencia_app/app/view/screen/admin_screens/home_admin_
 import 'package:control_asistencia_app/app/view/widget/customdialog_widget.dart';
 import 'package:control_asistencia_app/app/view/widget/customtextformfield_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LoginAdminScreen extends StatefulWidget {
   const LoginAdminScreen({super.key});
@@ -83,7 +84,7 @@ class _LoginAdminScreenState extends State<LoginAdminScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(top: 15),
+      margin: EdgeInsets.only(top: 15.h),
       child: SingleChildScrollView(
         child: Column(
           children: [
@@ -108,17 +109,17 @@ class _LoginAdminScreenState extends State<LoginAdminScreen> {
                     action: TextInputAction.done,
                   ),
                   Container(
-                    margin: const EdgeInsets.symmetric(vertical: 10),
+                    margin: EdgeInsets.symmetric(vertical: 10.h),
                     child: Center(
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           elevation: 1,
-                          padding: const EdgeInsets.symmetric(horizontal: 24),
-                          textStyle: const TextStyle(fontSize: 18),
+                          padding: EdgeInsets.symmetric(horizontal: 24.w),
+                          textStyle: TextStyle(fontSize: 18.sp),
                           backgroundColor: const Color(0xFFD9D9D9),
                           foregroundColor: const Color(0xff000000),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
+                            borderRadius: BorderRadius.circular(20).w,
                           ),
                         ),
                         onPressed: login,

@@ -1,6 +1,7 @@
 // import 'package:control_asistencia_app/app/view/screen/worker_screens/checkin_method_screens/checkin_fingerprint_screen.dart';
 import 'package:control_asistencia_app/app/packages/packageslocal_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomeWorkerScreen extends StatelessWidget {
   const HomeWorkerScreen({super.key});
@@ -12,15 +13,18 @@ class HomeWorkerScreen extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(
-          title: const Text("Asistencia laboral"),
+          title: const Text(
+            "Asistencia laboral",
+            style: TextStyle(fontWeight: FontWeight.w700),
+          ),
           centerTitle: true,
           backgroundColor: const Color(0xffEBEBEB),
         ),
         backgroundColor: const Color(0xffEBEBEB),
         body: SizedBox(
-          width: media.width,
+          height: media.height,
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 100.0),
+            padding: EdgeInsets.symmetric(vertical: 100.h),
             child: Column(
               children: [
                 Row(
@@ -34,19 +38,25 @@ class HomeWorkerScreen extends StatelessWidget {
                               Color(0xff28C925),
                             ),
                           ),
-                          onPressed: () {
-                            Navigator.of(context)
-                                .pushNamed(MoreOptionsScreen.route);
-                            //Todo: Cambiar ruta hacar registro por NumeroTrabajador.
-                          },
-                          icon: const Icon(Icons.check,
-                              color: Colors.white, size: 70),
+                          onPressed: () => Navigator.of(context).pushNamed(
+                              MoreOptionsScreen.route,
+                              arguments: <String, dynamic>{
+                                "isEntrance": true,
+                                "title": "entrada"
+                              }),
+                          icon: Icon(Icons.check,
+                              color: Colors.white, size: 50.r),
                         ),
-                        const Text("Entrada"),
+                        Text(
+                          "Entrada",
+                          style: TextStyle(
+                            fontSize: 16.sp,
+                          ),
+                        ),
                       ],
                     ),
                     Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 50),
+                      margin: EdgeInsets.symmetric(horizontal: 50.w),
                     ),
                     Column(
                       children: [
@@ -56,17 +66,27 @@ class HomeWorkerScreen extends StatelessWidget {
                               Color(0xff990303),
                             ),
                           ),
-                          onPressed: () {},
-                          icon: const Icon(Icons.close,
-                              color: Colors.white, size: 70),
+                          onPressed: () => Navigator.of(context).pushNamed(
+                              MoreOptionsScreen.route,
+                              arguments: <String, dynamic>{
+                                "isEntrance": false,
+                                "title": "salida"
+                              }),
+                          icon: Icon(Icons.close,
+                              color: Colors.white, size: 50.r),
                         ),
-                        const Text("Salida"),
+                        Text(
+                          "Salida",
+                          style: TextStyle(
+                            fontSize: 16.sp,
+                          ),
+                        ),
                       ],
                     ),
                   ],
                 ),
                 Container(
-                  margin: const EdgeInsets.only(top: 60),
+                  margin: EdgeInsets.only(top: 60.h),
                 ),
                 IconButton(
                   style: const ButtonStyle(
@@ -75,10 +95,15 @@ class HomeWorkerScreen extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {},
-                  icon: const Icon(Icons.fastfood_outlined,
-                      color: Colors.white, size: 70),
+                  icon: Icon(Icons.fastfood_outlined,
+                      color: Colors.white, size: 50.r),
                 ),
-                const Text("Comida"),
+                Text(
+                  "Comida",
+                  style: TextStyle(
+                    fontSize: 16.sp,
+                  ),
+                ),
               ],
             ),
           ),

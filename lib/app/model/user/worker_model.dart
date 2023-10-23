@@ -40,10 +40,10 @@ class WorkerModel extends UserModel {
         numTrabajador: numTrabajador ?? this.numTrabajador,
         nombre: nombre ?? this.nombre,
         apellido: apellido ?? this.apellido,
-        curp: curp ?? this.curp!,
-        numImss: numImss ?? this.numImss!,
-        rfc: rfc ?? this.rfc!,
-        puesto: puesto ?? this.puesto!,
+        curp: curp ?? this.curp,
+        numImss: numImss ?? this.numImss,
+        rfc: rfc ?? this.rfc,
+        puesto: puesto ?? this.puesto,
         // idHuella: idHuella ?? _idHuella,
       );
 

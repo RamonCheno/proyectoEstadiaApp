@@ -37,10 +37,10 @@ class LocalAuthController {
       authenticated = await _auth.authenticate(
         localizedReason: 'Escanee su huella para continuar',
         options: const AuthenticationOptions(
-            useErrorDialogs: true, stickyAuth: true, biometricOnly: true),
+            useErrorDialogs: true, stickyAuth: true, biometricOnly: false),
         authMessages: const <AuthMessages>[
           AndroidAuthMessages(
-            signInTitle: 'Lector biometrico para Lista de asistencia ISC',
+            signInTitle: 'Lector biometrico para autenticar',
             cancelButton: 'Cancelar',
           )
         ],

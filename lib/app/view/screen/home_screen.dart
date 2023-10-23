@@ -1,19 +1,15 @@
 // import 'package:control_asistencia_app/app/view/screen/admin_screens/login_admin_screen.dart';
 import 'package:control_asistencia_app/app/view/screen/worker_screens/home_worker_screeen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'admin_screens/login_register_tabbar_screen.dart';
 // import 'scan_devices_bluetooth_screen.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
   static const route = "/";
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,30 +28,35 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 15),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 14.h),
               child: Column(
                 children: [
                   CircleAvatar(
                     backgroundColor: Colors.transparent,
-                    radius: 65,
+                    radius: 65.r,
                     child: ClipOval(
                         child: Image(
-                      image: AssetImage("assets/images/logo_grupo_mexico.png"),
+                      image: const AssetImage(
+                          "assets/images/logo_grupo_mexico.png"),
                       fit: BoxFit.cover,
-                      width: 130,
-                      height: 130,
+                      width: 130.w,
+                      height: 130.h,
                     )),
                   ),
                   SizedBox(
-                    height: 15,
+                    height: 15.h,
                   ),
-                  Text("Control de asistencia laboral"),
+                  Text(
+                    "Control de asistencia laboral",
+                    style:
+                        TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w600),
+                  ),
                 ],
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 60),
+              padding: EdgeInsets.symmetric(vertical: 60.h),
               child: Column(
                 children: [
                   ElevatedButton(
@@ -65,13 +66,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     onPressed: () {
                       Navigator.pushNamed(context, HomeWorkerScreen.route);
                     },
-                    child: const Text(
+                    child: Text(
                       "Soy trabajador",
-                      style: TextStyle(color: Colors.black),
+                      style: TextStyle(color: Colors.black, fontSize: 16.sp),
                     ),
                   ),
-                  const SizedBox(
-                    height: 30,
+                  SizedBox(
+                    height: 40.h,
                   ),
                   ElevatedButton(
                     style: const ButtonStyle(
@@ -81,9 +82,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       Navigator.of(context)
                           .pushNamed(TabBarLoginRegisterScreen.route);
                     },
-                    child: const Text(
+                    child: Text(
                       "Soy administrador",
-                      style: TextStyle(color: Colors.black),
+                      style: TextStyle(color: Colors.black, fontSize: 16.sp),
                     ),
                   ),
                 ],

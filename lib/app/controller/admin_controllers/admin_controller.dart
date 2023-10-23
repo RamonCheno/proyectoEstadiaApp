@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:control_asistencia_app/app/model/admin_model.dart';
+import 'package:control_asistencia_app/app/model/user/admin_model.dart';
 import 'package:control_asistencia_app/app/packages/packages_pub.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 

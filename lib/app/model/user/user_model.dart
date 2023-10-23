@@ -7,19 +7,19 @@ class UserModel {
   String? _rfc;
   String? _puesto;
 
-  int? get numTrabajador => _numTrabajador;
+  int get numTrabajador => _numTrabajador!;
 
   String get nombre => _nombre;
 
   String get apellido => _apellido;
 
-  String? get curp => _curp;
+  String get curp => _curp!;
 
-  int? get numImss => _numImss;
+  int get numImss => _numImss!;
 
-  String? get rfc => _rfc;
+  String get rfc => _rfc!;
 
-  String? get puesto => _puesto;
+  String get puesto => _puesto!;
 
   UserModel({
     int? numTrabajador,

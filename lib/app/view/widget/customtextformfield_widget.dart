@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomTextFormWidget extends StatefulWidget {
   final String hintName;
@@ -50,7 +51,7 @@ class _CustomTextFormWidgetState extends State<CustomTextFormWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 15),
+      margin: EdgeInsets.symmetric(vertical: 5.h, horizontal: 15.w),
       child: TextFormField(
         buildCounter: (BuildContext context,
             {required int currentLength,
@@ -60,8 +61,8 @@ class _CustomTextFormWidgetState extends State<CustomTextFormWidget> {
             return isFocused
                 ? Text(
                     '$currentLength/$maxLength',
-                    style: const TextStyle(
-                      fontSize: 12.0,
+                    style: TextStyle(
+                      fontSize: 12.sp,
                     ),
                     semanticsLabel: 'Input constraints',
                   )
@@ -85,7 +86,7 @@ class _CustomTextFormWidgetState extends State<CustomTextFormWidget> {
         },
         decoration: InputDecoration(
           border: OutlineInputBorder(
-            borderRadius: const BorderRadius.all(Radius.circular(15.0)),
+            borderRadius: const BorderRadius.all(Radius.circular(15.0)).w,
             borderSide: BorderSide(
               color: _activeField == widget.hintName && _isFocused
                   ? const Color(0Xff4caf50)
@@ -93,16 +94,16 @@ class _CustomTextFormWidgetState extends State<CustomTextFormWidget> {
             ),
           ),
           enabledBorder: OutlineInputBorder(
-            borderRadius: const BorderRadius.all(Radius.circular(15.0)),
+            borderRadius: const BorderRadius.all(Radius.circular(15.0)).w,
             borderSide: BorderSide(
               color: _activeField == widget.hintName && _isFocused
                   ? const Color(0Xff4caf50)
                   : const Color(0xffF69100),
             ),
           ),
-          focusedBorder: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(15.0)),
-            borderSide: BorderSide(
+          focusedBorder: OutlineInputBorder(
+            borderRadius: const BorderRadius.all(Radius.circular(15.0)).w,
+            borderSide: const BorderSide(
               color: Color(0Xff4caf50),
             ),
           ),
@@ -112,9 +113,9 @@ class _CustomTextFormWidgetState extends State<CustomTextFormWidget> {
                   : Colors.grey),
           hintStyle: const TextStyle(color: Color(0xff757575)),
           labelText: widget.hintName,
-          floatingLabelStyle: const TextStyle(
-            color: Color(0xff4caf50),
-          ),
+          labelStyle: TextStyle(fontSize: 14.sp),
+          floatingLabelStyle:
+              TextStyle(color: const Color(0xff4caf50), fontSize: 12.sp),
           fillColor: Colors.white,
           filled: true,
         ),
