@@ -1,5 +1,5 @@
 // import 'package:control_asistencia_app/app/controller/admin_controllers/worker_controller.dart';
-import 'package:control_asistencia_app/app/controller/settings_controllers/bluetooth_controller.dart';
+// import 'package:control_asistencia_app/app/controller/settings_controllers/bluetooth_controller.dart';
 import 'package:control_asistencia_app/app/controller/worker_controllers/worker_controller.dart';
 import 'package:control_asistencia_app/app/model/user/worker_model.dart';
 // import 'package:control_asistencia_app/app/view/screen/admin_screens/fingerprintregister.dart';
@@ -25,7 +25,7 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
   late TextEditingController _conworkerPosition;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   WorkerController workerController = WorkerController();
-  BluetoothController bluetoothController = BluetoothController();
+  // BluetoothController bluetoothController = BluetoothController();
   int idWorker = 0;
 
   void addWorker() async {
@@ -106,12 +106,12 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
     _conCurpWorker = TextEditingController();
     _conIMSSWorker = TextEditingController();
     _conworkerPosition = TextEditingController();
-    loadMacAddress();
+    // loadMacAddress();
   }
 
-  void loadMacAddress() async {
-    await bluetoothController.loadDeviceMacAddress();
-  }
+  // void loadMacAddress() async {
+  //   await bluetoothController.loadDeviceMacAddress();
+  // }
 
   @override
   void dispose() {

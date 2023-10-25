@@ -1,5 +1,5 @@
 abstract class AttendanceModel {
-  fromMap(Map<String, dynamic> json);
+  static dynamic fromMap(Map<String, dynamic> json) {}
 
   Map<String, dynamic> toMap();
 }

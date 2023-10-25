@@ -1,27 +1,34 @@
-import 'package:control_asistencia_app/app/packages/packagelocal_controller.dart';
+// import 'package:control_asistencia_app/app/packages/packagelocal_controller.dart';
 import 'package:control_asistencia_app/app/packages/packages_pub.dart';
 import 'package:control_asistencia_app/app/packages/packageslocal_view.dart';
 import 'package:control_asistencia_app/app/view/screen/admin_screens/listattendance_screen.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 void main() async {
   await ScreenUtil.ensureScreenSize();
-  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
-  // HttpRequest.configureDio();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  runApp(
-    ChangeNotifierProvider(
-      create: (context) => BluetoothController(),
-      child: MyApp(),
-    ),
-  );
+
+  final WidgetsBinding widgetsBinding =
+      WidgetsFlutterBinding.ensureInitialized();
+
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+
+  // ChangeNotifierProvider(
+  //   create: (context) => BluetoothController(),
+  //   child: ,
+  // ),
+
+  await Future.delayed(const Duration(seconds: 3));
+  FlutterNativeSplash.remove();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {

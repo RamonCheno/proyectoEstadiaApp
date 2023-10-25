@@ -13,10 +13,9 @@ class CheckOutModel extends AttendanceModel {
     _fechaSalida = day;
   }
 
-  @override
-  CheckOutModel fromMap(Map<String, dynamic> json) => CheckOutModel(
-        hour: _horaSalida,
-        day: _fechaSalida,
+  static CheckOutModel fromMap(Map<String, dynamic> json) => CheckOutModel(
+        hour: json["hora"],
+        day: json["fecha"],
       );
 
   @override

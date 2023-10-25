@@ -9,19 +9,19 @@ class AttendanceViewModel {
 
   String? _checkInHour;
 
-  String? _checkOutHour;
+  // String? _checkOutHour;
 
-  AttendanceViewModel(WorkerModel workerModel, CheckInModel checkInModel,
-      CheckOutModel checkOutModel) {
+  AttendanceViewModel(
+      {required WorkerModel workerModel, required CheckInModel checkInModel}) {
     List<String> firstNameWorkerArray = workerModel.nombre.split(' ');
     List<String> lastNameWorkerArray = workerModel.apellido.split(' ');
     _firstNameWorker = firstNameWorkerArray[0];
     _lastNameWorker = lastNameWorkerArray[0];
     _checkInHour = checkInModel.horaEntrada;
-    _checkOutHour = checkOutModel.horaSalida;
+    // _checkOutHour = checkOutModel.horaSalida;
   }
 
-  String get checkOutHour => _checkOutHour!;
+  // String get checkOutHour => _checkOutHour!;
 
   String get checkInHour => _checkInHour!;
 

@@ -17,15 +17,24 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        return ios;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for ios - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -43,39 +52,11 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDBC_kRVN0pGpJNflHxR-bwZaC-hHkVCXg',
-    appId: '1:533988597570:web:8e150e249e9f5b36ea72db',
-    messagingSenderId: '533988597570',
-    projectId: 'control-asistencia-app',
-    authDomain: 'control-asistencia-app.firebaseapp.com',
-    storageBucket: 'control-asistencia-app.appspot.com',
-    measurementId: 'G-34D47DYPRG',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBzKcnnION22kMQg2ygqpxAygwASiOv9MQ',
     appId: '1:533988597570:android:c5a2d558626bd911ea72db',
     messagingSenderId: '533988597570',
     projectId: 'control-asistencia-app',
     storageBucket: 'control-asistencia-app.appspot.com',
-  );
-
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDfxf4oHHaHUZhusStaLMkqIvnxBSWA4ts',
-    appId: '1:533988597570:ios:7a22773b737284afea72db',
-    messagingSenderId: '533988597570',
-    projectId: 'control-asistencia-app',
-    storageBucket: 'control-asistencia-app.appspot.com',
-    iosBundleId: 'com.example.controlAsistenciaApp',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyDfxf4oHHaHUZhusStaLMkqIvnxBSWA4ts',
-    appId: '1:533988597570:ios:20d194fc4419171fea72db',
-    messagingSenderId: '533988597570',
-    projectId: 'control-asistencia-app',
-    storageBucket: 'control-asistencia-app.appspot.com',
-    iosBundleId: 'com.example.controlAsistenciaApp.RunnerTests',
   );
 }

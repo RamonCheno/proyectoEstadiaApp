@@ -12,10 +12,9 @@ class CheckInModel extends AttendanceModel {
     _horaEntrada = hour;
   }
 
-  @override
-  CheckInModel fromMap(Map<String, dynamic> json) => CheckInModel(
-        day: _fechaEntrada,
-        hour: _horaEntrada,
+  static CheckInModel fromMap(Map<String, dynamic> json) => CheckInModel(
+        day: json["fecha"],
+        hour: json["hora"],
       );
 
   @override
