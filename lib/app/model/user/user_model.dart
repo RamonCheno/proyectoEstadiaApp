@@ -6,6 +6,7 @@ class UserModel {
   int? _numImss;
   String? _rfc;
   String? _puesto;
+  String? _urlPhoto;
 
   int get numTrabajador => _numTrabajador!;
 
@@ -21,6 +22,8 @@ class UserModel {
 
   String get puesto => _puesto!;
 
+  String get urlPhoto => _urlPhoto!;
+
   UserModel({
     int? numTrabajador,
     required String nombre,
@@ -29,6 +32,7 @@ class UserModel {
     int? numImss,
     String? rfc,
     String? puesto,
+    String? urlPhoto,
   }) {
     _numTrabajador = numTrabajador;
     _nombre = nombre;
@@ -37,6 +41,7 @@ class UserModel {
     _numImss = numImss;
     _rfc = rfc;
     _puesto = puesto;
+    _urlPhoto = urlPhoto;
   }
 
   UserModel copyWith({
@@ -47,6 +52,7 @@ class UserModel {
     int? numImss,
     String? rfc,
     String? puesto,
+    String? urlPhoto,
   }) =>
       UserModel(
         numTrabajador: numTrabajador ?? _numTrabajador,
@@ -56,6 +62,7 @@ class UserModel {
         numImss: numImss ?? _numImss,
         rfc: rfc ?? _rfc,
         puesto: puesto ?? _puesto,
+        urlPhoto: urlPhoto ?? _urlPhoto,
       );
 
   factory UserModel.fromMap(Map<String, dynamic> json) => UserModel(
@@ -66,6 +73,7 @@ class UserModel {
         numImss: json["numIMSS"],
         rfc: json["RFC"],
         puesto: json["puesto"],
+        urlPhoto: json["urlPhoto"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -76,5 +84,6 @@ class UserModel {
         "numIMSS": _numImss,
         "RFC": _rfc,
         "puesto": _puesto,
+        "urlPhoto": _urlPhoto,
       };
 }

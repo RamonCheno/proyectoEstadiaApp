@@ -1,6 +1,6 @@
 import 'package:control_asistencia_app/app/controller/admin_controllers/admin_controller.dart';
+import 'package:control_asistencia_app/app/view/screen/admin_screens/crud_worker_screens/listworker_screen.dart';
 import 'package:control_asistencia_app/app/view/screen/admin_screens/listattendance_screen.dart';
-import 'package:control_asistencia_app/app/view/screen/admin_screens/listworker_screen.dart';
 import 'package:control_asistencia_app/app/view/screen/admin_screens/login_register_tabbar_screen.dart';
 import 'package:control_asistencia_app/app/view/screen/settings_screen.dart';
 import 'package:control_asistencia_app/app/view/widget/customdialog_widget.dart';
@@ -196,7 +196,7 @@ class _HomeAdminScreenState extends State<HomeAdminScreen> {
                           onPressed: () => Navigator.of(context)
                               .pushNamed(ListAttendance.route),
                         ),
-                        Text("Asistencia", style: TextStyle(fontSize: 16.sp)),
+                        Text("Asistencia", style: TextStyle(fontSize: 14.sp)),
                       ],
                     ),
                   ),
@@ -230,7 +230,7 @@ class _HomeAdminScreenState extends State<HomeAdminScreen> {
                           onPressed: () =>
                               debugPrint("Boton reportes presionado"),
                         ),
-                        Text("Reportes", style: TextStyle(fontSize: 16.sp)),
+                        Text("Reportes", style: TextStyle(fontSize: 14.sp)),
                       ],
                     ),
                   ),
@@ -268,7 +268,7 @@ class _HomeAdminScreenState extends State<HomeAdminScreen> {
                           onPressed: () => Navigator.of(context)
                               .pushNamed(ListWorkerScreen.route),
                         ),
-                        Text("Trabajadores", style: TextStyle(fontSize: 16.sp)),
+                        Text("Trabajadores", style: TextStyle(fontSize: 14.sp)),
                       ],
                     ),
                   ),

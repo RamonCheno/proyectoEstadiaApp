@@ -2,8 +2,14 @@
     <uses-permission
         android:name="android.permission.INTERNET"/>
     <uses-permission
-        android:name="android.permission.USE_BIOMETRIC"/>
+        android:name="android.permission.USE_BIOMETRIC"/>    
     <uses-permission
+        android:name="android.permission.CAMERA"/>
+    <uses-permission 
+        android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission 
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- <uses-permission
         android:name="android.permission.BLUETOOTH"
         android:maxSdkVersion="30"/>
     <uses-permission
@@ -14,7 +20,7 @@
     <uses-permission
         android:name="android.permission.BLUETOOTH_ADVERTISE"/>
     <uses-permission
-        android:name="android.permission.BLUETOOTH_CONNECT"/>
+        android:name="android.permission.BLUETOOTH_CONNECT"/> -->
     <application
         android:label="control_asistencia_app"
         android:name="${applicationName}"

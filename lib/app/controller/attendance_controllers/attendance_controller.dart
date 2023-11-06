@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:control_asistencia_app/app/controller/worker_controllers/worker_controller.dart';
 import 'package:control_asistencia_app/app/model/attendance/checkout_model.dart';
@@ -25,7 +27,9 @@ class AttendanceController {
       await _firebaseAuth.signInAnonymously();
       final CollectionReference subColleAttendance = _firestore
           .collection("Trabajador/${workerModel.numTrabajador}/Asistencia");
-      await subColleAttendance.doc(checkInDay).set({"Entrada": checkInMap});
+      await subColleAttendance
+          .doc(checkInDay)
+          .set({"Entrada": checkInMap, "Salida": null});
       await _firebaseAuth.signOut();
       return true;
     } catch (e) {

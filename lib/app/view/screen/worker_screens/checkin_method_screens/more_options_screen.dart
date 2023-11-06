@@ -7,9 +7,10 @@ import 'package:control_asistencia_app/app/controller/worker_controllers/worker_
 import 'package:control_asistencia_app/app/model/attendance/checkout_model.dart';
 import 'package:control_asistencia_app/app/model/attendance/ckeckin_model.dart';
 import 'package:control_asistencia_app/app/model/user/worker_model.dart';
+import 'package:control_asistencia_app/app/packages/packages_pub.dart';
+import 'package:control_asistencia_app/app/view/provider/attendande_provider.dart';
 import 'package:control_asistencia_app/app/view/widget/customdialog_widget.dart';
 import 'package:control_asistencia_app/app/view/widget/customtextformfield_widget.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
@@ -79,8 +80,11 @@ class _MoreOptionsScreenState extends State<MoreOptionsScreen>
           if (_isEntrance) {
             CheckInModel checkInModel =
                 CheckInModel(hour: nowTimeText!, day: nowDayText!);
-            await _attendanceController.addCheckIn(
-                checkInModel, foundWorker.numTrabajador);
+            // await _attendanceController.addCheckIn(
+            //     checkInModel, foundWorker.numTrabajador);
+            if (!mounted) return;
+            Provider.of<AttendanceProvider>(context, listen: false)
+                .addCheckInProvider(checkInModel, foundWorker.numTrabajador);
             fechaEntrada = checkInModel.fechaEntrada;
             showCustomDialog(
                 foundWorker.apellido, foundWorker.nombre, titleMayus);

@@ -1,4 +1,3 @@
-import 'package:control_asistencia_app/app/model/attendance/checkout_model.dart';
 import 'package:control_asistencia_app/app/model/attendance/ckeckin_model.dart';
 import 'package:control_asistencia_app/app/model/user/worker_model.dart';
 

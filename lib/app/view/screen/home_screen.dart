@@ -17,9 +17,9 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: const Color(0xffEBEBEB),
         // actions: [
         //   IconButton(
-        //     onPressed: () => Navigator.of(context)
-        //         .pushNamed(ScanDevicesBluetoothScreen.route),
-        //     icon: const Icon(Icons.bluetooth, size: 34),
+        //     onPressed: () =>
+        //         Navigator.of(context).pushNamed(CameraScreen.route),
+        //     icon: const Icon(Icons.camera, size: 34),
         //   ),
         // ],
       ),

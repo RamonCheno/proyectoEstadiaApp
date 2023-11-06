@@ -7,23 +7,26 @@ class AdminModel extends UserModel {
   String get password => _password;
   String get email => _email;
 
-  AdminModel(
-      {int? numTrabajador,
-      required String nombre,
-      required String apellido,
-      String? curp,
-      int? numImss,
-      String? rfc,
-      String? puesto,
-      required String email})
-      : super(
-            numTrabajador: numTrabajador,
-            nombre: nombre,
-            apellido: apellido,
-            curp: curp,
-            numImss: numImss,
-            puesto: puesto,
-            rfc: rfc) {
+  AdminModel({
+    int? numTrabajador,
+    required String nombre,
+    required String apellido,
+    String? curp,
+    int? numImss,
+    String? rfc,
+    String? puesto,
+    required String email,
+    // String? urlPhoto,
+  }) : super(
+          numTrabajador: numTrabajador,
+          nombre: nombre,
+          apellido: apellido,
+          curp: curp,
+          numImss: numImss,
+          puesto: puesto,
+          rfc: rfc,
+          // urlPhoto: urlPhoto,
+        ) {
     _email = email;
   }
 
@@ -37,16 +40,19 @@ class AdminModel extends UserModel {
           String? rfc,
           String? puesto,
           String? email,
-          String? password}) =>
+          String? password,
+          String? urlPhoto}) =>
       AdminModel(
-          numTrabajador: numTrabajador ?? this.numTrabajador,
-          nombre: nombre ?? this.nombre,
-          apellido: apellido ?? this.apellido,
-          curp: curp ?? this.curp,
-          numImss: numImss ?? this.numImss,
-          rfc: rfc ?? this.rfc,
-          puesto: puesto ?? this.puesto,
-          email: email ?? _email);
+        numTrabajador: numTrabajador ?? this.numTrabajador,
+        nombre: nombre ?? this.nombre,
+        apellido: apellido ?? this.apellido,
+        curp: curp ?? this.curp,
+        numImss: numImss ?? this.numImss,
+        rfc: rfc ?? this.rfc,
+        puesto: puesto ?? this.puesto,
+        email: email ?? _email,
+        // urlPhoto: urlPhoto ?? this.urlPhoto,
+      );
 
   factory AdminModel.fromMap(Map<String, dynamic> json) => AdminModel(
       numTrabajador: json["numTrabajador"],

@@ -1,6 +1,7 @@
 // import 'package:control_asistencia_app/app/controller/admin_controllers/worker_controller.dart';
 import 'package:control_asistencia_app/app/controller/worker_controllers/worker_controller.dart';
-import 'package:control_asistencia_app/app/view/screen/admin_screens/addworker_screen.dart';
+import 'package:control_asistencia_app/app/view/screen/admin_screens/crud_worker_screens/addworker_screen.dart';
+import 'package:control_asistencia_app/app/view/screen/admin_screens/crud_worker_screens/updateworker_screen.dart';
 import 'package:control_asistencia_app/app/view_models/worker_viewmodel.dart';
 import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:flutter/material.dart';
@@ -38,8 +39,17 @@ class _ListWorkerScreenState extends State<ListWorkerScreen> {
     // });
   }
 
-  Future<void> registerWorker() async {
+  Future<void> registerWorkerScreen() async {
     Navigator.of(context).pushNamed(AddWorkerScreen.route).then((_) {
+      _getListWorker().then((_) {
+        setState(() {});
+      });
+    });
+  }
+
+  Future<void> updateWorkerScreen(int numWorker) async {
+    Navigator.pushNamed(context, UpdateWorkerScreen.route,
+        arguments: {"numWorkerSelect": numWorker}).then((_) {
       _getListWorker().then((_) {
         setState(() {});
       });
@@ -95,11 +105,12 @@ class _ListWorkerScreenState extends State<ListWorkerScreen> {
                         itemBuilder: (context, index) {
                           final WorkerViewModel workerViewModel =
                               _workerViewModelList[index];
-                          String numWorker = workerViewModel.numWorker;
+                          String numWorkerText = workerViewModel.numWorker;
                           String firstNameWorker =
                               workerViewModel.firstNameWorker;
                           String lastNameWorker =
                               workerViewModel.lastNameWorker;
+                          String urlImage = workerViewModel.photo;
                           return Container(
                             margin: EdgeInsets.symmetric(horizontal: 10.w),
                             decoration: BoxDecoration(
@@ -112,8 +123,19 @@ class _ListWorkerScreenState extends State<ListWorkerScreen> {
                                       blurRadius: 1),
                                 ]),
                             child: ListTile(
+                              leading: CircleAvatar(
+                                radius: 20.r,
+                                foregroundImage: urlImage.isNotEmpty
+                                    ? AssetImage(urlImage)
+                                    : const AssetImage(
+                                        "assets/images/usuario.png"),
+                              ), //TODO: Obtener imagenes desde firebaseStorage
                               title: Text("$firstNameWorker $lastNameWorker"),
-                              subtitle: Text(numWorker),
+                              subtitle: Text(numWorkerText),
+                              onTap: () {
+                                int numWorker = numWorkerText as int;
+                                updateWorkerScreen(numWorker);
+                              },
                             ),
                           );
                         },
@@ -133,7 +155,7 @@ class _ListWorkerScreenState extends State<ListWorkerScreen> {
           child: FloatingActionButton(
             shape: const CircleBorder(),
             backgroundColor: const Color(0xffD9D9D9),
-            onPressed: registerWorker,
+            onPressed: registerWorkerScreen,
             child: Icon(
               Icons.person_add_outlined,
               size: 30.r,
