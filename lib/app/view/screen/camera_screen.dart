@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:camera/camera.dart';
 import 'package:control_asistencia_app/app/packages/packages_pub.dart';
 import 'package:control_asistencia_app/app/view/provider/image_provider.dart';
@@ -34,8 +32,8 @@ class _CameraScreenState extends State<CameraScreen> {
                   onPressed: () async {
                     await cameraProvider.takePicture();
                     if (!mounted) return;
-                    File image = cameraProvider.image;
-                    Navigator.pop(context, image);
+                    String imagePath = cameraProvider.imagePath;
+                    Navigator.pop(context, imagePath);
                   },
                   icon: const Icon(Icons.camera),
                 ),

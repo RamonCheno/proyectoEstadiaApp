@@ -31,7 +31,7 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
   late TextEditingController _conworkerPosition;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   WorkerController workerController = WorkerController();
-  File? _image;
+  String? _imagePath;
   final picker = ImagePicker();
   // BluetoothController bluetoothController = BluetoothController();
   // int idWorker = 0;
@@ -48,7 +48,7 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
     int numIMSSWorker = int.parse(_conIMSSWorker.text);
     String workerPosition = _conworkerPosition.text;
     String urlImage = await workerProvider.getUrlImage(
-        _image!, firstNameWorker, lastNameWorker);
+        File(_imagePath!), firstNameWorker, lastNameWorker);
 
     if (form != null) {
       if (form.validate()) {
@@ -93,9 +93,8 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
                         .pushNamed(CameraScreen.route)
                         .then((img) {
                       setState(() {
-                        _image = img as File;
+                        _imagePath = img as String;
                       });
-                      debugPrint(_image!.path);
                     });
                   },
                 ),
@@ -113,7 +112,7 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
                     await imageProvider.pickImageFromGallery();
                     if (!mounted) return;
                     setState(() {
-                      _image = imageProvider.image;
+                      _imagePath = imageProvider.imagePath;
                     });
                     Navigator.pop(context);
                   },
@@ -178,17 +177,20 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
                       CircleAvatar(
                         radius: 50.r,
                         backgroundColor: const Color(0xffE1E1E1),
-                        foregroundImage: _image != null
-                            ? FileImage(_image!)
-                            : FileImage(File("assets/images/usuario.png")),
+                        foregroundImage: _imagePath != null
+                            ? FileImage(File(_imagePath!))
+                            : null,
+                        backgroundImage: _imagePath != null
+                            ? null
+                            : const AssetImage("assets/images/usuario.png"),
                       ),
                     ],
                   ),
                 ),
                 IconButton(
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        Colors.grey), // Color de fondo
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.grey.shade400),
                   ),
                   color: Colors.black,
                   iconSize: 30.r,

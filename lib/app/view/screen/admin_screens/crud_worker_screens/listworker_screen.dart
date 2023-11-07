@@ -1,5 +1,7 @@
 // import 'package:control_asistencia_app/app/controller/admin_controllers/worker_controller.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:control_asistencia_app/app/controller/worker_controllers/worker_controller.dart';
+import 'package:control_asistencia_app/app/model/user/worker_model.dart';
 import 'package:control_asistencia_app/app/view/screen/admin_screens/crud_worker_screens/addworker_screen.dart';
 import 'package:control_asistencia_app/app/view/screen/admin_screens/crud_worker_screens/updateworker_screen.dart';
 import 'package:control_asistencia_app/app/view_models/worker_viewmodel.dart';
@@ -16,13 +18,13 @@ class ListWorkerScreen extends StatefulWidget {
 }
 
 class _ListWorkerScreenState extends State<ListWorkerScreen> {
-  final WorkerController workerController = WorkerController();
+  final WorkerController _workerController = WorkerController();
 
   List<WorkerViewModel> _workerViewModelList = [];
 
   Future<List<WorkerViewModel>> _getListWorker() async {
     List<WorkerViewModel> listWorkerViewModel =
-        await workerController.getListWokersViewModel();
+        await _workerController.getListWokersViewModel();
     return listWorkerViewModel;
   }
 
@@ -39,7 +41,7 @@ class _ListWorkerScreenState extends State<ListWorkerScreen> {
     // });
   }
 
-  Future<void> registerWorkerScreen() async {
+  void registerWorkerScreen() {
     Navigator.of(context).pushNamed(AddWorkerScreen.route).then((_) {
       _getListWorker().then((_) {
         setState(() {});
@@ -47,9 +49,14 @@ class _ListWorkerScreenState extends State<ListWorkerScreen> {
     });
   }
 
-  Future<void> updateWorkerScreen(int numWorker) async {
-    Navigator.pushNamed(context, UpdateWorkerScreen.route,
-        arguments: {"numWorkerSelect": numWorker}).then((_) {
+  void updateWorkerScreen(int numWorker) async {
+    WorkerModel? workerModelSelect = await _workerController
+        .getWorkerData(numWorker, useAnonymousAuth: false);
+    if (!mounted) return;
+    Navigator.pushNamed(context, UpdateWorkerScreen.route, arguments: {
+      "numWorkerSelectArg": numWorker,
+      "workerModelSelectArg": workerModelSelect
+    }).then((_) {
       _getListWorker().then((_) {
         setState(() {});
       });
@@ -124,17 +131,23 @@ class _ListWorkerScreenState extends State<ListWorkerScreen> {
                                 ]),
                             child: ListTile(
                               leading: CircleAvatar(
-                                radius: 20.r,
+                                radius: 25.r,
+                                backgroundColor: const Color(0xffE1E1E1),
                                 foregroundImage: urlImage.isNotEmpty
-                                    ? AssetImage(urlImage)
+                                    ? CachedNetworkImageProvider(urlImage)
+                                    : null,
+                                backgroundImage: urlImage.isNotEmpty
+                                    ? null
                                     : const AssetImage(
                                         "assets/images/usuario.png"),
-                              ), //TODO: Obtener imagenes desde firebaseStorage
+                              ),
                               title: Text("$firstNameWorker $lastNameWorker"),
                               subtitle: Text(numWorkerText),
                               onTap: () {
-                                int numWorker = numWorkerText as int;
+                                int numWorker = int.parse(numWorkerText);
                                 updateWorkerScreen(numWorker);
+                                debugPrint(
+                                    "Item presionado con numero: $numWorker");
                               },
                             ),
                           );

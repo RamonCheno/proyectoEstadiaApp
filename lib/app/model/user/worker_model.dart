@@ -5,6 +5,8 @@ class WorkerModel extends UserModel {
 
   // int get idHuella => _idHuella;
 
+  WorkerModel.instance() : super.instance();
+
   WorkerModel({
     int? numTrabajador,
     required String nombre,
@@ -60,7 +62,7 @@ class WorkerModel extends UserModel {
       numImss: json["numIMSS"],
       rfc: json["RFC"],
       puesto: json["puesto"],
-      urlPhoto: json["urlPhoto"]
+      urlPhoto: json["urlPhoto"] ?? ""
       // idHuella: json["idHuella"],
       );
 

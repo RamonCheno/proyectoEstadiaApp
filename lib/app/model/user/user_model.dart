@@ -24,6 +24,8 @@ class UserModel {
 
   String get urlPhoto => _urlPhoto!;
 
+  UserModel.instance();
+
   UserModel({
     int? numTrabajador,
     required String nombre,

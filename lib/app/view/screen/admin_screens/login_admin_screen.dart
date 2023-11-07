@@ -47,14 +47,12 @@ class _LoginAdminScreenState extends State<LoginAdminScreen> {
             .loginAdmin(email, pass)
             .then((responseMessagge) => responseMessagge);
         if (response == "Sesion iniciada") {
-          //hacer autenticacion con local Auth
           bool autenticated = await _localAuthController.authenticate();
           if (autenticated) {
             if (!mounted) return;
             Navigator.pushReplacementNamed(context, HomeAdminScreen.route);
           }
         } else {
-          /*mostrar un customDialog donde muestre al usuario cual fue la falla*/
           if (!mounted) return;
           showDialog(
             barrierDismissible: false,

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:control_asistencia_app/app/controller/worker_controllers/worker_controller.dart';
 import 'package:control_asistencia_app/app/model/user/worker_model.dart';
 import 'package:control_asistencia_app/app/packages/packages_pub.dart';
@@ -7,6 +8,7 @@ import 'package:control_asistencia_app/app/view/provider/image_provider.dart';
 import 'package:control_asistencia_app/app/view/provider/worker_provider.dart';
 import 'package:control_asistencia_app/app/view/screen/camera_screen.dart';
 import 'package:control_asistencia_app/app/view/widget/customtextformfield_widget.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -19,23 +21,27 @@ class UpdateWorkerScreen extends StatefulWidget {
 }
 
 class _UpdateWorkerScreenState extends State<UpdateWorkerScreen> {
-  late TextEditingController _conNumWorker;
-  late TextEditingController _conFirstNameWorker;
-  late TextEditingController _conLastNameWorker;
-  late TextEditingController _conRFCWorker;
-  late TextEditingController _conCurpWorker;
-  late TextEditingController _conIMSSWorker;
-  late TextEditingController _conworkerPosition;
+  final TextEditingController _conNumWorker = TextEditingController();
+  final TextEditingController _conFirstNameWorker = TextEditingController();
+  final TextEditingController _conLastNameWorker = TextEditingController();
+  final TextEditingController _conRFCWorker = TextEditingController();
+  final TextEditingController _conCurpWorker = TextEditingController();
+  final TextEditingController _conIMSSWorker = TextEditingController();
+  final TextEditingController _conworkerPosition = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   WorkerController workerController = WorkerController();
-  File? _image;
+  FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  Map<String, dynamic> _args = {};
+  WorkerModel? workerModelSelect;
+  int? numWorkerSelect;
+  String? _imagePath;
   final picker = ImagePicker();
+  bool isEnable = true;
 
   void updateWorker() async {
     final FormState? form = _formKey.currentState;
     WorkerProvider workerProvider =
         Provider.of<WorkerProvider>(context, listen: false);
-    int numWorker = int.parse(_conNumWorker.text);
     String firstNameWorker = _conFirstNameWorker.text;
     String lastNameWorker = _conLastNameWorker.text;
     String rfcWorker = _conRFCWorker.text.toUpperCase();
@@ -43,13 +49,13 @@ class _UpdateWorkerScreenState extends State<UpdateWorkerScreen> {
     int numIMSSWorker = int.parse(_conIMSSWorker.text);
     String workerPosition = _conworkerPosition.text;
     String urlImage = await workerProvider.getUrlImage(
-        _image!, firstNameWorker, lastNameWorker);
+        File(_imagePath!), firstNameWorker, lastNameWorker);
 
     if (form != null) {
       if (form.validate()) {
         form.save();
         WorkerModel workerModel = WorkerModel(
-          numTrabajador: numWorker,
+          numTrabajador: numWorkerSelect,
           nombre: firstNameWorker.trim(),
           apellido: lastNameWorker.trim(),
           curp: curpWorker.trim(),
@@ -59,15 +65,31 @@ class _UpdateWorkerScreenState extends State<UpdateWorkerScreen> {
           urlPhoto: urlImage,
           // idHuella: idWorker,
         );
-        String response = await workerProvider.addWokerProvider(workerModel);
+        String response = await workerProvider.updateWorkerProvider(
+            workerModel, numWorkerSelect!);
         if (!mounted) return;
-        if (response == "Trabajador agregado") {
+        if (response == "Trabajador actualizado") {
           workerProvider.showResponseDialog(context, response, addWorker: true);
         } else {
           workerProvider.showResponseDialog(context, response);
         }
       }
     }
+  }
+
+  ImageProvider<Object>? imageInternetLocal() {
+    ImageProvider? image;
+    ImageProvider imgNetwork = CachedNetworkImageProvider(_imagePath!);
+    ImageProvider imgAssets = const AssetImage("assets/images/usuario.png");
+    if (_imagePath != null) {
+      image = _imagePath!.startsWith("https")
+          ? imgNetwork
+          : FileImage(File(_imagePath!));
+    } else {
+      image = imgAssets;
+    }
+
+    return image;
   }
 
   void showBottomSheet() {
@@ -87,10 +109,11 @@ class _UpdateWorkerScreenState extends State<UpdateWorkerScreen> {
                     Navigator.of(context)
                         .pushNamed(CameraScreen.route)
                         .then((img) {
-                      setState(() {
-                        _image = img as File;
-                      });
-                      debugPrint(_image!.path);
+                      if (img != null) {
+                        setState(() {
+                          _imagePath = img as String;
+                        });
+                      }
                     });
                   },
                 ),
@@ -108,7 +131,7 @@ class _UpdateWorkerScreenState extends State<UpdateWorkerScreen> {
                     await imageProvider.pickImageFromGallery();
                     if (!mounted) return;
                     setState(() {
-                      _image = imageProvider.image;
+                      _imagePath = imageProvider.imagePath;
                     });
                     Navigator.pop(context);
                   },
@@ -125,23 +148,57 @@ class _UpdateWorkerScreenState extends State<UpdateWorkerScreen> {
   @override
   void initState() {
     super.initState();
-    _conNumWorker = TextEditingController();
-    _conFirstNameWorker = TextEditingController();
-    _conLastNameWorker = TextEditingController();
-    _conRFCWorker = TextEditingController();
-    _conCurpWorker = TextEditingController();
-    _conIMSSWorker = TextEditingController();
-    _conworkerPosition = TextEditingController();
     // loadMacAddress();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _conNumWorker.dispose();
+    _conFirstNameWorker.dispose();
+    _conLastNameWorker.dispose();
+    _conRFCWorker.dispose();
+    _conCurpWorker.dispose();
+    _conIMSSWorker.dispose();
+    _conworkerPosition.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final args =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+    _args = args;
+    numWorkerSelect = _args["numWorkerSelectArg"];
+    workerModelSelect = _args["workerModelSelectArg"];
+    if (workerModelSelect != null) {
+      _conNumWorker.text = workerModelSelect!.numTrabajador.toString();
+      _conFirstNameWorker.text = workerModelSelect!.nombre;
+      _conLastNameWorker.text = workerModelSelect!.apellido;
+      _conRFCWorker.text = workerModelSelect!.rfc;
+      _conCurpWorker.text = workerModelSelect!.curp;
+      _conIMSSWorker.text = workerModelSelect!.numImss.toString();
+      _conworkerPosition.text = workerModelSelect!.puesto;
+      _imagePath = workerModelSelect!.urlPhoto;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Registrar Trabajador"),
+        title: const Text("Actualizar Trabajador"),
         centerTitle: true,
         backgroundColor: const Color(0xffEBEBEB),
+        actions: [
+          IconButton(
+              onPressed: () {
+                setState(() {
+                  isEnable = !isEnable;
+                });
+              },
+              icon: const Icon(Icons.edit))
+        ],
       ),
       backgroundColor: const Color(0xffEBEBEB),
       body: Form(
@@ -157,9 +214,7 @@ class _UpdateWorkerScreenState extends State<UpdateWorkerScreen> {
                       CircleAvatar(
                         radius: 50.r,
                         backgroundColor: const Color(0xffE1E1E1),
-                        foregroundImage: _image != null
-                            ? FileImage(_image!)
-                            : FileImage(File("assets/images/usuario.png")),
+                        foregroundImage: imageInternetLocal(),
                       ),
                     ],
                   ),
@@ -167,7 +222,7 @@ class _UpdateWorkerScreenState extends State<UpdateWorkerScreen> {
                 IconButton(
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(
-                        Colors.grey), // Color de fondo
+                        Colors.grey.shade400), // Color de fondo
                   ),
                   color: Colors.black,
                   iconSize: 30.r,
@@ -185,7 +240,7 @@ class _UpdateWorkerScreenState extends State<UpdateWorkerScreen> {
                 isObscureText: false,
                 inputType: TextInputType.number,
                 action: TextInputAction.next,
-                soloLeer: false,
+                soloLeer: true,
                 lengthChar: 8,
               ),
               CustomTextFormWidget(
@@ -195,7 +250,7 @@ class _UpdateWorkerScreenState extends State<UpdateWorkerScreen> {
                 isObscureText: false,
                 inputType: TextInputType.text,
                 action: TextInputAction.next,
-                soloLeer: false,
+                soloLeer: isEnable,
               ),
               CustomTextFormWidget(
                 controller: _conLastNameWorker,
@@ -204,7 +259,7 @@ class _UpdateWorkerScreenState extends State<UpdateWorkerScreen> {
                 isObscureText: false,
                 inputType: TextInputType.text,
                 action: TextInputAction.next,
-                soloLeer: false,
+                soloLeer: isEnable,
               ),
               CustomTextFormWidget(
                   controller: _conRFCWorker,
@@ -213,7 +268,7 @@ class _UpdateWorkerScreenState extends State<UpdateWorkerScreen> {
                   isObscureText: false,
                   inputType: TextInputType.text,
                   action: TextInputAction.next,
-                  soloLeer: false,
+                  soloLeer: isEnable,
                   lengthChar: 13),
               CustomTextFormWidget(
                   controller: _conCurpWorker,
@@ -222,7 +277,7 @@ class _UpdateWorkerScreenState extends State<UpdateWorkerScreen> {
                   isObscureText: false,
                   inputType: TextInputType.text,
                   action: TextInputAction.next,
-                  soloLeer: false,
+                  soloLeer: isEnable,
                   lengthChar: 18),
               CustomTextFormWidget(
                   controller: _conIMSSWorker,
@@ -231,7 +286,7 @@ class _UpdateWorkerScreenState extends State<UpdateWorkerScreen> {
                   isObscureText: false,
                   inputType: TextInputType.number,
                   action: TextInputAction.next,
-                  soloLeer: false,
+                  soloLeer: isEnable,
                   lengthChar: 11),
               CustomTextFormWidget(
                 controller: _conworkerPosition,
@@ -240,7 +295,7 @@ class _UpdateWorkerScreenState extends State<UpdateWorkerScreen> {
                 isObscureText: false,
                 inputType: TextInputType.text,
                 action: TextInputAction.done,
-                soloLeer: false,
+                soloLeer: isEnable,
               ),
               // Container(
               //   margin: const EdgeInsets.symmetric(vertical: 10),
@@ -292,7 +347,7 @@ class _UpdateWorkerScreenState extends State<UpdateWorkerScreen> {
                     ),
                     onPressed: updateWorker,
                     child: const Text(
-                      'Registrar',
+                      'Actualizar',
                     ),
                   ),
                 ),

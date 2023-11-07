@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:control_asistencia_app/app/packages/packages_pub.dart';
 import 'package:image_picker/image_picker.dart';
@@ -6,11 +5,10 @@ import 'package:image_picker/image_picker.dart';
 class ImageProviders with ChangeNotifier {
   CameraController? _controller;
   bool isCameraReady = false;
-  File? _image;
-  String? imagePath;
+  String? _imagePath;
   final picker = ImagePicker();
 
-  File get image => _image!;
+  String get imagePath => _imagePath!;
 
   CameraController get cameraController => _controller!;
 
@@ -33,7 +31,7 @@ class ImageProviders with ChangeNotifier {
     try {
       final XFile picture = await _controller!.takePicture();
 
-      _image = File(picture.path);
+      _imagePath = picture.path;
 
       notifyListeners();
     } catch (e) {
@@ -53,7 +51,7 @@ class ImageProviders with ChangeNotifier {
   }
 
   void setImagePath(String path) {
-    _image = File(path);
+    _imagePath = path;
     notifyListeners();
   }
 

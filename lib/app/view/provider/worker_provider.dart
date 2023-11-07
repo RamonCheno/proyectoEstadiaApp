@@ -18,6 +18,17 @@ class WorkerProvider with ChangeNotifier {
     return response;
   }
 
+  Future<String> updateWorkerProvider(
+      WorkerModel workerModel, int numWorkerSelect) async {
+    String response =
+        await _workerController.updateWorker(numWorkerSelect, workerModel).then(
+      (methodResponse) {
+        return methodResponse;
+      },
+    );
+    return response;
+  }
+
   void showResponseDialog(BuildContext context, String response,
       {bool addWorker = false}) {
     showDialog(

@@ -14,18 +14,27 @@ class WorkerController {
 
   Future<String> updateImageToStorage(
       File photoWorker, String nameWorker, String lastNameW) async {
-    List<String> firstNameWorkerArray = nameWorker.split(' ');
-    List<String> lastNameWorkerArray = lastNameW.split(' ');
-    String firstNameWorker = firstNameWorkerArray[0];
-    String lastNameWorker = lastNameWorkerArray[0];
-    String nameWorkerComplete = "$firstNameWorker $lastNameWorker";
-
-    final storageReference = firebaseStorage
-        .ref()
-        .child("fotos/trabajadores/$nameWorkerComplete.jpg");
-    UploadTask uploadTask = storageReference.putFile(photoWorker);
-    await uploadTask.whenComplete(() {});
-    return await storageReference.getDownloadURL();
+    String response = "";
+    if (firebaseAuth.currentUser != null) {
+      List<String> firstNameWorkerArray = nameWorker.split(' ');
+      List<String> lastNameWorkerArray = lastNameW.split(' ');
+      String firstNameWorker = firstNameWorkerArray[0];
+      String lastNameWorker = lastNameWorkerArray[0];
+      String nameWorkerComplete = "${firstNameWorker}_$lastNameWorker";
+      try {
+        final storageReference = firebaseStorage
+            .ref()
+            .child("fotos/trabajadores/$nameWorkerComplete.jpg");
+        UploadTask uploadTask = storageReference.putFile(photoWorker);
+        await uploadTask.whenComplete(() {});
+        response = await storageReference.getDownloadURL();
+      } catch (e) {
+        response = "$e";
+      }
+    } else {
+      response = "Usuario no autorizado";
+    }
+    return response;
   }
 
   Future<String> addWorker(WorkerModel workerModel) async {
@@ -40,12 +49,17 @@ class WorkerController {
     }
   }
 
-  Future<String> updateWorker(int numWorker) async {
-    WorkerModel? workerModel = await getWorkerData(numWorker);
-    try {} catch (e) {
+  Future<String> updateWorker(int numWorker, WorkerModel workerModel) async {
+    try {
+      final workeUpdateMap = workerModel.toMap();
+      final DocumentReference docRef =
+          firestore.collection('Trabajador').doc('$numWorker');
+      await docRef.update(workeUpdateMap);
+      return "Trabajador actualizado";
+    } catch (e) {
       debugPrint("Error: $e");
+      return "Error en actualizar trabajador, Verifique datos de guardado";
     }
-    return "";
   }
 
   Future<List<WorkerModel>> getListWokersModel() async {
@@ -85,16 +99,21 @@ class WorkerController {
     }
   }
 
-  Future<WorkerModel?> getWorkerData(int numWorker) async {
+  Future<WorkerModel?> getWorkerData(int numWorker,
+      {bool useAnonymousAuth = true}) async {
     try {
-      await firebaseAuth.signInAnonymously();
+      if (useAnonymousAuth) {
+        await firebaseAuth.signInAnonymously();
+      }
       QuerySnapshot userSnapshot = await firestore
           .collection("Trabajador")
           .where("numTrabajador", isEqualTo: numWorker)
           .get();
       Map<String, dynamic> workerData =
           userSnapshot.docs.first.data() as Map<String, dynamic>;
-      await firebaseAuth.signOut();
+      if (useAnonymousAuth) {
+        await firebaseAuth.signOut();
+      }
       WorkerModel workerModel = WorkerModel.fromMap(workerData);
       return workerModel;
     } catch (e) {
