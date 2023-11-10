@@ -21,10 +21,10 @@ class AdminModel extends UserModel {
           numTrabajador: numTrabajador,
           nombre: nombre,
           apellido: apellido,
-          curp: curp,
-          numImss: numImss,
-          puesto: puesto,
-          rfc: rfc,
+          curp: curp ?? "",
+          numImss: numImss ?? 0,
+          puesto: puesto ?? "",
+          rfc: rfc ?? "",
           // urlPhoto: urlPhoto,
         ) {
     _email = email;

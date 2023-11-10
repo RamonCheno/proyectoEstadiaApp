@@ -39,6 +39,8 @@ dependencies:
   firebase_storage: ^11.4.1
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
   flutter_native_splash: ^2.3.4
   flutter_screenutil: ^5.9.0
   image_picker: ^1.0.4

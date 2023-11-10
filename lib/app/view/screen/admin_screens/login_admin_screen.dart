@@ -1,5 +1,5 @@
 import 'package:control_asistencia_app/app/controller/admin_controllers/admin_controller.dart';
-import 'package:control_asistencia_app/app/controller/settings_controllers/localauthcontroller.dart';
+// import 'package:control_asistencia_app/app/controller/settings_controllers/localauthcontroller.dart';
 import 'package:control_asistencia_app/app/view/screen/admin_screens/home_admin_screen.dart';
 import 'package:control_asistencia_app/app/view/widget/customdialog_widget.dart';
 import 'package:control_asistencia_app/app/view/widget/customtextformfield_widget.dart';
@@ -18,7 +18,7 @@ class _LoginAdminScreenState extends State<LoginAdminScreen> {
   late TextEditingController _conEmailAdmin;
   late TextEditingController _conPass;
   AdminController adminController = AdminController();
-  final LocalAuthController _localAuthController = LocalAuthController();
+  // final LocalAuthController _localAuthController = LocalAuthController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -26,8 +26,8 @@ class _LoginAdminScreenState extends State<LoginAdminScreen> {
     super.initState();
     _conEmailAdmin = TextEditingController();
     _conPass = TextEditingController();
-    _localAuthController.checkBiometric();
-    _localAuthController.getAvailableBiometric();
+    // _localAuthController.checkBiometric();
+    // _localAuthController.getAvailableBiometric();
   }
 
   @override
@@ -47,11 +47,31 @@ class _LoginAdminScreenState extends State<LoginAdminScreen> {
             .loginAdmin(email, pass)
             .then((responseMessagge) => responseMessagge);
         if (response == "Sesion iniciada") {
-          bool autenticated = await _localAuthController.authenticate();
-          if (autenticated) {
-            if (!mounted) return;
-            Navigator.pushReplacementNamed(context, HomeAdminScreen.route);
-          }
+          // bool autenticated = await _localAuthController.authenticate();
+          // if (autenticated) {
+          //   if (!mounted) return;
+          //   Navigator.pushReplacementNamed(context, HomeAdminScreen.route);
+          // }
+          if (!mounted) return;
+          showDialog(
+            barrierDismissible: false,
+            context: context,
+            builder: (context) {
+              Future.delayed(
+                const Duration(seconds: 2),
+                () {
+                  Navigator.of(context).pop();
+                  Navigator.pushReplacementNamed(
+                      context, HomeAdminScreen.route);
+                },
+              );
+              return CustomDialogWidget(
+                iconData: const Icon(Icons.check_circle,
+                    color: Colors.green, size: 42),
+                messagge: Text(response),
+              );
+            },
+          );
         } else {
           if (!mounted) return;
           showDialog(

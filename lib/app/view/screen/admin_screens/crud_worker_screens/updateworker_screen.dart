@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:after_layout/after_layout.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:control_asistencia_app/app/controller/worker_controllers/worker_controller.dart';
 import 'package:control_asistencia_app/app/model/user/worker_model.dart';
@@ -20,7 +21,8 @@ class UpdateWorkerScreen extends StatefulWidget {
   State<UpdateWorkerScreen> createState() => _UpdateWorkerScreenState();
 }
 
-class _UpdateWorkerScreenState extends State<UpdateWorkerScreen> {
+class _UpdateWorkerScreenState extends State<UpdateWorkerScreen>
+    with AfterLayoutMixin<UpdateWorkerScreen> {
   final TextEditingController _conNumWorker = TextEditingController();
   final TextEditingController _conFirstNameWorker = TextEditingController();
   final TextEditingController _conLastNameWorker = TextEditingController();
@@ -38,7 +40,7 @@ class _UpdateWorkerScreenState extends State<UpdateWorkerScreen> {
   final picker = ImagePicker();
   bool isEnable = true;
 
-  void updateWorker() async {
+  Future<void> updateWorker() async {
     final FormState? form = _formKey.currentState;
     WorkerProvider workerProvider =
         Provider.of<WorkerProvider>(context, listen: false);
@@ -79,9 +81,9 @@ class _UpdateWorkerScreenState extends State<UpdateWorkerScreen> {
 
   ImageProvider<Object>? imageInternetLocal() {
     ImageProvider? image;
-    ImageProvider imgNetwork = CachedNetworkImageProvider(_imagePath!);
     ImageProvider imgAssets = const AssetImage("assets/images/usuario.png");
     if (_imagePath != null) {
+      ImageProvider imgNetwork = CachedNetworkImageProvider(_imagePath!);
       image = _imagePath!.startsWith("https")
           ? imgNetwork
           : FileImage(File(_imagePath!));
@@ -146,9 +148,28 @@ class _UpdateWorkerScreenState extends State<UpdateWorkerScreen> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    // loadMacAddress();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final args =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+    _args = args;
+    numWorkerSelect = _args["numWorkerSelectArg"];
+    workerModelSelect = _args["workerModelSelectArg"];
+  }
+
+  @override
+  void afterFirstLayout(BuildContext context) {
+    if (workerModelSelect != null) {
+      _conNumWorker.text = workerModelSelect!.numTrabajador.toString();
+      _conFirstNameWorker.text = workerModelSelect!.nombre;
+      _conLastNameWorker.text = workerModelSelect!.apellido;
+      _conRFCWorker.text = workerModelSelect!.rfc;
+      _conCurpWorker.text = workerModelSelect!.curp;
+      _conIMSSWorker.text = workerModelSelect!.numImss.toString();
+      _conworkerPosition.text = workerModelSelect!.puesto;
+      _imagePath = workerModelSelect!.urlPhoto;
+      setState(() {});
+    }
   }
 
   @override
@@ -161,26 +182,6 @@ class _UpdateWorkerScreenState extends State<UpdateWorkerScreen> {
     _conCurpWorker.dispose();
     _conIMSSWorker.dispose();
     _conworkerPosition.dispose();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    final args =
-        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
-    _args = args;
-    numWorkerSelect = _args["numWorkerSelectArg"];
-    workerModelSelect = _args["workerModelSelectArg"];
-    if (workerModelSelect != null) {
-      _conNumWorker.text = workerModelSelect!.numTrabajador.toString();
-      _conFirstNameWorker.text = workerModelSelect!.nombre;
-      _conLastNameWorker.text = workerModelSelect!.apellido;
-      _conRFCWorker.text = workerModelSelect!.rfc;
-      _conCurpWorker.text = workerModelSelect!.curp;
-      _conIMSSWorker.text = workerModelSelect!.numImss.toString();
-      _conworkerPosition.text = workerModelSelect!.puesto;
-      _imagePath = workerModelSelect!.urlPhoto;
-    }
   }
 
   @override

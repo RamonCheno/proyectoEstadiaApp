@@ -18,13 +18,13 @@ class RegisterAdminScreen extends StatefulWidget {
 
 class _RegisterAdminScreenState extends State<RegisterAdminScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  late TextEditingController _conNumWorkerAdmin;
-  late TextEditingController _conFirtNameAdmin;
-  late TextEditingController _conLastNameAdmin;
-  late TextEditingController _conEmailAdmin;
-  late TextEditingController _conPassAdmin;
-  late TextEditingController _conConfirmPassAdmin;
-  AdminController adminController = AdminController();
+  final TextEditingController _conNumWorkerAdmin = TextEditingController();
+  final TextEditingController _conFirtNameAdmin = TextEditingController();
+  final TextEditingController _conLastNameAdmin = TextEditingController();
+  final TextEditingController _conEmailAdmin = TextEditingController();
+  final TextEditingController _conPassAdmin = TextEditingController();
+  final TextEditingController _conConfirmPassAdmin = TextEditingController();
+  final AdminController adminController = AdminController();
 
   void register() async {
     final FormState? form = _formKey.currentState;
@@ -93,17 +93,6 @@ class _RegisterAdminScreenState extends State<RegisterAdminScreen> {
         }
       }
     }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _conNumWorkerAdmin = TextEditingController();
-    _conFirtNameAdmin = TextEditingController();
-    _conLastNameAdmin = TextEditingController();
-    _conEmailAdmin = TextEditingController();
-    _conPassAdmin = TextEditingController();
-    _conConfirmPassAdmin = TextEditingController();
   }
 
   @override

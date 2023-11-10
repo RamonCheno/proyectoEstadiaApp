@@ -117,7 +117,7 @@ class _ListWorkerScreenState extends State<ListWorkerScreen> {
                               workerViewModel.firstNameWorker;
                           String lastNameWorker =
                               workerViewModel.lastNameWorker;
-                          String urlImage = workerViewModel.photo;
+                          String urlImage = workerViewModel.urlPhoto;
                           return Container(
                             margin: EdgeInsets.symmetric(horizontal: 10.w),
                             decoration: BoxDecoration(

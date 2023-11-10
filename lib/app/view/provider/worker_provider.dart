@@ -32,17 +32,15 @@ class WorkerProvider with ChangeNotifier {
   void showResponseDialog(BuildContext context, String response,
       {bool addWorker = false}) {
     showDialog(
+      barrierDismissible: false,
       context: context,
       builder: (context) {
-        Future.delayed(
-          const Duration(seconds: 2),
-          () {
+        Future.delayed(const Duration(seconds: 2), () {
+          Navigator.of(context).pop();
+          if (addWorker) {
             Navigator.of(context).pop();
-            if (addWorker) {
-              Navigator.of(context).pop();
-            }
-          },
-        );
+          }
+        });
         return CustomDialogWidget(
           messagge: Text(response),
           iconData: addWorker
@@ -55,7 +53,7 @@ class WorkerProvider with ChangeNotifier {
 
   Future<String> getUrlImage(
       File image, String firstName, String lastName) async {
-    String urlPhoto = await _workerController.updateImageToStorage(
+    String urlPhoto = await _workerController.uploadImageToStorage(
         image, firstName, lastName);
     return urlPhoto;
   }

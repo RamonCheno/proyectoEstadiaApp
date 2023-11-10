@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:control_asistencia_app/app/controller/attendance_controllers/attendance_controller.dart';
 import 'package:control_asistencia_app/app/view/provider/attendande_provider.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +27,8 @@ class _ListAttendanceState extends State<ListAttendance> {
   Future<DateTime?> _selectedInitialDay(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
+      locale: const Locale("es", "MX"),
+      initialEntryMode: DatePickerEntryMode.calendarOnly,
       initialDate: DateTime.now(),
       firstDate: DateTime(2023, 10, 15),
       lastDate: DateTime(2099),
@@ -50,7 +53,6 @@ class _ListAttendanceState extends State<ListAttendance> {
   }
 
   Future<List<AttendanceViewModel>> _getListAttendance() async {
-    //TODO: Utilizar un datetime.now y con un calendario para seleccionar dias
     List<AttendanceViewModel> attendanceViewModelList =
         await _attendanceController.getListAttendanceViewModel(dateNowText);
     return attendanceViewModelList;
@@ -182,6 +184,7 @@ class _ListAttendanceState extends State<ListAttendance> {
                               attendanceViewModel.firstNameWorker;
                           String lastNameWorker =
                               attendanceViewModel.lastNameWorker;
+                          String urlImage = attendanceViewModel.urlPhoto;
                           return Container(
                             margin: EdgeInsets.symmetric(horizontal: 10.w),
                             decoration: BoxDecoration(
@@ -194,6 +197,17 @@ class _ListAttendanceState extends State<ListAttendance> {
                                       blurRadius: 1),
                                 ]),
                             child: ListTile(
+                              leading: CircleAvatar(
+                                radius: 25.r,
+                                backgroundColor: const Color(0xffE1E1E1),
+                                foregroundImage: urlImage.isNotEmpty
+                                    ? CachedNetworkImageProvider(urlImage)
+                                    : null,
+                                backgroundImage: urlImage.isNotEmpty
+                                    ? null
+                                    : const AssetImage(
+                                        "assets/images/usuario.png"),
+                              ),
                               title: Text("$firstNameWorker $lastNameWorker"),
                               subtitle: Text(checkInHour),
                             ),

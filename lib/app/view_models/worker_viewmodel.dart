@@ -7,7 +7,7 @@ class WorkerViewModel {
 
   late String _lastNameWorker;
 
-  late String _photo;
+  late String _urlPhoto;
 
   WorkerViewModel(WorkerModel workerModel) {
     _numWorker = workerModel.numTrabajador.toString().trim();
@@ -15,10 +15,10 @@ class WorkerViewModel {
     List<String> lastNameWorkerArray = workerModel.apellido.split(' ');
     _firstNameWorker = firstNameWorkerArray[0];
     _lastNameWorker = lastNameWorkerArray[0];
-    _photo = workerModel.urlPhoto;
+    _urlPhoto = workerModel.urlPhoto;
   }
 
-  String get photo => _photo;
+  String get urlPhoto => _urlPhoto;
 
   String get numWorker => _numWorker;
 

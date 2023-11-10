@@ -8,8 +8,13 @@ class SharedPreferencesCommon {
     return prefs.setString(key, value);
   }
 
-  static Future<String?> loadString(String key) async {
+  static Future<String> loadString(String key) async {
     final SharedPreferences prefs = await _prefs;
-    return prefs.getString(key);
+    return prefs.getString(key)!;
+  }
+
+  static Future<void> clearSheadPreferences(String key) async {
+    final SharedPreferences prefs = await _prefs;
+    prefs.remove(key);
   }
 }

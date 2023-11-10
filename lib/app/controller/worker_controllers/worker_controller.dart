@@ -12,7 +12,7 @@ class WorkerController {
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   FirebaseStorage firebaseStorage = FirebaseStorage.instance;
 
-  Future<String> updateImageToStorage(
+  Future<String> uploadImageToStorage(
       File photoWorker, String nameWorker, String lastNameW) async {
     String response = "";
     if (firebaseAuth.currentUser != null) {
@@ -25,6 +25,11 @@ class WorkerController {
         final storageReference = firebaseStorage
             .ref()
             .child("fotos/trabajadores/$nameWorkerComplete.jpg");
+
+        bool isExist = await checkIfFileExist(storageReference.fullPath);
+        if (isExist) {
+          await storageReference.delete();
+        }
         UploadTask uploadTask = storageReference.putFile(photoWorker);
         await uploadTask.whenComplete(() {});
         response = await storageReference.getDownloadURL();
@@ -35,6 +40,16 @@ class WorkerController {
       response = "Usuario no autorizado";
     }
     return response;
+  }
+
+  Future<bool> checkIfFileExist(String filePath) async {
+    try {
+      final ref = firebaseStorage.ref(filePath);
+      final FullMetadata result = await ref.getMetadata();
+      return result.fullPath.isNotEmpty;
+    } catch (e) {
+      return false;
+    }
   }
 
   Future<String> addWorker(WorkerModel workerModel) async {

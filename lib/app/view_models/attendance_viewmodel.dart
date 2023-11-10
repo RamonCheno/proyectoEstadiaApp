@@ -8,6 +8,8 @@ class AttendanceViewModel {
 
   String? _checkInHour;
 
+  late String _urlPhoto;
+
   // String? _checkOutHour;
 
   AttendanceViewModel(
@@ -18,9 +20,12 @@ class AttendanceViewModel {
     _lastNameWorker = lastNameWorkerArray[0];
     _checkInHour = checkInModel.horaEntrada;
     // _checkOutHour = checkOutModel.horaSalida;
+    _urlPhoto = workerModel.urlPhoto;
   }
 
   // String get checkOutHour => _checkOutHour!;
+
+  String get urlPhoto => _urlPhoto;
 
   String get checkInHour => _checkInHour!;
 

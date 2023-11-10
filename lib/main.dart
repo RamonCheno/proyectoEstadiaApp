@@ -1,6 +1,7 @@
 // import 'package:control_asistencia_app/app/packages/packagelocal_controller.dart';
 import 'package:control_asistencia_app/app/packages/packages_pub.dart';
 import 'package:control_asistencia_app/app/packages/packageslocal_view.dart';
+import 'package:control_asistencia_app/app/view/provider/adminprovider.dart';
 import 'package:control_asistencia_app/app/view/provider/attendande_provider.dart';
 import 'package:control_asistencia_app/app/view/screen/admin_screens/crud_worker_screens/addworker_screen.dart';
 import 'package:control_asistencia_app/app/view/screen/admin_screens/crud_worker_screens/listworker_screen.dart';
@@ -9,7 +10,7 @@ import 'package:control_asistencia_app/app/view/screen/admin_screens/listattenda
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'app/view/provider/image_provider.dart';
 import 'app/view/provider/worker_provider.dart';
 import 'app/view/screen/camera_screen.dart';
@@ -42,6 +43,7 @@ void main() async {
         ChangeNotifierProvider(create: (context) => AttendanceProvider()),
         ChangeNotifierProvider(create: (context) => ImageProviders()),
         ChangeNotifierProvider(create: (context) => WorkerProvider()),
+        ChangeNotifierProvider(create: (context) => AdminProvider()),
       ],
       child: MyApp(),
     ),
@@ -75,6 +77,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       builder: (context, child) => MaterialApp(
+        localizationsDelegates: const [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: const [
+          Locale('en'),
+          Locale('es', 'MX'),
+        ],
         title: 'Asistencia Laboral',
         theme: ThemeData(
           useMaterial3: true,
