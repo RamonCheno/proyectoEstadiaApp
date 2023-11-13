@@ -1,4 +1,4 @@
-import 'package:control_asistencia_app/app/model/worker_model.dart';
+import 'package:control_asistencia_app/app/model/user/worker_model.dart';
 
 class WorkerViewModel {
   late String _numWorker;
@@ -7,13 +7,18 @@ class WorkerViewModel {
 
   late String _lastNameWorker;
 
+  late String _urlPhoto;
+
   WorkerViewModel(WorkerModel workerModel) {
     _numWorker = workerModel.numTrabajador.toString().trim();
-    List<String> firstNameWorker = workerModel.nombre.split(' ');
-    List<String> lastNameWorker = workerModel.apellido.split(' ');
-    _firstNameWorker = firstNameWorker[0];
-    _lastNameWorker = lastNameWorker[0];
+    List<String> firstNameWorkerArray = workerModel.nombre.split(' ');
+    List<String> lastNameWorkerArray = workerModel.apellido.split(' ');
+    _firstNameWorker = firstNameWorkerArray[0];
+    _lastNameWorker = lastNameWorkerArray[0];
+    _urlPhoto = workerModel.urlPhoto;
   }
+
+  String get urlPhoto => _urlPhoto;
 
   String get numWorker => _numWorker;
 

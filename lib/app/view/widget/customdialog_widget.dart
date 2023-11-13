@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomDialogWidget extends StatelessWidget {
   final Widget messagge;
   final String? title;
   final Icon iconData;
+  final List<Widget>? actions;
   const CustomDialogWidget(
-      {this.title, required this.messagge, required this.iconData, super.key});
+      {this.title,
+      required this.messagge,
+      required this.iconData,
+      this.actions,
+      super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,15 +20,21 @@ class CustomDialogWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           iconData,
-          if (title != null) Text(title!),
+          10.horizontalSpace,
+          if (title != null)
+            Text(
+              title!,
+              style: TextStyle(fontSize: 16.sp),
+            ),
         ],
       ),
-      contentPadding: const EdgeInsets.fromLTRB(10, 12, 10, 16),
+      contentPadding: EdgeInsets.fromLTRB(10.w, 12.h, 10.w, 16.h),
       content: SingleChildScrollView(
         child: Center(
           child: messagge,
         ),
       ),
+      actions: actions ?? [],
     );
   }
 }

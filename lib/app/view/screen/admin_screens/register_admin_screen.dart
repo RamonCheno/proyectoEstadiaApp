@@ -1,8 +1,9 @@
 import 'package:control_asistencia_app/app/controller/admin_controllers/admin_controller.dart';
-import 'package:control_asistencia_app/app/model/admin_model.dart';
+import 'package:control_asistencia_app/app/model/user/admin_model.dart';
 import 'package:control_asistencia_app/app/view/widget/customdialog_widget.dart';
 import 'package:control_asistencia_app/app/view/widget/customtextformfield_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'login_register_tabbar_screen.dart';
 
@@ -17,13 +18,13 @@ class RegisterAdminScreen extends StatefulWidget {
 
 class _RegisterAdminScreenState extends State<RegisterAdminScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  late TextEditingController _conNumWorkerAdmin;
-  late TextEditingController _conFirtNameAdmin;
-  late TextEditingController _conLastNameAdmin;
-  late TextEditingController _conEmailAdmin;
-  late TextEditingController _conPassAdmin;
-  late TextEditingController _conConfirmPassAdmin;
-  AdminController adminController = AdminController();
+  final TextEditingController _conNumWorkerAdmin = TextEditingController();
+  final TextEditingController _conFirtNameAdmin = TextEditingController();
+  final TextEditingController _conLastNameAdmin = TextEditingController();
+  final TextEditingController _conEmailAdmin = TextEditingController();
+  final TextEditingController _conPassAdmin = TextEditingController();
+  final TextEditingController _conConfirmPassAdmin = TextEditingController();
+  final AdminController adminController = AdminController();
 
   void register() async {
     final FormState? form = _formKey.currentState;
@@ -95,22 +96,11 @@ class _RegisterAdminScreenState extends State<RegisterAdminScreen> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    _conNumWorkerAdmin = TextEditingController();
-    _conFirtNameAdmin = TextEditingController();
-    _conLastNameAdmin = TextEditingController();
-    _conEmailAdmin = TextEditingController();
-    _conPassAdmin = TextEditingController();
-    _conConfirmPassAdmin = TextEditingController();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xffEBEBEB),
-        title: const Text("Registro"),
+        title: Text("Registro", style: TextStyle(fontSize: 18.sp)),
         centerTitle: true,
       ),
       backgroundColor: const Color(0xffEBEBEB),
@@ -174,17 +164,17 @@ class _RegisterAdminScreenState extends State<RegisterAdminScreen> {
                 soloLeer: false,
               ),
               Container(
-                margin: const EdgeInsets.symmetric(vertical: 10),
+                margin: EdgeInsets.symmetric(vertical: 10.h),
                 child: Center(
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       elevation: 1,
-                      padding: const EdgeInsets.symmetric(horizontal: 24),
-                      textStyle: const TextStyle(fontSize: 18),
+                      padding: EdgeInsets.symmetric(horizontal: 24.w),
+                      textStyle: TextStyle(fontSize: 14.sp),
                       backgroundColor: const Color(0xFFD9D9D9),
                       foregroundColor: const Color(0xFF000000),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
+                        borderRadius: BorderRadius.circular(20).w,
                       ),
                     ),
                     onPressed: register,

@@ -1,7 +1,5 @@
-export 'package:control_asistencia_app/app/view/screen/admin_screens/addworker_screen.dart';
 // export 'package:control_asistencia_app/app/view/screen/admin_screens/fingerprintregister.dart';
 export 'package:control_asistencia_app/app/view/screen/admin_screens/home_admin_screen.dart';
-export 'package:control_asistencia_app/app/view/screen/admin_screens/listworker_screen.dart';
 export 'package:control_asistencia_app/app/view/screen/admin_screens/login_admin_screen.dart';
 export 'package:control_asistencia_app/app/view/screen/admin_screens/login_register_tabbar_screen.dart';
 export 'package:control_asistencia_app/app/view/screen/admin_screens/register_admin_screen.dart';

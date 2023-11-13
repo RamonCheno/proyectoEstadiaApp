@@ -1,7 +1,7 @@
 // import 'package:control_asistencia_app/app/view/screen/devices_bluetooth_search_screen.dart';
 import 'package:flutter/material.dart';
 // import 'devices_bluetooth_search_screen.dart';
-import 'scan_devices_bluetooth_screen.dart';
+// import 'scan_devices_bluetooth_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({Key? key}) : super(key: key);

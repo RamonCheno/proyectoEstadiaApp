@@ -1,15 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomTextFormWidget extends StatefulWidget {
-  const CustomTextFormWidget(
-      {super.key,
-      required this.controller,
-      required this.hintName,
-      required this.icon,
-      required this.action,
-      this.inputType = TextInputType.text,
-      this.isObscureText = false,
-      this.soloLeer = false});
   final String hintName;
   final IconData icon;
   final bool isObscureText;
@@ -17,6 +10,18 @@ class CustomTextFormWidget extends StatefulWidget {
   final TextInputAction action;
   final bool soloLeer;
   final TextEditingController controller;
+  final int? lengthChar;
+
+  const CustomTextFormWidget(
+      {super.key,
+      required this.controller,
+      required this.hintName,
+      required this.icon,
+      required this.action,
+      this.lengthChar,
+      this.inputType = TextInputType.text,
+      this.isObscureText = false,
+      this.soloLeer = false});
 
   @override
   State<CustomTextFormWidget> createState() => _CustomTextFormWidgetState();
@@ -46,14 +51,33 @@ class _CustomTextFormWidgetState extends State<CustomTextFormWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 15),
+      margin: EdgeInsets.symmetric(vertical: 5.h, horizontal: 15.w),
       child: TextFormField(
+        buildCounter: (BuildContext context,
+            {required int currentLength,
+            required bool isFocused,
+            int? maxLength}) {
+          if (maxLength != null) {
+            return isFocused
+                ? Text(
+                    '$currentLength/$maxLength',
+                    style: TextStyle(
+                      fontSize: 12.sp,
+                    ),
+                    semanticsLabel: 'Input constraints',
+                  )
+                : null;
+          }
+          return null;
+        },
         controller: widget.controller,
         readOnly: widget.soloLeer,
         textInputAction: widget.action,
         focusNode: _focusNode,
         obscureText: widget.isObscureText,
         keyboardType: widget.inputType,
+        maxLength: widget.lengthChar,
+        maxLengthEnforcement: MaxLengthEnforcement.enforced,
         validator: (value) {
           if (value == null || value.isEmpty) {
             return 'Ingrese ${widget.hintName}';
@@ -62,7 +86,7 @@ class _CustomTextFormWidgetState extends State<CustomTextFormWidget> {
         },
         decoration: InputDecoration(
           border: OutlineInputBorder(
-            borderRadius: const BorderRadius.all(Radius.circular(15.0)),
+            borderRadius: const BorderRadius.all(Radius.circular(15.0)).w,
             borderSide: BorderSide(
               color: _activeField == widget.hintName && _isFocused
                   ? const Color(0Xff4caf50)
@@ -70,16 +94,16 @@ class _CustomTextFormWidgetState extends State<CustomTextFormWidget> {
             ),
           ),
           enabledBorder: OutlineInputBorder(
-            borderRadius: const BorderRadius.all(Radius.circular(15.0)),
+            borderRadius: const BorderRadius.all(Radius.circular(15.0)).w,
             borderSide: BorderSide(
               color: _activeField == widget.hintName && _isFocused
                   ? const Color(0Xff4caf50)
                   : const Color(0xffF69100),
             ),
           ),
-          focusedBorder: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(15.0)),
-            borderSide: BorderSide(
+          focusedBorder: OutlineInputBorder(
+            borderRadius: const BorderRadius.all(Radius.circular(15.0)).w,
+            borderSide: const BorderSide(
               color: Color(0Xff4caf50),
             ),
           ),
@@ -89,9 +113,9 @@ class _CustomTextFormWidgetState extends State<CustomTextFormWidget> {
                   : Colors.grey),
           hintStyle: const TextStyle(color: Color(0xff757575)),
           labelText: widget.hintName,
-          floatingLabelStyle: const TextStyle(
-            color: Color(0xff4caf50),
-          ),
+          labelStyle: TextStyle(fontSize: 14.sp),
+          floatingLabelStyle:
+              TextStyle(color: const Color(0xff4caf50), fontSize: 12.sp),
           fillColor: Colors.white,
           filled: true,
         ),

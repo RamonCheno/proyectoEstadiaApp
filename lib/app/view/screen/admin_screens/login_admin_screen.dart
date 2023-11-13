@@ -1,9 +1,10 @@
 import 'package:control_asistencia_app/app/controller/admin_controllers/admin_controller.dart';
-import 'package:control_asistencia_app/app/controller/settings_controllers/localauthcontroller.dart';
-import 'package:control_asistencia_app/app/view/screen/admin_screens/home_admin_screen.dart';
+// import 'package:control_asistencia_app/app/controller/settings_controllers/localauthcontroller.dart';
+import 'package:control_asistencia_app/app/view/screen/admin_screens/home_admin_tabbar_screen.dart';
 import 'package:control_asistencia_app/app/view/widget/customdialog_widget.dart';
 import 'package:control_asistencia_app/app/view/widget/customtextformfield_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LoginAdminScreen extends StatefulWidget {
   const LoginAdminScreen({super.key});
@@ -17,7 +18,7 @@ class _LoginAdminScreenState extends State<LoginAdminScreen> {
   late TextEditingController _conEmailAdmin;
   late TextEditingController _conPass;
   AdminController adminController = AdminController();
-  final LocalAuthController _localAuthController = LocalAuthController();
+  // final LocalAuthController _localAuthController = LocalAuthController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -25,8 +26,8 @@ class _LoginAdminScreenState extends State<LoginAdminScreen> {
     super.initState();
     _conEmailAdmin = TextEditingController();
     _conPass = TextEditingController();
-    _localAuthController.checkBiometric();
-    _localAuthController.getAvailableBiometric();
+    // _localAuthController.checkBiometric();
+    // _localAuthController.getAvailableBiometric();
   }
 
   @override
@@ -46,14 +47,32 @@ class _LoginAdminScreenState extends State<LoginAdminScreen> {
             .loginAdmin(email, pass)
             .then((responseMessagge) => responseMessagge);
         if (response == "Sesion iniciada") {
-          //hacer autenticacion con local Auth
-          bool autenticated = await _localAuthController.authenticate();
-          if (autenticated) {
-            if (!mounted) return;
-            Navigator.pushReplacementNamed(context, HomeAdminScreen.route);
-          }
+          // bool autenticated = await _localAuthController.authenticate();
+          // if (autenticated) {
+          //   if (!mounted) return;
+          //   Navigator.pushReplacementNamed(context, HomeAdminScreen.route);
+          // }
+          if (!mounted) return;
+          showDialog(
+            barrierDismissible: false,
+            context: context,
+            builder: (context) {
+              Future.delayed(
+                const Duration(seconds: 2),
+                () {
+                  Navigator.of(context).pop();
+                  Navigator.pushReplacementNamed(
+                      context, HomeAdminTabBarScreen.route);
+                },
+              );
+              return CustomDialogWidget(
+                iconData: const Icon(Icons.check_circle,
+                    color: Colors.green, size: 42),
+                messagge: Text(response),
+              );
+            },
+          );
         } else {
-          /*mostrar un customDialog donde muestre al usuario cual fue la falla*/
           if (!mounted) return;
           showDialog(
             barrierDismissible: false,
@@ -83,7 +102,7 @@ class _LoginAdminScreenState extends State<LoginAdminScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(top: 15),
+      margin: EdgeInsets.only(top: 15.h),
       child: SingleChildScrollView(
         child: Column(
           children: [
@@ -108,17 +127,17 @@ class _LoginAdminScreenState extends State<LoginAdminScreen> {
                     action: TextInputAction.done,
                   ),
                   Container(
-                    margin: const EdgeInsets.symmetric(vertical: 10),
+                    margin: EdgeInsets.symmetric(vertical: 10.h),
                     child: Center(
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           elevation: 1,
-                          padding: const EdgeInsets.symmetric(horizontal: 24),
-                          textStyle: const TextStyle(fontSize: 18),
+                          padding: EdgeInsets.symmetric(horizontal: 24.w),
+                          textStyle: TextStyle(fontSize: 18.sp),
                           backgroundColor: const Color(0xFFD9D9D9),
                           foregroundColor: const Color(0xff000000),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
+                            borderRadius: BorderRadius.circular(20).w,
                           ),
                         ),
                         onPressed: login,
