@@ -1,11 +1,14 @@
 import 'package:control_asistencia_app/app/controller/admin_controllers/admin_controller.dart';
+import 'package:control_asistencia_app/app/packages/packages_pub.dart';
 import 'package:control_asistencia_app/app/packages/packageslocal_view.dart';
+import 'package:control_asistencia_app/app/view/screen/admin_screens/perfile_user_screen.dart';
 import 'package:control_asistencia_app/app/view/widget/customdialog_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomeAdminTabBarScreen extends StatefulWidget {
   const HomeAdminTabBarScreen({super.key});
+  static const String route = "/tabHomeAdminScreen";
 
   @override
   State<HomeAdminTabBarScreen> createState() => _HomeAdminTabBarScreenState();
@@ -15,12 +18,16 @@ class _HomeAdminTabBarScreenState extends State<HomeAdminTabBarScreen> {
   int _currentIndex = 0;
   final AdminController _adminController = AdminController();
 
-  final List<Widget> _page = const [
-    HomeAdminScreen(),
-  ];
+  final List<Widget> _page = const [HomeAdminScreen(), PerfilUserScreen()];
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+    Size media = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -102,8 +109,12 @@ class _HomeAdminTabBarScreenState extends State<HomeAdminTabBarScreen> {
                               child: Text('Aceptar',
                                   style: TextStyle(fontSize: 14.sp)),
                               onPressed: () {
+                                // final provider = Provider.of<AdminProvider>(
+                                //     context,
+                                //     listen: false);
                                 Navigator.of(context).pop();
                                 _adminController.signOut();
+                                // provider.clear();
                                 Navigator.of(context).pushReplacementNamed(
                                     TabBarLoginRegisterScreen.route);
                               },
@@ -124,8 +135,21 @@ class _HomeAdminTabBarScreenState extends State<HomeAdminTabBarScreen> {
               ],
             )),
       ),
-      body: _page[_currentIndex],
+      body: Stack(
+        children: [
+          Container(
+            width: media.width,
+            height: media.height,
+            color: const Color(0xffD9D9D9),
+          ),
+          _page[_currentIndex]
+        ],
+      ),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.grey.shade600,
+        selectedFontSize: 14.0.sp,
+        unselectedFontSize: 12.0.sp,
+        iconSize: 24.0.r,
         currentIndex: _currentIndex,
         onTap: (index) {
           setState(() {
@@ -134,9 +158,14 @@ class _HomeAdminTabBarScreenState extends State<HomeAdminTabBarScreen> {
         },
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home_filled, color: Colors.black),
+            icon: Icon(Icons.home_outlined, color: Colors.black),
             label: "Inicio",
-            activeIcon: Icon(Icons.home_filled, color: Colors.orange),
+            activeIcon: Icon(Icons.home, color: Colors.orange),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person_outline, color: Colors.black),
+            label: "Perfil",
+            activeIcon: Icon(Icons.person, color: Colors.orange),
           )
         ],
       ),

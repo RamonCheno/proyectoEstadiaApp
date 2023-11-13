@@ -17,10 +17,10 @@ class ListAttendance extends StatefulWidget {
 }
 
 class _ListAttendanceState extends State<ListAttendance> {
-  AttendanceProvider attendanceProvider = AttendanceProvider();
+  final AttendanceProvider attendanceProvider = AttendanceProvider();
   final AttendanceController _attendanceController = AttendanceController();
 
-  DateFormat dateFormat = DateFormat('dd-MM-yyyy');
+  final DateFormat dateFormat = DateFormat('dd-MM-yyyy');
   String dateNowText = '';
   int attendancelength = 0;
 
@@ -72,6 +72,7 @@ class _ListAttendanceState extends State<ListAttendance> {
   @override
   void dispose() {
     super.dispose();
+    attendanceProvider.dispose();
   }
 
   @override

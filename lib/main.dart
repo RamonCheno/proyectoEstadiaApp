@@ -6,7 +6,9 @@ import 'package:control_asistencia_app/app/view/provider/attendande_provider.dar
 import 'package:control_asistencia_app/app/view/screen/admin_screens/crud_worker_screens/addworker_screen.dart';
 import 'package:control_asistencia_app/app/view/screen/admin_screens/crud_worker_screens/listworker_screen.dart';
 import 'package:control_asistencia_app/app/view/screen/admin_screens/crud_worker_screens/updateworker_screen.dart';
+import 'package:control_asistencia_app/app/view/screen/admin_screens/home_admin_tabbar_screen.dart';
 import 'package:control_asistencia_app/app/view/screen/admin_screens/listattendance_screen.dart';
+import 'package:control_asistencia_app/app/view/screen/admin_screens/perfile_user_screen.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -60,6 +62,7 @@ class MyApp extends StatelessWidget {
     LoginAdminScreen.route: (_) => const LoginAdminScreen(),
     RegisterAdminScreen.route: (_) => const RegisterAdminScreen(),
     HomeAdminScreen.route: (_) => const HomeAdminScreen(),
+    HomeAdminTabBarScreen.route: (_) => const HomeAdminTabBarScreen(),
     // CheckInFingerPrintScreen.route: (_) => const CheckInFingerPrintScreen(),
     MoreOptionsScreen.route: (_) => const MoreOptionsScreen(),
     ListWorkerScreen.route: (_) => const ListWorkerScreen(),
@@ -68,6 +71,7 @@ class MyApp extends StatelessWidget {
     SettingsScreen.route: (_) => const SettingsScreen(),
     CameraScreen.route: (_) => const CameraScreen(),
     UpdateWorkerScreen.route: (_) => const UpdateWorkerScreen(),
+    PerfilUserScreen.route: (_) => const PerfilUserScreen(),
     // ScanDevicesBluetoothScreen.route: (_) => const ScanDevicesBluetoothScreen(),
     // FingerPrintRegisterScreen.route: (_) => const FingerPrintRegisterScreen()
   };

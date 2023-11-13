@@ -40,36 +40,41 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
     final FormState? form = _formKey.currentState;
     WorkerProvider workerProvider =
         Provider.of<WorkerProvider>(context, listen: false);
-    int numWorker = int.parse(_conNumWorker.text);
-    String firstNameWorker = _conFirstNameWorker.text;
-    String lastNameWorker = _conLastNameWorker.text;
-    String rfcWorker = _conRFCWorker.text.toUpperCase();
-    String curpWorker = _conCurpWorker.text.toUpperCase();
-    int numIMSSWorker = int.parse(_conIMSSWorker.text);
-    String workerPosition = _conworkerPosition.text;
-    String urlImage = await workerProvider.getUrlImage(
-        File(_imagePath!), firstNameWorker, lastNameWorker);
-
     if (form != null) {
       if (form.validate()) {
-        form.save();
-        WorkerModel workerModel = WorkerModel(
-          numTrabajador: numWorker,
-          nombre: firstNameWorker.trim(),
-          apellido: lastNameWorker.trim(),
-          curp: curpWorker.trim(),
-          rfc: rfcWorker.trim(),
-          numImss: numIMSSWorker,
-          puesto: workerPosition.trim(),
-          urlPhoto: urlImage,
-          // idHuella: idWorker,
-        );
-        String response = await workerProvider.addWokerProvider(workerModel);
-        if (!mounted) return;
-        if (response == "Trabajador agregado") {
-          workerProvider.showResponseDialog(context, response, addWorker: true);
+        if (_imagePath == null) {
+          workerProvider.showResponseDialog(context, "Agregar una foto");
         } else {
-          workerProvider.showResponseDialog(context, response);
+          form.save();
+          int numWorker = int.parse(_conNumWorker.text);
+          String firstNameWorker = _conFirstNameWorker.text;
+          String lastNameWorker = _conLastNameWorker.text;
+          String rfcWorker = _conRFCWorker.text.toUpperCase();
+          String curpWorker = _conCurpWorker.text.toUpperCase();
+          int numIMSSWorker = int.parse(_conIMSSWorker.text);
+          String workerPosition = _conworkerPosition.text;
+          String? urlImage;
+          urlImage = await workerProvider.getUrlImage(
+              File(_imagePath!), firstNameWorker, lastNameWorker);
+          WorkerModel workerModel = WorkerModel(
+            numTrabajador: numWorker,
+            nombre: firstNameWorker.trim(),
+            apellido: lastNameWorker.trim(),
+            curp: curpWorker.trim(),
+            rfc: rfcWorker.trim(),
+            numImss: numIMSSWorker,
+            puesto: workerPosition.trim(),
+            urlPhoto: urlImage,
+            // idHuella: idWorker,
+          );
+          String response = await workerProvider.addWokerProvider(workerModel);
+          if (!mounted) return;
+          if (response == "Trabajador agregado") {
+            workerProvider.showResponseDialog(context, response,
+                addWorker: true);
+          } else {
+            workerProvider.showResponseDialog(context, response);
+          }
         }
       }
     }
@@ -175,15 +180,14 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
                   child: Stack(
                     children: [
                       CircleAvatar(
-                        radius: 50.r,
-                        backgroundColor: const Color(0xffE1E1E1),
-                        foregroundImage: _imagePath != null
-                            ? FileImage(File(_imagePath!))
-                            : null,
-                        backgroundImage: _imagePath != null
-                            ? null
-                            : const AssetImage("assets/images/usuario.png"),
-                      ),
+                          radius: 50.r,
+                          backgroundColor: const Color(0xffE1E1E1),
+                          foregroundImage: _imagePath != null
+                              ? FileImage(File(_imagePath!))
+                              : null,
+                          backgroundImage: _imagePath != null
+                              ? null
+                              : const AssetImage("assets/images/usuario.png")),
                     ],
                   ),
                 ),

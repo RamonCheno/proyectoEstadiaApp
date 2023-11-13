@@ -64,7 +64,7 @@ class _UpdateWorkerScreenState extends State<UpdateWorkerScreen>
           rfc: rfcWorker.trim(),
           numImss: numIMSSWorker,
           puesto: workerPosition.trim(),
-          urlPhoto: urlImage,
+          urlPhoto: _imagePath!.startsWith("https") ? _imagePath! : urlImage,
           // idHuella: idWorker,
         );
         String response = await workerProvider.updateWorkerProvider(
@@ -81,14 +81,11 @@ class _UpdateWorkerScreenState extends State<UpdateWorkerScreen>
 
   ImageProvider<Object>? imageInternetLocal() {
     ImageProvider? image;
-    ImageProvider imgAssets = const AssetImage("assets/images/usuario.png");
     if (_imagePath != null) {
       ImageProvider imgNetwork = CachedNetworkImageProvider(_imagePath!);
       image = _imagePath!.startsWith("https")
           ? imgNetwork
           : FileImage(File(_imagePath!));
-    } else {
-      image = imgAssets;
     }
 
     return image;

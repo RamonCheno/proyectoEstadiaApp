@@ -1,0 +1,10 @@
+Requisitos faltantes
+> Crud Personal:
+	- Eliminar asistencia cuando se da de baja un trabajador.
+	- Mantener la informacion de un trabajador eliminado.
+	- Hacer una busqueda de un numero de treabajador y mostrarlo en la lista y si no existe, crear un nuevo trabajador
+> Crud Comida:
+	- Agregar una nueva subcoleccion para cada trabajador llamado comida.
+	- Tabla comida va a contener como atributo: Desayuno, Comida, Cena.
+	- Cada comida debe contener como id la fecha.
+> Cambiar texto de inicio de pantalla.

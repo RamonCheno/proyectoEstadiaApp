@@ -33,20 +33,18 @@ class _ListWorkerScreenState extends State<ListWorkerScreen> {
     super.initState();
   }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    // _getListWorker().then((_) {
-    //   setState(() {});
-    // });
-  }
-
   void registerWorkerScreen() {
     Navigator.of(context).pushNamed(AddWorkerScreen.route).then((_) {
       _getListWorker().then((_) {
         setState(() {});
       });
     });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _workerViewModelList.clear();
   }
 
   void updateWorkerScreen(int numWorker) async {
@@ -98,7 +96,7 @@ class _ListWorkerScreenState extends State<ListWorkerScreen> {
                           Container(
                             margin: EdgeInsets.symmetric(horizontal: 10.h),
                             child: Text(
-                                'Presione el "botón +" para agregar un alumno a la lista',
+                                'Presione el "botón +" para agregar un trabajador a la lista',
                                 style: TextStyle(
                                     fontSize: 20.sp, color: Colors.black45)),
                           ),
