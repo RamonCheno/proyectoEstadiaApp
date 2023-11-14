@@ -4,10 +4,13 @@ import 'package:control_asistencia_app/app/controller/worker_controllers/worker_
 import 'package:control_asistencia_app/app/model/user/worker_model.dart';
 import 'package:control_asistencia_app/app/packages/packages_pub.dart';
 import 'package:control_asistencia_app/app/view/widget/customdialog_widget.dart';
+import 'package:control_asistencia_app/app/view_models/worker_viewmodel.dart';
 import 'package:flutter/material.dart';
 
 class WorkerProvider with ChangeNotifier {
   final WorkerController _workerController = WorkerController();
+  List<WorkerViewModel> _listWorkerViewModel = [];
+  List<WorkerViewModel> get listWorkerViewModel => _listWorkerViewModel;
 
   Future<String> addWokerProvider(WorkerModel workerModel) async {
     String response = await _workerController.addWorker(workerModel).then(
@@ -15,7 +18,20 @@ class WorkerProvider with ChangeNotifier {
         return methodResponse;
       },
     );
+    notifyListeners();
     return response;
+  }
+
+  Future<void> getDataWorkerVModel() async {
+    _listWorkerViewModel = await _workerController.getListWokersViewModel();
+    notifyListeners();
+  }
+
+  Future<WorkerModel> selectWorkerModel(int numWorker) async {
+    WorkerModel? workerModelSelect = await _workerController
+        .getWorkerData(numWorker, useAnonymousAuth: false);
+    notifyListeners();
+    return workerModelSelect!;
   }
 
   Future<String> updateWorkerProvider(
@@ -26,6 +42,7 @@ class WorkerProvider with ChangeNotifier {
         return methodResponse;
       },
     );
+    notifyListeners();
     return response;
   }
 
@@ -55,6 +72,7 @@ class WorkerProvider with ChangeNotifier {
       File image, String firstName, String lastName) async {
     String urlPhoto = await _workerController.uploadImageToStorage(
         image, firstName, lastName);
+    notifyListeners();
     return urlPhoto;
   }
 }

@@ -67,7 +67,7 @@ class HomeScreen extends StatelessWidget {
                       Navigator.pushNamed(context, HomeWorkerScreen.route);
                     },
                     child: Text(
-                      "Soy trabajador",
+                      "Personal",
                       style: TextStyle(color: Colors.black, fontSize: 16.sp),
                     ),
                   ),
@@ -83,7 +83,7 @@ class HomeScreen extends StatelessWidget {
                           .pushNamed(TabBarLoginRegisterScreen.route);
                     },
                     child: Text(
-                      "Soy administrador",
+                      "Recursos Humanos",
                       style: TextStyle(color: Colors.black, fontSize: 16.sp),
                     ),
                   ),
