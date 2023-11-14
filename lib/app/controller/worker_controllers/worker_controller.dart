@@ -124,15 +124,19 @@ class WorkerController {
           .collection("Trabajador")
           .where("numTrabajador", isEqualTo: numWorker)
           .get();
-      Map<String, dynamic> workerData =
-          userSnapshot.docs.first.data() as Map<String, dynamic>;
-      if (useAnonymousAuth) {
-        await firebaseAuth.signOut();
+      if (userSnapshot.docs.isEmpty) {
+        return null;
+      } else {
+        Map<String, dynamic> workerData =
+            userSnapshot.docs.first.data() as Map<String, dynamic>;
+        if (useAnonymousAuth) {
+          await firebaseAuth.signOut();
+        }
+        WorkerModel workerModel = WorkerModel.fromMap(workerData);
+        return workerModel;
       }
-      WorkerModel workerModel = WorkerModel.fromMap(workerData);
-      return workerModel;
     } catch (e) {
-      return null;
+      throw "Error: $e";
     }
   }
 }

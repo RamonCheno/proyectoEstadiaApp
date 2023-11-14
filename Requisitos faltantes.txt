@@ -7,4 +7,5 @@ Requisitos faltantes
 	- Agregar una nueva subcoleccion para cada trabajador llamado comida.
 	- Tabla comida va a contener como atributo: Desayuno, Comida, Cena.
 	- Cada comida debe contener como id la fecha.
-> Cambiar texto de inicio de pantalla.
+> Perfil Admin (En proceso)
+> Cambiar texto de inicio de pantalla. (Listo)

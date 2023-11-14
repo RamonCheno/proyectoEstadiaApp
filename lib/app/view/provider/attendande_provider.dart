@@ -9,17 +9,19 @@ class AttendanceProvider with ChangeNotifier {
 
   String get dateNowText => _dateNowText;
 
-  List<AttendanceViewModel> attendanceViewModelList = [];
+  List<AttendanceViewModel> _attendanceViewModelList = [];
+  List<AttendanceViewModel> get attendanceViewModelList =>
+      _attendanceViewModelList;
   // Stream<List<AttendanceViewModel>> getListAttendanceStream() {
   //   return _attendanceController.getListAttendanceViewModel(_dateNowText);
   // }
 
-  // Future<void> getListAttendance(String dateNowText) async {
-  //   //TODO: Utilizar un datetime.now y con un calendario para seleccionar dias
-  //   attendanceViewModelList =
-  //       await _attendanceController.getListAttendanceViewModel(dateNowText);
-  //   notifyListeners();
-  // }
+  Future<void> getListAttendance(String dateNowText) async {
+    //TODO: Utilizar un datetime.now y con un calendario para seleccionar dias
+    _attendanceViewModelList =
+        await _attendanceController.getListAttendanceViewModel(dateNowText);
+    notifyListeners();
+  }
 
   // void updateDateNowText(String value) {
   //   _dateNowText = value;
