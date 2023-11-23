@@ -21,7 +21,7 @@ class _CameraScreenState extends State<CameraScreen> {
       ),
       body: FutureBuilder(
         future: cameraProvider.initializeCamera(),
-        builder: (context, snapshot) {
+        builder: (BuildContext futureContext, AsyncSnapshot<void> snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             return Stack(
               alignment: Alignment.bottomCenter,

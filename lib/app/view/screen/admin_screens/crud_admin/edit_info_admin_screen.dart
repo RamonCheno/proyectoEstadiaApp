@@ -90,18 +90,20 @@ class _EditInfoAdminScreenState extends State<EditInfoAdminScreen> {
                   icon: const Icon(Icons.camera_alt_outlined),
                   onPressed: () async {
                     //Metodo para tomar foto por camara
+                    final updateAdmin = Provider.of<UpdatePerfilProvider>(
+                        context,
+                        listen: false);
                     Navigator.pop(context);
-                    Navigator.of(context)
+                    String? img = await Navigator.of(context)
                         .pushNamed(CameraScreen.route)
                         .then((img) {
-                      if (img != null) {
-                        setState(() {
-                          Provider.of<UpdatePerfilProvider>(context,
-                                  listen: false)
-                              .setNewImagePath(img as String);
-                        });
-                      }
+                      return img as String;
                     });
+                    if (img != null) {
+                      setState(() {
+                        updateAdmin.setNewImagePath(img);
+                      });
+                    }
                   },
                 ),
                 const Text("Tomar Foto"),

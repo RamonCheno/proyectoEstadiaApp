@@ -83,7 +83,7 @@ class AdminController {
       final ref = firebaseStorage.ref(filePath);
       final FullMetadata result = await ref.getMetadata();
       String isExistFile = result.fullPath;
-      if (isExistFile == filePath) {
+      if (isExistFile.isNotEmpty) {
         return true;
       } else {
         return false;

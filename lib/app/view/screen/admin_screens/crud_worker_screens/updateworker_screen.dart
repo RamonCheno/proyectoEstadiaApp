@@ -167,6 +167,7 @@ class _UpdateWorkerScreenState extends State<UpdateWorkerScreen>
       _conworkerPosition.text = workerModelSelect!.puesto!;
       if (workerModelSelect!.urlPhoto != null) {
         _imagePath = workerModelSelect!.urlPhoto;
+        setState(() {});
       } else {
         final imageProvider =
             Provider.of<ImageProviders>(context, listen: false);
