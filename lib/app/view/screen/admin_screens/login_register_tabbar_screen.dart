@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'login_admin_screen.dart';
-import 'register_admin_screen.dart';
+import 'crud_admin/login_admin_screen.dart';
+import 'crud_admin/register_admin_screen.dart';
 
 class TabBarLoginRegisterScreen extends StatefulWidget {
   const TabBarLoginRegisterScreen({super.key});

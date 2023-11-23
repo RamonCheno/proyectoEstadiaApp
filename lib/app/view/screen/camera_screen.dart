@@ -29,11 +29,11 @@ class _CameraScreenState extends State<CameraScreen> {
                 CameraPreview(cameraProvider.cameraController),
                 IconButton(
                   iconSize: 40,
-                  onPressed: () async {
-                    await cameraProvider.takePicture();
-                    if (!mounted) return;
-                    String imagePath = cameraProvider.imagePath;
-                    Navigator.pop(context, imagePath);
+                  onPressed: () {
+                    cameraProvider.takePicture().then((value) {
+                      String imagePath = value;
+                      Navigator.pop(context, imagePath);
+                    });
                   },
                   icon: const Icon(Icons.camera),
                 ),

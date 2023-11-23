@@ -15,7 +15,6 @@ class AttendanceController {
   final WorkerController _workerController = WorkerController();
 
   Future<bool> addCheckIn(CheckInModel checkInModel, int numWorker) async {
-    //TODO:Añadir docuemento asistencia dontro de la coleccion Trabajador
     WorkerModel? workerModel = await _workerController.getWorkerData(numWorker);
     if (workerModel == null) {
       debugPrint("Trabajador No encontrado");
@@ -40,7 +39,6 @@ class AttendanceController {
 
   Future<String> addCheckOut(
       CheckOutModel attendanceModel, int numWorker, String fechaEntrada) async {
-    //TODO:Actualizar docuemento asistencia dontro de la coleccion Trabajador
     WorkerModel? workerModel = await _workerController.getWorkerData(numWorker);
     if (workerModel == null) {
       debugPrint("Trabajador No encontrado");

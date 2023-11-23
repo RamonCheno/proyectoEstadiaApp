@@ -38,7 +38,8 @@ class _UpdateWorkerScreenState extends State<UpdateWorkerScreen>
   int? numWorkerSelect;
   String? _imagePath;
   final picker = ImagePicker();
-  bool isEnable = true;
+  bool isEnable = false;
+  bool onlyRead = true;
 
   Future<void> updateWorker() async {
     final FormState? form = _formKey.currentState;
@@ -49,7 +50,7 @@ class _UpdateWorkerScreenState extends State<UpdateWorkerScreen>
     String rfcWorker = _conRFCWorker.text.toUpperCase();
     String curpWorker = _conCurpWorker.text.toUpperCase();
     int numIMSSWorker = int.parse(_conIMSSWorker.text);
-    String workerPosition = _conworkerPosition.text;
+    String workerPosition = _conworkerPosition.text.toUpperCase();
     String urlImage = await workerProvider.getUrlImage(
         File(_imagePath!), firstNameWorker, lastNameWorker);
 
@@ -123,16 +124,16 @@ class _UpdateWorkerScreenState extends State<UpdateWorkerScreen>
               children: [
                 IconButton(
                   icon: const Icon(Icons.photo_library_outlined),
-                  onPressed: () async {
+                  onPressed: () {
                     //Metodo para tomar foto por galeria
                     final imageProvider =
                         Provider.of<ImageProviders>(context, listen: false);
-                    await imageProvider.pickImageFromGallery();
-                    if (!mounted) return;
-                    setState(() {
-                      _imagePath = imageProvider.imagePath;
+                    imageProvider.pickImageFromGallery().then((value) {
+                      setState(() {
+                        _imagePath = value;
+                      });
+                      Navigator.pop(context);
                     });
-                    Navigator.pop(context);
                   },
                 ),
                 const Text("Subir Foto"),
@@ -160,12 +161,21 @@ class _UpdateWorkerScreenState extends State<UpdateWorkerScreen>
       _conNumWorker.text = workerModelSelect!.numTrabajador.toString();
       _conFirstNameWorker.text = workerModelSelect!.nombre;
       _conLastNameWorker.text = workerModelSelect!.apellido;
-      _conRFCWorker.text = workerModelSelect!.rfc;
-      _conCurpWorker.text = workerModelSelect!.curp;
+      _conRFCWorker.text = workerModelSelect!.rfc!;
+      _conCurpWorker.text = workerModelSelect!.curp!;
       _conIMSSWorker.text = workerModelSelect!.numImss.toString();
-      _conworkerPosition.text = workerModelSelect!.puesto;
-      _imagePath = workerModelSelect!.urlPhoto;
-      setState(() {});
+      _conworkerPosition.text = workerModelSelect!.puesto!;
+      if (workerModelSelect!.urlPhoto != null) {
+        _imagePath = workerModelSelect!.urlPhoto;
+      } else {
+        final imageProvider =
+            Provider.of<ImageProviders>(context, listen: false);
+        imageProvider.getAssetPath("assets/images/usuario.png").then((value) {
+          setState(() {
+            _imagePath = value;
+          });
+        });
+      }
     }
   }
 
@@ -193,165 +203,142 @@ class _UpdateWorkerScreenState extends State<UpdateWorkerScreen>
               onPressed: () {
                 setState(() {
                   isEnable = !isEnable;
+                  onlyRead = !onlyRead;
                 });
               },
               icon: const Icon(Icons.edit))
         ],
       ),
       backgroundColor: const Color(0xffEBEBEB),
-      body: Form(
-        key: _formKey,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Stack(alignment: Alignment.bottomRight, children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: Stack(
-                    children: [
-                      CircleAvatar(
-                        radius: 50.r,
-                        backgroundColor: const Color(0xffE1E1E1),
-                        foregroundImage: imageInternetLocal(),
-                      ),
-                    ],
-                  ),
-                ),
-                IconButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        Colors.grey.shade400), // Color de fondo
-                  ),
-                  color: Colors.black,
-                  iconSize: 30.r,
-                  onPressed: () {
-                    showBottomSheet();
-                  },
-                  icon: const Icon(Icons.add_a_photo_outlined),
-                ),
-              ]),
-
-              CustomTextFormWidget(
-                controller: _conNumWorker,
-                hintName: "Num Trabajador",
-                icon: Icons.numbers,
-                isObscureText: false,
-                inputType: TextInputType.number,
-                action: TextInputAction.next,
-                soloLeer: true,
-                lengthChar: 8,
-              ),
-              CustomTextFormWidget(
-                controller: _conFirstNameWorker,
-                hintName: "Nombre",
-                icon: Icons.person_outline,
-                isObscureText: false,
-                inputType: TextInputType.text,
-                action: TextInputAction.next,
-                soloLeer: isEnable,
-              ),
-              CustomTextFormWidget(
-                controller: _conLastNameWorker,
-                hintName: "Apellido",
-                icon: Icons.person_outline,
-                isObscureText: false,
-                inputType: TextInputType.text,
-                action: TextInputAction.next,
-                soloLeer: isEnable,
-              ),
-              CustomTextFormWidget(
-                  controller: _conRFCWorker,
-                  hintName: "RFC",
-                  icon: Icons.person_outline,
-                  isObscureText: false,
-                  inputType: TextInputType.text,
-                  action: TextInputAction.next,
-                  soloLeer: isEnable,
-                  lengthChar: 13),
-              CustomTextFormWidget(
-                  controller: _conCurpWorker,
-                  hintName: "Curp",
-                  icon: Icons.person_outline,
-                  isObscureText: false,
-                  inputType: TextInputType.text,
-                  action: TextInputAction.next,
-                  soloLeer: isEnable,
-                  lengthChar: 18),
-              CustomTextFormWidget(
-                  controller: _conIMSSWorker,
-                  hintName: "Num Imss",
-                  icon: Icons.numbers,
-                  isObscureText: false,
-                  inputType: TextInputType.number,
-                  action: TextInputAction.next,
-                  soloLeer: isEnable,
-                  lengthChar: 11),
-              CustomTextFormWidget(
-                controller: _conworkerPosition,
-                hintName: "Puesto",
-                icon: Icons.person_outline,
-                isObscureText: false,
-                inputType: TextInputType.text,
-                action: TextInputAction.done,
-                soloLeer: isEnable,
-              ),
-              // Container(
-              //   margin: const EdgeInsets.symmetric(vertical: 10),
-              //   child: Center(
-              //     child: ElevatedButton(
-              //       style: ElevatedButton.styleFrom(
-              //         elevation: 1,
-              //         padding: const EdgeInsets.symmetric(horizontal: 24),
-              //         textStyle: const TextStyle(fontSize: 18),
-              //         backgroundColor: const Color(0xFFD9D9D9),
-              //         foregroundColor: const Color(0xFF000000),
-              //         shape: RoundedRectangleBorder(
-              //           borderRadius: BorderRadius.circular(20),
-              //         ),
-              //       ),
-              //       onPressed: () {
-              //         // _showAlertDialog(context, data);
-              //         //Ir a la pantalla FingerPrintRegisterScreen
-              //         Navigator.of(context)
-              //             .pushNamed(FingerPrintRegisterScreen.route)
-              //             .then((value) {
-              //           setState(() {
-              //             if (value != null) {
-              //               idWorker = value as int;
-              //             }
-              //             debugPrint("$idWorker");
-              //           });
-              //         });
-              //       },
-              //       child: const Text(
-              //         'Registrar Huella Dactilar',
-              //       ),
-              //     ),
-              //   ),
-              // ),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 10),
-                child: Center(
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      elevation: 1,
-                      padding: const EdgeInsets.symmetric(horizontal: 24),
-                      textStyle: const TextStyle(fontSize: 18),
-                      backgroundColor: const Color(0xFFD9D9D9),
-                      foregroundColor: const Color(0xFF000000),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Stack(alignment: Alignment.bottomRight, children: [
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 10.h),
+                child: Stack(
+                  children: [
+                    CircleAvatar(
+                      radius: 50.r,
+                      backgroundColor: const Color(0xffE1E1E1),
+                      foregroundImage: imageInternetLocal(),
                     ),
-                    onPressed: updateWorker,
-                    child: const Text(
-                      'Actualizar',
+                  ],
+                ),
+              ),
+              IconButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                      Colors.grey.shade400), // Color de fondo
+                ),
+                color: Colors.black,
+                iconSize: 30.r,
+                onPressed: () {
+                  showBottomSheet();
+                },
+                icon: const Icon(Icons.add_a_photo_outlined),
+              ),
+            ]),
+            Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  CustomTextFormWidget(
+                    controller: _conNumWorker,
+                    hintName: "Num Trabajador",
+                    icon: Icons.numbers,
+                    isObscureText: false,
+                    inputType: TextInputType.number,
+                    action: TextInputAction.next,
+                    soloLeer: true,
+                    lengthChar: 8,
+                    isEnable: false,
+                  ),
+                  CustomTextFormWidget(
+                    controller: _conFirstNameWorker,
+                    hintName: "Nombre",
+                    icon: Icons.person_outline,
+                    isObscureText: false,
+                    inputType: TextInputType.text,
+                    action: TextInputAction.next,
+                    soloLeer: onlyRead,
+                    isEnable: isEnable,
+                  ),
+                  CustomTextFormWidget(
+                    controller: _conLastNameWorker,
+                    hintName: "Apellido",
+                    icon: Icons.person_outline,
+                    isObscureText: false,
+                    inputType: TextInputType.text,
+                    action: TextInputAction.next,
+                    soloLeer: onlyRead,
+                    isEnable: isEnable,
+                  ),
+                  CustomTextFormWidget(
+                      controller: _conRFCWorker,
+                      hintName: "RFC",
+                      icon: Icons.person_outline,
+                      isObscureText: false,
+                      inputType: TextInputType.text,
+                      action: TextInputAction.next,
+                      soloLeer: onlyRead,
+                      isEnable: isEnable,
+                      lengthChar: 13),
+                  CustomTextFormWidget(
+                      controller: _conCurpWorker,
+                      hintName: "Curp",
+                      icon: Icons.person_outline,
+                      isObscureText: false,
+                      inputType: TextInputType.text,
+                      action: TextInputAction.next,
+                      soloLeer: onlyRead,
+                      isEnable: isEnable,
+                      lengthChar: 18),
+                  CustomTextFormWidget(
+                      controller: _conIMSSWorker,
+                      hintName: "Num Imss",
+                      icon: Icons.numbers,
+                      isObscureText: false,
+                      inputType: TextInputType.number,
+                      action: TextInputAction.next,
+                      soloLeer: onlyRead,
+                      isEnable: isEnable,
+                      lengthChar: 11),
+                  CustomTextFormWidget(
+                    controller: _conworkerPosition,
+                    hintName: "Puesto",
+                    icon: Icons.person_outline,
+                    isObscureText: false,
+                    inputType: TextInputType.text,
+                    action: TextInputAction.done,
+                    soloLeer: onlyRead,
+                    isEnable: isEnable,
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 10),
+              child: Center(
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    elevation: 1,
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                    textStyle: const TextStyle(fontSize: 18),
+                    backgroundColor: const Color(0xFFD9D9D9),
+                    foregroundColor: const Color(0xFF000000),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
                     ),
                   ),
+                  onPressed: updateWorker,
+                  child: const Text(
+                    'Actualizar',
+                  ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

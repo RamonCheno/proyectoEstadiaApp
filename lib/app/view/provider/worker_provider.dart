@@ -38,10 +38,8 @@ class WorkerProvider with ChangeNotifier {
       WorkerModel workerModel, int numWorkerSelect) async {
     String response =
         await _workerController.updateWorker(numWorkerSelect, workerModel).then(
-      (methodResponse) {
-        return methodResponse;
-      },
-    );
+              (methodResponse) => methodResponse,
+            );
     notifyListeners();
     return response;
   }

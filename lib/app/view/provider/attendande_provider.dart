@@ -17,7 +17,6 @@ class AttendanceProvider with ChangeNotifier {
   // }
 
   Future<void> getListAttendance(String dateNowText) async {
-    //TODO: Utilizar un datetime.now y con un calendario para seleccionar dias
     _attendanceViewModelList =
         await _attendanceController.getListAttendanceViewModel(dateNowText);
     notifyListeners();

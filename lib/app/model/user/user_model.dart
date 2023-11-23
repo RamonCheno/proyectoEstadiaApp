@@ -14,17 +14,17 @@ class UserModel {
 
   String get apellido => _apellido;
 
-  String get curp => _curp!;
+  String? get curp => _curp;
 
-  int get numImss => _numImss!;
+  int? get numImss => _numImss;
 
-  String get rfc => _rfc!;
+  String? get rfc => _rfc;
 
-  String get puesto => _puesto!;
+  String? get puesto => _puesto;
 
-  String get urlPhoto => _urlPhoto!;
+  String? get urlPhoto => _urlPhoto;
 
-  UserModel.instance();
+  // UserModel.instance();
 
   UserModel({
     int? numTrabajador,

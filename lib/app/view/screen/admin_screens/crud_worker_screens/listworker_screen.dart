@@ -50,7 +50,7 @@ class _ListWorkerScreenState extends State<ListWorkerScreen> {
         onSearch: (value) => null,
         backgroundColor: const Color(0xffEBEBEB),
       ),
-      backgroundColor: const Color(0xffEBEBEB),
+      backgroundColor: const Color(0xffD9D9D9),
       body: Column(
         children: [
           10.verticalSpace,
@@ -59,50 +59,69 @@ class _ListWorkerScreenState extends State<ListWorkerScreen> {
               refreshWorker();
               List<WorkerViewModel> workerViewModelList =
                   workerProvider.listWorkerViewModel;
-              return ListView.separated(
-                itemBuilder: (context, index) {
-                  final WorkerViewModel workerViewModel =
-                      workerViewModelList[index];
-                  String numWorkerText = workerViewModel.numWorker;
-                  String firstNameWorker = workerViewModel.firstNameWorker;
-                  String lastNameWorker = workerViewModel.lastNameWorker;
-                  String urlImage = workerViewModel.urlPhoto;
-                  return Container(
-                    margin: EdgeInsets.symmetric(horizontal: 10.w),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15).r,
-                        color: const Color(0XFFF4F4F4),
-                        boxShadow: const [
-                          BoxShadow(
-                              color: Colors.black26,
-                              offset: Offset(0.0, 3.0),
-                              blurRadius: 1),
-                        ]),
-                    child: ListTile(
-                      leading: CircleAvatar(
-                        radius: 25.r,
-                        backgroundColor: const Color(0xffE1E1E1),
-                        foregroundImage: urlImage.isNotEmpty
-                            ? CachedNetworkImageProvider(urlImage)
-                            : null,
-                        backgroundImage: urlImage.isNotEmpty
-                            ? null
-                            : const AssetImage("assets/images/usuario.png"),
-                      ),
-                      title: Text("$firstNameWorker $lastNameWorker"),
-                      subtitle: Text(numWorkerText),
-                      onTap: () {
-                        int numWorker = int.parse(numWorkerText);
-                        updateWorkerScreen(numWorker);
-                        debugPrint("Item presionado con numero: $numWorker");
+              return workerViewModelList.isEmpty
+                  ? Column(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.symmetric(horizontal: 10.w),
+                          child: Text(
+                              'Presione el "botón +" para agregar un trabajador a la lista',
+                              style: TextStyle(
+                                  fontSize: 20.sp, color: Colors.black45)),
+                        ),
+                        const Center(
+                          child: CircularProgressIndicator(
+                              color: Color(0xffF69100)),
+                        )
+                      ],
+                    )
+                  : ListView.separated(
+                      itemBuilder: (context, index) {
+                        final WorkerViewModel workerViewModel =
+                            workerViewModelList[index];
+                        String numWorkerText = workerViewModel.numWorker;
+                        String firstNameWorker =
+                            workerViewModel.firstNameWorker;
+                        String lastNameWorker = workerViewModel.lastNameWorker;
+                        String urlImage = workerViewModel.urlPhoto;
+                        return Container(
+                          margin: EdgeInsets.symmetric(horizontal: 10.w),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15).r,
+                              color: const Color(0XFFF4F4F4),
+                              boxShadow: const [
+                                BoxShadow(
+                                    color: Colors.black26,
+                                    offset: Offset(0.0, 3.0),
+                                    blurRadius: 1),
+                              ]),
+                          child: ListTile(
+                            leading: CircleAvatar(
+                              radius: 25.r,
+                              backgroundColor: const Color(0xffE1E1E1),
+                              foregroundImage: urlImage.isNotEmpty
+                                  ? CachedNetworkImageProvider(urlImage)
+                                  : null,
+                              backgroundImage: urlImage.isNotEmpty
+                                  ? null
+                                  : const AssetImage(
+                                      "assets/images/usuario.png"),
+                            ),
+                            title: Text("$firstNameWorker $lastNameWorker"),
+                            subtitle: Text(numWorkerText),
+                            onTap: () {
+                              int numWorker = int.parse(numWorkerText);
+                              updateWorkerScreen(numWorker);
+                              debugPrint(
+                                  "Item presionado con numero: $numWorker");
+                            },
+                          ),
+                        );
                       },
-                    ),
-                  );
-                },
-                itemCount: workerViewModelList.length,
-                separatorBuilder: (BuildContext context, int index) =>
-                    10.verticalSpace,
-              );
+                      itemCount: workerViewModelList.length,
+                      separatorBuilder: (BuildContext context, int index) =>
+                          10.verticalSpace,
+                    );
             },
           )
               //     FutureBuilder(
@@ -117,23 +136,23 @@ class _ListWorkerScreenState extends State<ListWorkerScreen> {
               //       return Center(child: Text('Error: ${snapshot.error}'));
               //     } else {
               //       _workerViewModelList = snapshot.data as List<WorkerViewModel>;
-              //       return _workerViewModelList.isEmpty
-              //           ? Column(
-              //               children: [
-              //                 Container(
-              //                   margin: EdgeInsets.symmetric(horizontal: 10.h),
-              //                   child: Text(
-              //                       'Presione el "botón +" para agregar un trabajador a la lista',
-              //                       style: TextStyle(
-              //                           fontSize: 20.sp, color: Colors.black45)),
-              //                 ),
-              //                 const Center(
-              //                   child: CircularProgressIndicator(
-              //                       color: Color(0xffF69100)),
-              //                 )
-              //               ],
-              //             )
-              //           :
+              // return _workerViewModelList.isEmpty
+              //     ? Column(
+              //         children: [
+              //           Container(
+              //             margin: EdgeInsets.symmetric(horizontal: 10.h),
+              //             child: Text(
+              //                 'Presione el "botón +" para agregar un trabajador a la lista',
+              //                 style: TextStyle(
+              //                     fontSize: 20.sp, color: Colors.black45)),
+              //           ),
+              //           const Center(
+              //             child: CircularProgressIndicator(
+              //                 color: Color(0xffF69100)),
+              //           )
+              //         ],
+              //       )
+              //     :
               //     }
               //   },
               // )

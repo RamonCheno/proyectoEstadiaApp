@@ -1,6 +1,6 @@
 import 'package:control_asistencia_app/app/controller/admin_controllers/admin_controller.dart';
+import 'package:control_asistencia_app/app/view/screen/admin_screens/home_admin_screen.dart';
 // import 'package:control_asistencia_app/app/controller/settings_controllers/localauthcontroller.dart';
-import 'package:control_asistencia_app/app/view/screen/admin_screens/home_admin_tabbar_screen.dart';
 import 'package:control_asistencia_app/app/view/widget/customdialog_widget.dart';
 import 'package:control_asistencia_app/app/view/widget/customtextformfield_widget.dart';
 import 'package:flutter/material.dart';
@@ -62,7 +62,7 @@ class _LoginAdminScreenState extends State<LoginAdminScreen> {
                 () {
                   Navigator.of(context).pop();
                   Navigator.pushReplacementNamed(
-                      context, HomeAdminTabBarScreen.route);
+                      context, HomeAdminScreen.route);
                 },
               );
               return CustomDialogWidget(

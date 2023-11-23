@@ -114,12 +114,12 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
                     //Metodo para tomar foto por galeria
                     final imageProvider =
                         Provider.of<ImageProviders>(context, listen: false);
-                    await imageProvider.pickImageFromGallery();
-                    if (!mounted) return;
-                    setState(() {
-                      _imagePath = imageProvider.imagePath;
+                    imageProvider.pickImageFromGallery().then((value) {
+                      setState(() {
+                        _imagePath = value;
+                      });
+                      Navigator.pop(context);
                     });
-                    Navigator.pop(context);
                   },
                 ),
                 const Text("Subir Foto"),

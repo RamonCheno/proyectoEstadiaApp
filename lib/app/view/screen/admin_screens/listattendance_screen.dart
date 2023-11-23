@@ -41,9 +41,11 @@ class _ListAttendanceState extends State<ListAttendance> {
         Provider.of<AttendanceProvider>(context, listen: false);
     await attendanceProvider.getListAttendance(dateNowText).then((value) {
       int lengthAttendance = attendanceProvider.attendanceViewModelList.length;
-      setState(() {
-        attendancelength = lengthAttendance;
-      });
+      if (mounted) {
+        setState(() {
+          attendancelength = lengthAttendance;
+        });
+      }
     });
   }
 
@@ -138,46 +140,63 @@ class _ListAttendanceState extends State<ListAttendance> {
                 refreshAttendance();
                 List<AttendanceViewModel> attendanceVMList =
                     attednanceProvider.attendanceViewModelList;
-                return ListView.separated(
-                  itemBuilder: (context, index) {
-                    final AttendanceViewModel attendanceViewModel =
-                        attendanceVMList[index];
-                    String checkInHour = attendanceViewModel.checkInHour;
-                    String firstNameWorker =
-                        attendanceViewModel.firstNameWorker;
-                    String lastNameWorker = attendanceViewModel.lastNameWorker;
-                    String urlImage = attendanceViewModel.urlPhoto;
-                    return Container(
-                      margin: EdgeInsets.symmetric(horizontal: 10.w),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15).r,
-                          color: const Color(0XFFF4F4F4),
-                          boxShadow: const [
-                            BoxShadow(
-                                color: Colors.black26,
-                                offset: Offset(0.0, 3.0),
-                                blurRadius: 1),
-                          ]),
-                      child: ListTile(
-                        leading: CircleAvatar(
-                          radius: 25.r,
-                          backgroundColor: const Color(0xffE1E1E1),
-                          foregroundImage: urlImage.isNotEmpty
-                              ? CachedNetworkImageProvider(urlImage)
-                              : null,
-                          backgroundImage: urlImage.isNotEmpty
-                              ? null
-                              : const AssetImage("assets/images/usuario.png"),
-                        ),
-                        title: Text("$firstNameWorker $lastNameWorker"),
-                        subtitle: Text(checkInHour),
-                      ),
-                    );
-                  },
-                  separatorBuilder: (BuildContext context, int index) =>
-                      10.verticalSpace,
-                  itemCount: attendanceVMList.length,
-                );
+                return attendanceVMList.isEmpty
+                    ? Column(
+                        children: [
+                          Container(
+                            margin: EdgeInsets.symmetric(horizontal: 10.w),
+                            child: Text("No registros de asistencia del dia",
+                                style: TextStyle(
+                                    fontSize: 20.sp, color: Colors.black45)),
+                          ),
+                          const Center(
+                            child: CircularProgressIndicator(
+                                color: Color(0xffF69100)),
+                          )
+                        ],
+                      )
+                    : ListView.separated(
+                        itemBuilder: (context, index) {
+                          final AttendanceViewModel attendanceViewModel =
+                              attendanceVMList[index];
+                          String checkInHour = attendanceViewModel.checkInHour;
+                          String firstNameWorker =
+                              attendanceViewModel.firstNameWorker;
+                          String lastNameWorker =
+                              attendanceViewModel.lastNameWorker;
+                          String urlImage = attendanceViewModel.urlPhoto;
+                          return Container(
+                            margin: EdgeInsets.symmetric(horizontal: 10.w),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15).r,
+                                color: const Color(0XFFF4F4F4),
+                                boxShadow: const [
+                                  BoxShadow(
+                                      color: Colors.black26,
+                                      offset: Offset(0.0, 3.0),
+                                      blurRadius: 1),
+                                ]),
+                            child: ListTile(
+                              leading: CircleAvatar(
+                                radius: 25.r,
+                                backgroundColor: const Color(0xffE1E1E1),
+                                foregroundImage: urlImage.isNotEmpty
+                                    ? CachedNetworkImageProvider(urlImage)
+                                    : null,
+                                backgroundImage: urlImage.isNotEmpty
+                                    ? null
+                                    : const AssetImage(
+                                        "assets/images/usuario.png"),
+                              ),
+                              title: Text("$firstNameWorker $lastNameWorker"),
+                              subtitle: Text(checkInHour),
+                            ),
+                          );
+                        },
+                        separatorBuilder: (BuildContext context, int index) =>
+                            10.verticalSpace,
+                        itemCount: attendanceVMList.length,
+                      );
               },
             ),
           ),

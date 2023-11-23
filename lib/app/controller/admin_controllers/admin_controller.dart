@@ -1,13 +1,17 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:control_asistencia_app/app/common/shared_preferences_common.dart';
 import 'package:control_asistencia_app/app/model/user/admin_model.dart';
 import 'package:control_asistencia_app/app/packages/packages_pub.dart';
 import 'package:control_asistencia_app/app/view_models/admin_viewmodel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class AdminController {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  FirebaseStorage firebaseStorage = FirebaseStorage.instance;
   SharedPreferencesCommon sharedPreferencesCommon = SharedPreferencesCommon();
 
   Future<String> registerAdmin(AdminModel adminModel, String password) async {
@@ -53,14 +57,67 @@ class AdminController {
     }
   }
 
-  Future<AdminViewModel> getDataAdmin() async {
+  Future<String> uploadImageToStorage(
+      File photoWorker, String name, String lastName) async {
+    String response = "";
+    List<String> firstNameAdminArray = name.split(' ');
+    List<String> lastNameAdminArray = lastName.split(' ');
+    String firstNameAdmin = firstNameAdminArray[0];
+    String lastNameAdmin = lastNameAdminArray[0];
+    String nameComplete = "${firstNameAdmin}_$lastNameAdmin";
+    final storageReference =
+        firebaseStorage.ref().child("fotos/RecursosHumanos/$nameComplete.jpg");
+
+    bool isExist = await checkIfFileExist(storageReference.fullPath);
+    if (isExist) {
+      await storageReference.delete();
+    }
+    UploadTask uploadTask = storageReference.putFile(photoWorker);
+    await uploadTask.whenComplete(() {});
+    response = await storageReference.getDownloadURL();
+    return response;
+  }
+
+  Future<bool> checkIfFileExist(String filePath) async {
     try {
-      String? uidAdmin = await SharedPreferencesCommon.loadString("uidAdmin");
+      final ref = firebaseStorage.ref(filePath);
+      final FullMetadata result = await ref.getMetadata();
+      String isExistFile = result.fullPath;
+      if (isExistFile == filePath) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      debugPrint("$e");
+      return false;
+    }
+  }
+
+  Future<String> updateAdmin(AdminModel adminModel) async {
+    try {
+      String uidAdmin = await SharedPreferencesCommon.loadString("uidAdmin");
+      final adminMap = adminModel.toMap();
+      final DocumentReference docRef =
+          firestore.collection('Administrador').doc(uidAdmin);
+      await docRef.update(adminMap);
+      return "Informacion actualizado";
+    } catch (e) {
+      return "Error en actualizar, Verifique datos de guardado";
+    }
+  }
+
+  Future<dynamic> getDataAdmin({bool returnViewModel = false}) async {
+    try {
+      String uidAdmin = await SharedPreferencesCommon.loadString("uidAdmin");
       final adminFromMap =
           await firestore.collection("Administrador").doc(uidAdmin).get();
       AdminModel adminModel = AdminModel.fromMap(adminFromMap.data()!);
-      AdminViewModel adminViewModel = AdminViewModel(adminModel);
-      return adminViewModel;
+      if (returnViewModel) {
+        AdminViewModel adminViewModel = AdminViewModel(adminModel);
+        return adminViewModel;
+      }
+      return adminModel;
     } catch (e) {
       throw "Error: $e";
     }

@@ -1,12 +1,7 @@
 import 'user_model.dart';
 
 class WorkerModel extends UserModel {
-  // late int _idHuella;
-
-  // int get idHuella => _idHuella;
-
-  WorkerModel.instance() : super.instance();
-
+  // WorkerModel.instance() : super.instance();
   WorkerModel({
     int? numTrabajador,
     required String nombre,
@@ -15,8 +10,7 @@ class WorkerModel extends UserModel {
     required int numImss,
     required String rfc,
     required String puesto,
-    required String urlPhoto,
-    // required int idHuella,
+    String? urlPhoto,
   }) : super(
           numTrabajador: numTrabajador,
           nombre: nombre,
@@ -26,9 +20,7 @@ class WorkerModel extends UserModel {
           puesto: puesto,
           rfc: rfc,
           urlPhoto: urlPhoto,
-        ) {
-    // _idHuella = idHuella;
-  }
+        );
 
   @override
   WorkerModel copyWith(
@@ -39,19 +31,16 @@ class WorkerModel extends UserModel {
           int? numImss,
           String? rfc,
           String? puesto,
-          String? urlPhoto
-          // int? idHuella,
-          }) =>
+          String? urlPhoto}) =>
       WorkerModel(
         numTrabajador: numTrabajador ?? this.numTrabajador,
         nombre: nombre ?? this.nombre,
         apellido: apellido ?? this.apellido,
-        curp: curp ?? this.curp,
-        numImss: numImss ?? this.numImss,
-        rfc: rfc ?? this.rfc,
-        puesto: puesto ?? this.puesto,
+        curp: curp ?? this.curp!,
+        numImss: numImss ?? this.numImss!,
+        rfc: rfc ?? this.rfc!,
+        puesto: puesto ?? this.puesto!,
         urlPhoto: urlPhoto ?? this.urlPhoto,
-        // idHuella: idHuella ?? _idHuella,
       );
 
   factory WorkerModel.fromMap(Map<String, dynamic> json) => WorkerModel(

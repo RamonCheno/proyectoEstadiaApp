@@ -16,16 +16,16 @@ class AdminModel extends UserModel {
     String? rfc,
     String? puesto,
     required String email,
-    // String? urlPhoto,
+    String? urlPhoto,
   }) : super(
           numTrabajador: numTrabajador,
           nombre: nombre,
           apellido: apellido,
-          curp: curp ?? "",
-          numImss: numImss ?? 0,
-          puesto: puesto ?? "",
-          rfc: rfc ?? "",
-          // urlPhoto: urlPhoto,
+          curp: curp,
+          numImss: numImss,
+          puesto: puesto,
+          rfc: rfc,
+          urlPhoto: urlPhoto,
         ) {
     _email = email;
   }
@@ -51,7 +51,7 @@ class AdminModel extends UserModel {
         rfc: rfc ?? this.rfc,
         puesto: puesto ?? this.puesto,
         email: email ?? _email,
-        // urlPhoto: urlPhoto ?? this.urlPhoto,
+        urlPhoto: urlPhoto ?? this.urlPhoto,
       );
 
   factory AdminModel.fromMap(Map<String, dynamic> json) => AdminModel(
@@ -62,7 +62,8 @@ class AdminModel extends UserModel {
       numImss: json["numIMSS"],
       rfc: json["RFC"],
       puesto: json["puesto"],
-      email: json["email"]);
+      email: json["email"],
+      urlPhoto: json["urlPhoto"]);
 
   @override
   Map<String, dynamic> toMap() => {
@@ -74,5 +75,6 @@ class AdminModel extends UserModel {
         "RFC": rfc,
         "puesto": puesto,
         "email": _email,
+        "urlPhoto": urlPhoto
       };
 }

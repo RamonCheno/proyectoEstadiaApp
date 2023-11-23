@@ -5,7 +5,7 @@ import 'package:control_asistencia_app/app/view/widget/customtextformfield_widge
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'login_register_tabbar_screen.dart';
+import '../login_register_tabbar_screen.dart';
 
 class RegisterAdminScreen extends StatefulWidget {
   const RegisterAdminScreen({super.key});

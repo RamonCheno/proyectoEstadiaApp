@@ -11,6 +11,7 @@ class CustomTextFormWidget extends StatefulWidget {
   final bool soloLeer;
   final TextEditingController controller;
   final int? lengthChar;
+  final bool isEnable;
 
   const CustomTextFormWidget(
       {super.key,
@@ -21,14 +22,15 @@ class CustomTextFormWidget extends StatefulWidget {
       this.lengthChar,
       this.inputType = TextInputType.text,
       this.isObscureText = false,
-      this.soloLeer = false});
+      this.soloLeer = false,
+      this.isEnable = true});
 
   @override
   State<CustomTextFormWidget> createState() => _CustomTextFormWidgetState();
 }
 
 class _CustomTextFormWidgetState extends State<CustomTextFormWidget> {
-  String? _activeField = '';
+  // String? _activeField = '';
   final FocusNode _focusNode = FocusNode();
   bool _isFocused = false;
 
@@ -53,27 +55,33 @@ class _CustomTextFormWidgetState extends State<CustomTextFormWidget> {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 5.h, horizontal: 15.w),
       child: TextFormField(
+        enabled: widget.isEnable,
+        style: TextStyle(
+            color: widget.isEnable ? Colors.black : const Color(0xff757575),
+            fontSize: 12.sp),
         buildCounter: (BuildContext context,
             {required int currentLength,
             required bool isFocused,
             int? maxLength}) {
           if (maxLength != null) {
-            return isFocused
-                ? Text(
-                    '$currentLength/$maxLength',
-                    style: TextStyle(
-                      fontSize: 12.sp,
-                    ),
-                    semanticsLabel: 'Input constraints',
-                  )
-                : null;
+            if (widget.soloLeer == false) {
+              return isFocused
+                  ? Text(
+                      '$currentLength/$maxLength',
+                      style: TextStyle(
+                        fontSize: 12.sp,
+                      ),
+                      semanticsLabel: 'Input constraints',
+                    )
+                  : null;
+            }
           }
           return null;
         },
         controller: widget.controller,
         readOnly: widget.soloLeer,
         textInputAction: widget.action,
-        focusNode: _focusNode,
+        focusNode: widget.soloLeer == false ? _focusNode : null,
         obscureText: widget.isObscureText,
         keyboardType: widget.inputType,
         maxLength: widget.lengthChar,
@@ -85,20 +93,19 @@ class _CustomTextFormWidgetState extends State<CustomTextFormWidget> {
           return null;
         },
         decoration: InputDecoration(
+          enabled: widget.isEnable,
           border: OutlineInputBorder(
             borderRadius: const BorderRadius.all(Radius.circular(15.0)).w,
             borderSide: BorderSide(
-              color: _activeField == widget.hintName && _isFocused
+              color: _isFocused
                   ? const Color(0Xff4caf50)
                   : const Color(0xffF69100),
             ),
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: const BorderRadius.all(Radius.circular(15.0)).w,
-            borderSide: BorderSide(
-              color: _activeField == widget.hintName && _isFocused
-                  ? const Color(0Xff4caf50)
-                  : const Color(0xffF69100),
+            borderSide: const BorderSide(
+              color: Color(0xffF69100),
             ),
           ),
           focusedBorder: OutlineInputBorder(
@@ -108,12 +115,13 @@ class _CustomTextFormWidgetState extends State<CustomTextFormWidget> {
             ),
           ),
           prefixIcon: Icon(widget.icon,
-              color: _activeField == widget.hintName && _isFocused
+              color: _isFocused
                   ? const Color(0Xff4caf50)
-                  : Colors.grey),
-          hintStyle: const TextStyle(color: Color(0xff757575)),
+                  : const Color(0xffF69100)),
+          // hintStyle: const TextStyle(color: Color(0xff757575)),
           labelText: widget.hintName,
-          labelStyle: TextStyle(fontSize: 14.sp),
+          labelStyle:
+              TextStyle(fontSize: 12.sp, color: const Color(0xff757575)),
           floatingLabelStyle:
               TextStyle(color: const Color(0xff4caf50), fontSize: 12.sp),
           fillColor: Colors.white,
@@ -121,28 +129,28 @@ class _CustomTextFormWidgetState extends State<CustomTextFormWidget> {
         ),
         onTap: () {
           _focusNode.requestFocus();
-          setState(() {
-            _activeField = widget.hintName;
-          });
+          // setState(() {
+          //   // _activeField = widget.hintName;
+          // });
         },
         onFieldSubmitted: (value) {
-          FocusScope.of(context).nextFocus();
+          _focusNode.nextFocus();
           setState(() {
-            _activeField = widget.hintName;
+            // _activeField = widget.hintName;
             _isFocused = false;
           });
         },
         onEditingComplete: () {
-          FocusScope.of(context).requestFocus(_focusNode);
+          _focusNode.requestFocus(_focusNode);
           setState(() {
             _isFocused = false;
           });
         },
         onTapOutside: (value) {
-          FocusScope.of(context).unfocus();
+          _focusNode.unfocus();
           setState(() {
             _isFocused = false;
-            _activeField = null;
+            // _activeField = null;
           });
         },
       ),
