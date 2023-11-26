@@ -11,7 +11,7 @@ Requisitos faltantes
 > Apartado Reportes
 	- Hacer que se pueda hacer un reporte de asistencias o de comidas y 
 		seleccionar un rango de dia inicial y dia final (reporte diario, semanal o Mensual).
-> Perfil Admin (Listo)
+> Perfil Admin. (Listo)
 > Cambiar texto de inicio de pantalla. (Listo)
 
 > Correo aplicacion: aplicacioncontroldeasistencia@gmail.com

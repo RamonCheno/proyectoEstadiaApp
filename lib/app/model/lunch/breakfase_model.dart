@@ -1,19 +1,19 @@
 import 'package:control_asistencia_app/app/model/lunch/foodservices_model.dart';
 
-class LunchModel extends FoodServicesModel {
-  LunchModel.instance() : super.instance();
+class BreakFastModel extends FoodServicesModel {
+  BreakFastModel.instance() : super.instance();
 
-  LunchModel(
+  BreakFastModel(
       {required String date, required String hour, required int quantity})
       : super(date: date, hour: hour, quantity: quantity);
 
   @override
-  LunchModel fromMap(Map<String, dynamic> json) => LunchModel(
+  BreakFastModel fromMap(json) => BreakFastModel(
       date: json["fecha"], hour: json["hora"], quantity: json["cantidad"]);
 
   @override
   Map<String, dynamic> toMap() => {
-        "Almuerzo": {
+        "Desayuno": {
           "hora": hour,
           "cantidad": quantity,
         },

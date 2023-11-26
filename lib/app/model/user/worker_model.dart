@@ -1,7 +1,6 @@
 import 'user_model.dart';
 
 class WorkerModel extends UserModel {
-  // WorkerModel.instance() : super.instance(
   bool _isVisible = true;
 
   bool get getIsVisible => _isVisible;
