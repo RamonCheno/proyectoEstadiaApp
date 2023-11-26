@@ -1,7 +1,13 @@
 import 'user_model.dart';
 
 class WorkerModel extends UserModel {
-  // WorkerModel.instance() : super.instance();
+  // WorkerModel.instance() : super.instance(
+  bool _isVisible = true;
+
+  bool get getIsVisible => _isVisible;
+
+  set setIsVisible(bool isVisible) => _isVisible = isVisible;
+
   WorkerModel({
     int? numTrabajador,
     required String nombre,
@@ -11,6 +17,7 @@ class WorkerModel extends UserModel {
     required String rfc,
     required String puesto,
     String? urlPhoto,
+    required bool visible,
   }) : super(
           numTrabajador: numTrabajador,
           nombre: nombre,
@@ -20,7 +27,9 @@ class WorkerModel extends UserModel {
           puesto: puesto,
           rfc: rfc,
           urlPhoto: urlPhoto,
-        );
+        ) {
+    _isVisible = visible;
+  }
 
   @override
   WorkerModel copyWith(
@@ -31,7 +40,8 @@ class WorkerModel extends UserModel {
           int? numImss,
           String? rfc,
           String? puesto,
-          String? urlPhoto}) =>
+          String? urlPhoto,
+          bool? visible}) =>
       WorkerModel(
         numTrabajador: numTrabajador ?? this.numTrabajador,
         nombre: nombre ?? this.nombre,
@@ -41,6 +51,7 @@ class WorkerModel extends UserModel {
         rfc: rfc ?? this.rfc!,
         puesto: puesto ?? this.puesto!,
         urlPhoto: urlPhoto ?? this.urlPhoto,
+        visible: visible ?? _isVisible,
       );
 
   factory WorkerModel.fromMap(Map<String, dynamic> json) => WorkerModel(
@@ -51,9 +62,8 @@ class WorkerModel extends UserModel {
       numImss: json["numIMSS"],
       rfc: json["RFC"],
       puesto: json["puesto"],
-      urlPhoto: json["urlPhoto"] ?? ""
-      // idHuella: json["idHuella"],
-      );
+      urlPhoto: json["urlPhoto"] ?? "",
+      visible: json["trabajando"] == "alta" ? true : false);
 
   @override
   Map<String, dynamic> toMap() => {
@@ -64,7 +74,8 @@ class WorkerModel extends UserModel {
         "numIMSS": numImss,
         "RFC": rfc,
         "puesto": puesto,
-        "urlPhoto": urlPhoto
+        "urlPhoto": urlPhoto,
+        "trabajando": _isVisible ? "alta" : "baja"
         // "idHuella": _idHuella,
       };
 }

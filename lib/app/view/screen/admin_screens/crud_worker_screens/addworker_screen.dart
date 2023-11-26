@@ -43,38 +43,41 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
     if (form != null) {
       if (form.validate()) {
         if (_imagePath == null) {
-          workerProvider.showResponseDialog(context, "Agregar una foto");
+          String assetPath =
+              await Provider.of<ImageProviders>(context, listen: false)
+                  .getAssetPath("assets/images/usuario.png");
+          _imagePath = assetPath;
+          // workerProvider.showResponseDialog(context, "Agregar una foto");
+        }
+        form.save();
+        int numWorker = int.parse(_conNumWorker.text);
+        String firstNameWorker = _conFirstNameWorker.text;
+        String lastNameWorker = _conLastNameWorker.text;
+        String rfcWorker = _conRFCWorker.text.toUpperCase();
+        String curpWorker = _conCurpWorker.text.toUpperCase();
+        int numIMSSWorker = int.parse(_conIMSSWorker.text);
+        String workerPosition = _conworkerPosition.text;
+        String? urlImage;
+        urlImage = await workerProvider.getUrlImage(
+            File(_imagePath!), firstNameWorker, lastNameWorker);
+        WorkerModel workerModel = WorkerModel(
+          numTrabajador: numWorker,
+          nombre: firstNameWorker.trim(),
+          apellido: lastNameWorker.trim(),
+          curp: curpWorker.trim(),
+          rfc: rfcWorker.trim(),
+          numImss: numIMSSWorker,
+          puesto: workerPosition.trim(),
+          urlPhoto: urlImage,
+          visible: true,
+          // idHuella: idWorker,
+        );
+        String response = await workerProvider.addWokerProvider(workerModel);
+        if (!mounted) return;
+        if (response == "Trabajador agregado") {
+          workerProvider.showResponseDialog(context, response, addWorker: true);
         } else {
-          form.save();
-          int numWorker = int.parse(_conNumWorker.text);
-          String firstNameWorker = _conFirstNameWorker.text;
-          String lastNameWorker = _conLastNameWorker.text;
-          String rfcWorker = _conRFCWorker.text.toUpperCase();
-          String curpWorker = _conCurpWorker.text.toUpperCase();
-          int numIMSSWorker = int.parse(_conIMSSWorker.text);
-          String workerPosition = _conworkerPosition.text;
-          String? urlImage;
-          urlImage = await workerProvider.getUrlImage(
-              File(_imagePath!), firstNameWorker, lastNameWorker);
-          WorkerModel workerModel = WorkerModel(
-            numTrabajador: numWorker,
-            nombre: firstNameWorker.trim(),
-            apellido: lastNameWorker.trim(),
-            curp: curpWorker.trim(),
-            rfc: rfcWorker.trim(),
-            numImss: numIMSSWorker,
-            puesto: workerPosition.trim(),
-            urlPhoto: urlImage,
-            // idHuella: idWorker,
-          );
-          String response = await workerProvider.addWokerProvider(workerModel);
-          if (!mounted) return;
-          if (response == "Trabajador agregado") {
-            workerProvider.showResponseDialog(context, response,
-                addWorker: true);
-          } else {
-            workerProvider.showResponseDialog(context, response);
-          }
+          workerProvider.showResponseDialog(context, response);
         }
       }
     }

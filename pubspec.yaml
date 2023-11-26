@@ -33,7 +33,6 @@ dependencies:
   camera: ^0.10.5+5
   cloud_firestore: ^4.13.0
   cupertino_icons: ^1.0.6
-  easy_search_bar: ^2.5.0
   firebase_auth: ^4.13.0
   firebase_core: ^2.22.0
   firebase_storage: ^11.5.0
@@ -48,6 +47,7 @@ dependencies:
   local_auth: ^2.1.7
   path_provider: ^2.1.1
   provider: ^6.0.5
+  searchfield: ^0.8.9
   shared_preferences: ^2.2.2
 
 dev_dependencies:

@@ -9,8 +9,11 @@ import 'package:flutter/material.dart';
 
 class WorkerProvider with ChangeNotifier {
   final WorkerController _workerController = WorkerController();
-  List<WorkerViewModel> _listWorkerViewModel = [];
-  List<WorkerViewModel> get listWorkerViewModel => _listWorkerViewModel;
+  List<WorkerViewModel> _listWorkerViewModelHigh = [];
+  List<WorkerViewModel> get listWorkerViewModelHigh => _listWorkerViewModelHigh;
+
+  List<WorkerViewModel> _listWorkerViewModelLow = [];
+  List<WorkerViewModel> get listWorkerViewModelLow => _listWorkerViewModelLow;
 
   Future<String> addWokerProvider(WorkerModel workerModel) async {
     String response = await _workerController.addWorker(workerModel).then(
@@ -22,8 +25,14 @@ class WorkerProvider with ChangeNotifier {
     return response;
   }
 
-  Future<void> getDataWorkerVModel() async {
-    _listWorkerViewModel = await _workerController.getListWokersViewModel();
+  Future<void> getDataWorkerVModel(String isWorking) async {
+    if (isWorking == "alta") {
+      _listWorkerViewModelHigh =
+          await _workerController.getListWokersViewModel("alta");
+    } else {
+      _listWorkerViewModelLow =
+          await _workerController.getListWokersViewModel("baja");
+    }
     notifyListeners();
   }
 
@@ -42,6 +51,19 @@ class WorkerProvider with ChangeNotifier {
             );
     notifyListeners();
     return response;
+  }
+
+  Future<void> setVisibleWorkerProvider(int numWorker, bool working) async {
+    WorkerModel workerModel = await selectWorkerModel(numWorker);
+    await _workerController.setVisibleWorker(numWorker, working, workerModel);
+  }
+
+  Future<void> deleteWorkerProvider(
+      String nameColection, int numWorker, bool working) async {
+    await setVisibleWorkerProvider(numWorker, working);
+    await _workerController.deleteSubColeccionWorker(nameColection, numWorker);
+
+    notifyListeners();
   }
 
   void showResponseDialog(BuildContext context, String response,

@@ -1,11 +1,31 @@
 Requisitos faltantes
 > Crud Personal:
-	- Eliminar asistencia cuando se da de baja un trabajador.
-	- Mantener la informacion de un trabajador eliminado.
-	- Hacer una busqueda de un numero de treabajador y mostrarlo en la lista y si no existe, crear un nuevo trabajador
+	- Eliminar asistencia cuando se da de baja un trabajador.(Listo)
+	- Mantener la informacion de un trabajador eliminado. (Listo)
+	- Hacer una busqueda de un numero de treabajador y mostrarlo en la lista y si no existe, 
+		crear un nuevo trabajador (Listo).
 > Crud Comida:
 	- Agregar una nueva subcoleccion para cada trabajador llamado comida.
 	- Tabla comida va a contener como atributo: Desayuno, Comida, Cena.
 	- Cada comida debe contener como id la fecha.
-> Perfil Admin (En proceso)
+> Apartado Reportes
+	- Hacer que se pueda hacer un reporte de asistencias o de comidas y 
+		seleccionar un rango de dia inicial y dia final (reporte diario, semanal o Mensual).
+> Perfil Admin (Listo)
 > Cambiar texto de inicio de pantalla. (Listo)
+
+> Correo aplicacion: aplicacioncontroldeasistencia@gmail.com
+> Contraseña: controlAsistencia123.
+
+Apartado terminados
+> Trabajadores
+	- Agregar Trabajadores
+	- Modificar Trabajadores
+	- Lista de trabajadores registrados
+> asistencia
+	- Agregar asistencia con numero de trabajador
+	- Lista de Asistencia registradas por diario
+	- Eliminar asistencia cuando un trabajador se marca como baja
+> Recursos Humanos
+	- Registrar e iniciar sesion utilziando firebase_auth
+	- Actualizar informacion del personal de recursos Humanos

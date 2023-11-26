@@ -36,9 +36,7 @@ class _ListAttendanceState extends State<ListAttendance> {
     return picked;
   }
 
-  void refreshAttendance() async {
-    final attendanceProvider =
-        Provider.of<AttendanceProvider>(context, listen: false);
+  void refreshAttendance(AttendanceProvider attendanceProvider) async {
     await attendanceProvider.getListAttendance(dateNowText).then((value) {
       int lengthAttendance = attendanceProvider.attendanceViewModelList.length;
       if (mounted) {
@@ -137,7 +135,7 @@ class _ListAttendanceState extends State<ListAttendance> {
           Expanded(
             child: Consumer<AttendanceProvider>(
               builder: (context, attednanceProvider, child) {
-                refreshAttendance();
+                refreshAttendance(attednanceProvider);
                 List<AttendanceViewModel> attendanceVMList =
                     attednanceProvider.attendanceViewModelList;
                 return attendanceVMList.isEmpty

@@ -326,26 +326,26 @@ class _HeaderWidgetState extends State<HeaderWidget> {
   @override
   void initState() {
     super.initState();
-    getAdminVModel();
+    // getAdminVModel();
   }
 
-  void getAdminVModel() async {
-    await Provider.of<AdminProvider>(context, listen: false)
-        .getAdminViewModel();
-    setState(() {});
+  void getAdminVModel(AdminProvider adminProvider) async {
+    await adminProvider.getAdminViewModel();
+    // setState(() {});
   }
 
-  @override
-  void didUpdateWidget(covariant HeaderWidget oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    getAdminVModel();
-  }
+  // @override
+  // void didUpdateWidget(covariant HeaderWidget oldWidget) {
+  //   super.didUpdateWidget(oldWidget);
+  //   // getAdminVModel();
+  // }
 
   @override
   Widget build(BuildContext context) {
     // getAdminVModel();
     return Consumer<AdminProvider>(
       builder: (context, adminProvider, child) {
+        getAdminVModel(adminProvider);
         if (adminProvider.isLoading) {
           return Row(
             children: [

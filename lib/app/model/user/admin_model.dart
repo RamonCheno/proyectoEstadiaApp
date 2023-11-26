@@ -2,9 +2,7 @@ import 'user_model.dart';
 
 class AdminModel extends UserModel {
   late String _email;
-  late String _password;
 
-  String get password => _password;
   String get email => _email;
 
   AdminModel({
@@ -40,7 +38,6 @@ class AdminModel extends UserModel {
           String? rfc,
           String? puesto,
           String? email,
-          String? password,
           String? urlPhoto}) =>
       AdminModel(
         numTrabajador: numTrabajador ?? this.numTrabajador,

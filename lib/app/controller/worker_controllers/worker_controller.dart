@@ -42,12 +42,35 @@ class WorkerController {
     return response;
   }
 
+  Future<void> deleteSubColeccionWorker(
+      String nameCollection, int numWorker) async {
+    String idDocumentWorker = numWorker.toString();
+    try {
+      DocumentReference documentWorker =
+          firestore.collection("Trabajador").doc(idDocumentWorker);
+      CollectionReference subColectionWorker =
+          documentWorker.collection(nameCollection);
+      QuerySnapshot querySnapshot = await subColectionWorker.get();
+      for (QueryDocumentSnapshot<Object?> document in querySnapshot.docs) {
+        await subColectionWorker.doc(document.id).delete();
+      }
+    } catch (error) {
+      debugPrint("Error al eliminar documentos de la subcolección: $error");
+    }
+  }
+
   Future<bool> checkIfFileExist(String filePath) async {
     try {
       final ref = firebaseStorage.ref(filePath);
       final FullMetadata result = await ref.getMetadata();
-      return result.fullPath.isNotEmpty;
+      String isExistFile = result.fullPath;
+      if (isExistFile.isNotEmpty) {
+        return true;
+      } else {
+        return false;
+      }
     } catch (e) {
+      debugPrint("Error: $e");
       return false;
     }
   }
@@ -64,6 +87,12 @@ class WorkerController {
     }
   }
 
+  Future<void> setVisibleWorker(
+      int idWorkerDoc, bool isVisible, WorkerModel workerModel) async {
+    workerModel.setIsVisible = isVisible;
+    updateWorker(idWorkerDoc, workerModel);
+  }
+
   Future<String> updateWorker(int numWorker, WorkerModel workerModel) async {
     try {
       final workeUpdateMap = workerModel.toMap();
@@ -77,27 +106,52 @@ class WorkerController {
     }
   }
 
-  Future<List<WorkerModel>> getListWokersModel() async {
-    final QuerySnapshot querySnapshot = await firestore
-        .collection('Trabajador')
-        .orderBy("apellido", descending: false)
-        .get();
-    List<WorkerModel> workerList = [];
-    if (querySnapshot.docs.isNotEmpty) {
-      for (var worker in querySnapshot.docs) {
-        WorkerModel workerModel =
-            WorkerModel.fromMap(worker.data() as Map<String, dynamic>);
-        workerList.add(workerModel);
-      }
-      return workerList;
-    } else {
-      return [];
-    }
-  }
+  // Future<List<WorkerModel>> getListWokersModel() async {
+  //   final QuerySnapshot querySnapshot = await firestore
+  //       .collection('Trabajador')
+  //       .orderBy("apellido", descending: false)
+  //       .get();
+  //   List<WorkerModel> workerList = [];
+  //   if (querySnapshot.docs.isNotEmpty) {
+  //     for (var worker in querySnapshot.docs) {
+  //       WorkerModel workerModel =
+  //           WorkerModel.fromMap(worker.data() as Map<String, dynamic>);
+  //       workerList.add(workerModel);
+  //     }
+  //     return workerList;
+  //   } else {
+  //     return [];
+  //   }
+  // }
 
-  Future<List<WorkerViewModel>> getListWokersViewModel() async {
+  // Future<List<dynamic>> getListDataWorkers(
+  //     {bool returnViewModel = false}) async {
+  //   final QuerySnapshot querySnapshot = await firestore
+  //       .collection('Trabajador')
+  //       .orderBy("apellido", descending: false)
+  //       .get();
+  //   List<dynamic> workerList = [];
+  //   if (querySnapshot.docs.isNotEmpty) {
+  //     for (var worker in querySnapshot.docs) {
+  //       WorkerModel workerModel =
+  //           WorkerModel.fromMap(worker.data() as Map<String, dynamic>);
+  //       if (returnViewModel) {
+  //         WorkerViewModel workerViewModel = WorkerViewModel(workerModel);
+  //         workerList.add(workerViewModel);
+  //       } else {
+  //         workerList.add(workerModel);
+  //       }
+  //     }
+  //     return workerList;
+  //   } else {
+  //     return [];
+  //   }
+  // }
+
+  Future<List<WorkerViewModel>> getListWokersViewModel(String isWorking) async {
     final QuerySnapshot querySnapshot = await firestore
         .collection('Trabajador')
+        .where("trabajando", isEqualTo: isWorking)
         .orderBy("apellido", descending: false)
         .get();
     List<WorkerViewModel> workerViewModelList = [];

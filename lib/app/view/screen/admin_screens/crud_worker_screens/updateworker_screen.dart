@@ -66,6 +66,7 @@ class _UpdateWorkerScreenState extends State<UpdateWorkerScreen>
           numImss: numIMSSWorker,
           puesto: workerPosition.trim(),
           urlPhoto: _imagePath!.startsWith("https") ? _imagePath! : urlImage,
+          visible: true,
           // idHuella: idWorker,
         );
         String response = await workerProvider.updateWorkerProvider(
