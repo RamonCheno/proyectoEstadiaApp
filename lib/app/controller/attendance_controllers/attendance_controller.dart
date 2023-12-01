@@ -93,10 +93,12 @@ class AttendanceController {
                 attendanceQuery.docs.first.data() as Map<String, dynamic>;
             final CheckInModel checkInModel =
                 CheckInModel.fromMap(attendanceData["Entrada"]);
-            // final CheckOutModel checkOutModel =
-            //     CheckOutModel.fromMap(attendanceData["Salida"]);
+            final CheckOutModel checkOutModel =
+                CheckOutModel.fromMap(attendanceData["Salida"]);
             AttendanceViewModel attendanceViewModel = AttendanceViewModel(
-                checkInModel: checkInModel, workerModel: workerModel);
+                checkInModel: checkInModel,
+                workerModel: workerModel,
+                checkOutModel: checkOutModel);
             attendanceViewModelList.add(attendanceViewModel);
           }
         }

@@ -46,9 +46,7 @@ class WorkerProvider with ChangeNotifier {
   Future<String> updateWorkerProvider(
       WorkerModel workerModel, int numWorkerSelect) async {
     String response =
-        await _workerController.updateWorker(numWorkerSelect, workerModel).then(
-              (methodResponse) => methodResponse,
-            );
+        await _workerController.updateWorker(numWorkerSelect, workerModel);
     notifyListeners();
     return response;
   }
@@ -92,7 +90,6 @@ class WorkerProvider with ChangeNotifier {
       File image, String firstName, String lastName) async {
     String urlPhoto = await _workerController.uploadImageToStorage(
         image, firstName, lastName);
-    notifyListeners();
     return urlPhoto;
   }
 }

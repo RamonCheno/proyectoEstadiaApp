@@ -81,13 +81,8 @@ class AdminController {
   Future<bool> checkIfFileExist(String filePath) async {
     try {
       final ref = firebaseStorage.ref(filePath);
-      final FullMetadata result = await ref.getMetadata();
-      String isExistFile = result.fullPath;
-      if (isExistFile.isNotEmpty) {
-        return true;
-      } else {
-        return false;
-      }
+      final isExistFile = (await ref.getMetadata()).fullPath.isNotEmpty;
+      return isExistFile;
     } catch (e) {
       debugPrint("$e");
       return false;

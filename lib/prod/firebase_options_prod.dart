@@ -14,7 +14,7 @@ import 'package:flutter/foundation.dart'
 ///   options: DefaultFirebaseOptions.currentPlatform,
 /// );
 /// ```
-class DefaultFirebaseOptions {
+class DefaultFirebaseOptionsProd {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
       throw UnsupportedError(
@@ -53,10 +53,10 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBzKcnnION22kMQg2ygqpxAygwASiOv9MQ',
-    appId: '1:533988597570:android:c5a2d558626bd911ea72db',
-    messagingSenderId: '533988597570',
-    projectId: 'control-asistencia-app',
-    storageBucket: 'control-asistencia-app.appspot.com',
+    apiKey: 'AIzaSyAKnmSzMcM_ekBqR9NH331mcQ5xHPkuJdw',
+    appId: '1:121348689070:android:f1783d7515e6e02778313f',
+    messagingSenderId: '121348689070',
+    projectId: 'controlasistenciaapp-302ff',
+    storageBucket: 'controlasistenciaapp-302ff.appspot.com',
   );
 }

@@ -73,7 +73,7 @@ class ImageProviders with ChangeNotifier {
 
   ImageProvider<Object>? imageInternetLocal(String? imgPath) {
     ImageProvider<Object>? image;
-    if (imgPath != null) {
+    if (imgPath != null && imgPath != "") {
       if (imgPath.startsWith("https")) {
         ImageProvider imgNetwork = CachedNetworkImageProvider(imgPath);
         image = imgNetwork;
@@ -81,6 +81,9 @@ class ImageProviders with ChangeNotifier {
         image = FileImage(File(imgPath));
       }
       // notifyListeners();
+    } else {
+      getAssetFile();
+      image = FileImage(File(_assetFilePath));
     }
     return image;
   }

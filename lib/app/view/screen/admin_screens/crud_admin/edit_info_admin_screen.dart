@@ -27,7 +27,12 @@ class _EditInfoAdminScreenState extends State<EditInfoAdminScreen> {
     final adminProvider = Provider.of<AdminProvider>(context, listen: false);
     final perfilProvider =
         Provider.of<UpdatePerfilProvider>(context, listen: false);
-    // final imageProvider = Provider.of<ImageProviders>(context, listen: false);
+    final imageProvider = Provider.of<ImageProviders>(context, listen: false);
+    if (perfilProvider.imagePath == "") {
+      String assetPath =
+          await imageProvider.getAssetPath("assets/images/usuario.png");
+      perfilProvider.setNewImagePath(assetPath);
+    }
     final FormState? form = _formKey.currentState;
     final int numAdmin = int.parse(perfilProvider.conNumWorker.text);
     final String firstName = perfilProvider.conFirstNameWorker.text;
@@ -38,13 +43,10 @@ class _EditInfoAdminScreenState extends State<EditInfoAdminScreen> {
     final String position = perfilProvider.conAdminPosition.text.trim();
     await adminProvider.getUrlImage(
         File(perfilProvider.imagePath!), firstName, lastName);
-    // if (!perfilProvider.imagePath!.startsWith("https")) {
-
-    // }
-
     final String imagePath = adminProvider.urlPhoto!;
     if (form != null) {
       if (form.validate()) {
+        form.save();
         AdminModel adminModel = AdminModel(
           numTrabajador: numAdmin,
           nombre: firstName.trim(),
@@ -136,7 +138,6 @@ class _EditInfoAdminScreenState extends State<EditInfoAdminScreen> {
                   icon: const Icon(Icons.photo_library_outlined),
                   onPressed: () async {
                     //Metodo para tomar foto por galeria
-
                     String assetPath = await Provider.of<ImageProviders>(
                             context,
                             listen: false)
@@ -186,29 +187,15 @@ class _EditInfoAdminScreenState extends State<EditInfoAdminScreen> {
                     Stack(alignment: Alignment.bottomRight, children: [
                       Consumer<ImageProviders>(
                         builder: (context, imgProvider, child) {
-                          if (updateperfilProvider.imagePath != "") {
-                            return Padding(
-                              padding: EdgeInsets.symmetric(vertical: 10.h),
-                              child: CircleAvatar(
-                                radius: 50.r,
-                                backgroundColor: const Color(0xffE1E1E1),
-                                foregroundImage: imgProvider.imageInternetLocal(
-                                    updateperfilProvider.imagePath),
-                              ),
-                            );
-                          } else {
-                            return Padding(
-                              padding: EdgeInsets.symmetric(vertical: 10.h),
-                              child: Material(
-                                color: const Color(0xffE1E1E1),
-                                shape: const CircleBorder(),
-                                child: Icon(
-                                  Icons.person_outline,
-                                  size: 60.r,
-                                ),
-                              ),
-                            );
-                          }
+                          return Padding(
+                            padding: EdgeInsets.symmetric(vertical: 10.h),
+                            child: CircleAvatar(
+                              radius: 50.r,
+                              backgroundColor: const Color(0xffE1E1E1),
+                              foregroundImage: imgProvider.imageInternetLocal(
+                                  updateperfilProvider.imagePath),
+                            ),
+                          );
                         },
                       ),
                       IconButton(

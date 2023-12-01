@@ -43,20 +43,27 @@ class _UpdateWorkerScreenState extends State<UpdateWorkerScreen>
 
   Future<void> updateWorker() async {
     final FormState? form = _formKey.currentState;
-    WorkerProvider workerProvider =
+    final WorkerProvider workerProvider =
         Provider.of<WorkerProvider>(context, listen: false);
-    String firstNameWorker = _conFirstNameWorker.text;
-    String lastNameWorker = _conLastNameWorker.text;
-    String rfcWorker = _conRFCWorker.text.toUpperCase();
-    String curpWorker = _conCurpWorker.text.toUpperCase();
-    int numIMSSWorker = int.parse(_conIMSSWorker.text);
-    String workerPosition = _conworkerPosition.text.toUpperCase();
-    String urlImage = await workerProvider.getUrlImage(
-        File(_imagePath!), firstNameWorker, lastNameWorker);
-
+    // ImageProviders imageProvider =
+    //     Provider.of<ImageProviders>(context, listen: false);
     if (form != null) {
       if (form.validate()) {
+        // if (_imagePath == null) {
+        //   String assetPath =
+        //       await imageProvider.getAssetPath("assets/images/usuario.png");
+        //   _imagePath = assetPath;
+        //   // workerProvider.showResponseDialog(context, "Agregar una foto");
+        // }
         form.save();
+        String firstNameWorker = _conFirstNameWorker.text;
+        String lastNameWorker = _conLastNameWorker.text;
+        String rfcWorker = _conRFCWorker.text.toUpperCase();
+        String curpWorker = _conCurpWorker.text.toUpperCase();
+        int numIMSSWorker = int.parse(_conIMSSWorker.text);
+        String workerPosition = _conworkerPosition.text.toUpperCase();
+        String urlImage = await workerProvider.getUrlImage(
+            File(_imagePath!), firstNameWorker, lastNameWorker);
         WorkerModel workerModel = WorkerModel(
           numTrabajador: numWorkerSelect,
           nombre: firstNameWorker.trim(),
@@ -69,28 +76,18 @@ class _UpdateWorkerScreenState extends State<UpdateWorkerScreen>
           visible: true,
           // idHuella: idWorker,
         );
-        String response = await workerProvider.updateWorkerProvider(
-            workerModel, numWorkerSelect!);
-        if (!mounted) return;
-        if (response == "Trabajador actualizado") {
-          workerProvider.showResponseDialog(context, response, addWorker: true);
-        } else {
-          workerProvider.showResponseDialog(context, response);
-        }
+        workerProvider
+            .updateWorkerProvider(workerModel, numWorkerSelect!)
+            .then((response) {
+          if (response == "Trabajador actualizado") {
+            workerProvider.showResponseDialog(context, response,
+                addWorker: true);
+          } else {
+            workerProvider.showResponseDialog(context, response);
+          }
+        });
       }
     }
-  }
-
-  ImageProvider<Object>? imageInternetLocal() {
-    ImageProvider? image;
-    if (_imagePath != null) {
-      ImageProvider imgNetwork = CachedNetworkImageProvider(_imagePath!);
-      image = _imagePath!.startsWith("https")
-          ? imgNetwork
-          : FileImage(File(_imagePath!));
-    }
-
-    return image;
   }
 
   void showBottomSheet() {
@@ -157,7 +154,7 @@ class _UpdateWorkerScreenState extends State<UpdateWorkerScreen>
   }
 
   @override
-  void afterFirstLayout(BuildContext context) {
+  void afterFirstLayout(BuildContext context) async {
     if (workerModelSelect != null) {
       _conNumWorker.text = workerModelSelect!.numTrabajador.toString();
       _conFirstNameWorker.text = workerModelSelect!.nombre;
@@ -166,16 +163,16 @@ class _UpdateWorkerScreenState extends State<UpdateWorkerScreen>
       _conCurpWorker.text = workerModelSelect!.curp!;
       _conIMSSWorker.text = workerModelSelect!.numImss.toString();
       _conworkerPosition.text = workerModelSelect!.puesto!;
-      if (workerModelSelect!.urlPhoto != null) {
+      if (workerModelSelect!.urlPhoto != null &&
+          workerModelSelect!.urlPhoto != "") {
         _imagePath = workerModelSelect!.urlPhoto;
         setState(() {});
       } else {
         final imageProvider =
             Provider.of<ImageProviders>(context, listen: false);
-        imageProvider.getAssetPath("assets/images/usuario.png").then((value) {
-          setState(() {
-            _imagePath = value;
-          });
+        await imageProvider.getAssetPath("assets/images/usuario.png");
+        setState(() {
+          _imagePath = imageProvider.assetFilePath;
         });
       }
     }
@@ -216,17 +213,18 @@ class _UpdateWorkerScreenState extends State<UpdateWorkerScreen>
         child: Column(
           children: [
             Stack(alignment: Alignment.bottomRight, children: [
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 10.h),
-                child: Stack(
-                  children: [
-                    CircleAvatar(
+              Consumer<ImageProviders>(
+                builder: (context, imgProvider, child) {
+                  return Padding(
+                    padding: EdgeInsets.symmetric(vertical: 10.h),
+                    child: CircleAvatar(
                       radius: 50.r,
                       backgroundColor: const Color(0xffE1E1E1),
-                      foregroundImage: imageInternetLocal(),
+                      foregroundImage:
+                          imgProvider.imageInternetLocal(_imagePath),
                     ),
-                  ],
-                ),
+                  );
+                },
               ),
               IconButton(
                 style: ButtonStyle(

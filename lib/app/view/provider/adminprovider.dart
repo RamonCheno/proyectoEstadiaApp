@@ -28,7 +28,6 @@ class AdminProvider extends ChangeNotifier {
     _lastNameProvider = newLastName;
     _numHumanResource = numRH;
     _urlPhoto = imgUrl;
-    notifyListeners();
   }
 
   Future<void> getAdminViewModel() async {
@@ -36,13 +35,12 @@ class AdminProvider extends ChangeNotifier {
         await _adminController.getDataAdmin(returnViewModel: true);
     updateValues(dataAdminModel.nombre, dataAdminModel.apellido,
         dataAdminModel.numHumanR, dataAdminModel.networkPhoto);
-    notifyListeners();
     _isLoading = false;
+    notifyListeners();
   }
 
   Future<AdminModel> getDataAdminProvider() async {
     AdminModel dataAdmin = await _adminController.getDataAdmin();
-    notifyListeners();
     return dataAdmin;
   }
 
@@ -50,12 +48,10 @@ class AdminProvider extends ChangeNotifier {
       File image, String firstName, String lastName) async {
     _urlPhoto =
         await _adminController.uploadImageToStorage(image, firstName, lastName);
-    notifyListeners();
   }
 
   Future<String> updateInfoProvider(AdminModel adminModel) async {
     String response = await _adminController.updateAdmin(adminModel);
-    notifyListeners();
     return response;
   }
 

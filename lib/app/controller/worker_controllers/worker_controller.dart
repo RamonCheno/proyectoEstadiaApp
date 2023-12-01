@@ -149,21 +149,26 @@ class WorkerController {
   // }
 
   Future<List<WorkerViewModel>> getListWokersViewModel(String isWorking) async {
-    final QuerySnapshot querySnapshot = await firestore
-        .collection('Trabajador')
-        .where("trabajando", isEqualTo: isWorking)
-        .orderBy("apellido", descending: false)
-        .get();
-    List<WorkerViewModel> workerViewModelList = [];
-    if (querySnapshot.docs.isNotEmpty) {
-      for (var worker in querySnapshot.docs) {
-        WorkerModel workerModel =
-            WorkerModel.fromMap(worker.data() as Map<String, dynamic>);
-        WorkerViewModel workerViewModel = WorkerViewModel(workerModel);
-        workerViewModelList.add(workerViewModel);
+    try {
+      final QuerySnapshot querySnapshot = await firestore
+          .collection('Trabajador')
+          .where("trabajando", isEqualTo: isWorking)
+          .orderBy("apellido", descending: false)
+          .get();
+      List<WorkerViewModel> workerViewModelList = [];
+      if (querySnapshot.docs.isNotEmpty) {
+        for (var worker in querySnapshot.docs) {
+          WorkerModel workerModel =
+              WorkerModel.fromMap(worker.data() as Map<String, dynamic>);
+          WorkerViewModel workerViewModel = WorkerViewModel(workerModel);
+          workerViewModelList.add(workerViewModel);
+        }
+        return workerViewModelList;
+      } else {
+        return [];
       }
-      return workerViewModelList;
-    } else {
+    } catch (e) {
+      debugPrint("Error: $e");
       return [];
     }
   }

@@ -158,6 +158,8 @@ class _ListAttendanceState extends State<ListAttendance> {
                           final AttendanceViewModel attendanceViewModel =
                               attendanceVMList[index];
                           String checkInHour = attendanceViewModel.checkInHour;
+                          // String checkOutHour =
+                          // attendanceViewModel.checkOutHour;
                           String firstNameWorker =
                               attendanceViewModel.firstNameWorker;
                           String lastNameWorker =
@@ -187,7 +189,7 @@ class _ListAttendanceState extends State<ListAttendance> {
                                         "assets/images/usuario.png"),
                               ),
                               title: Text("$firstNameWorker $lastNameWorker"),
-                              subtitle: Text(checkInHour),
+                              subtitle: Text("$checkInHour - checkOutHour"),
                             ),
                           );
                         },

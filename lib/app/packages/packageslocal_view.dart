@@ -7,7 +7,7 @@ export 'package:control_asistencia_app/app/view/screen/home_screen.dart';
 export 'package:control_asistencia_app/app/view/screen/settings_screen.dart';
 export 'package:control_asistencia_app/app/view/screen/worker_screens/checkin_method_screens/more_options_screen.dart';
 export 'package:control_asistencia_app/app/view/screen/worker_screens/home_worker_screeen.dart';
-export 'package:control_asistencia_app/firebase_options.dart';
+export 'package:control_asistencia_app/prod/firebase_options_prod.dart';
 export 'package:control_asistencia_app/app/view/provider/adminprovider.dart';
 export 'package:control_asistencia_app/app/view/provider/attendande_provider.dart';
 export 'package:control_asistencia_app/app/view/screen/admin_screens/crud_worker_screens/addworker_screen.dart';

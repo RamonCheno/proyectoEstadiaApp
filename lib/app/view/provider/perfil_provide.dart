@@ -5,7 +5,7 @@ class UpdatePerfilProvider extends ChangeNotifier {
   String? _imagePath;
   String? _email;
 
-  ImageProvider<Object>? _image;
+  // ImageProvider<Object>? _image;
   final TextEditingController _conNumWorker = TextEditingController();
   final TextEditingController _conFirstNameWorker = TextEditingController();
   final TextEditingController _conLastNameWorker = TextEditingController();
@@ -32,7 +32,7 @@ class UpdatePerfilProvider extends ChangeNotifier {
 
   String? get imagePath => _imagePath ?? "";
 
-  ImageProvider<Object>? get image => _image;
+  // ImageProvider<Object>? get image => _image;
 
   Future<void> getDataPerfil(BuildContext context) async {
     final provider = Provider.of<AdminProvider>(context, listen: false);
@@ -49,9 +49,6 @@ class UpdatePerfilProvider extends ChangeNotifier {
     if (adminProvider.urlPhoto != null) {
       setNewImagePath(adminProvider.urlPhoto!);
     }
-    // else {
-    //   setNewImagePath("assets/images/usuario.png");
-    // }
     notifyListeners();
   }
 
