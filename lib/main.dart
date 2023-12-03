@@ -64,7 +64,6 @@ class MyApp extends StatelessWidget {
     LoginAdminScreen.route: (_) => const LoginAdminScreen(),
     RegisterAdminScreen.route: (_) => const RegisterAdminScreen(),
     HomeAdminScreen.route: (_) => HomeAdminScreen(),
-    MoreOptionsScreen.route: (_) => const MoreOptionsScreen(),
     ListWorkerScreen.route: (_) => const ListWorkerScreen(),
     ListAttendance.route: (_) => const ListAttendance(),
     AddWorkerScreen.route: (_) => const AddWorkerScreen(),
