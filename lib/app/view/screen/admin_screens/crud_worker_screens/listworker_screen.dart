@@ -138,7 +138,7 @@ class _ListWorkerScreenState extends State<ListWorkerScreen> {
   }
 
   void updateWorkerScreen(int numWorker, WorkerProvider workerProvider) async {
-    WorkerModel workerModelSelect =
+    WorkerModel? workerModelSelect =
         await workerProvider.selectWorkerModel(numWorker);
     if (!mounted) return;
     Navigator.pushNamed(context, UpdateWorkerScreen.route, arguments: {

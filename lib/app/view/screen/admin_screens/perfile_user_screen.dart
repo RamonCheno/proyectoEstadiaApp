@@ -32,7 +32,7 @@ class PerfilUserScreen extends StatelessWidget {
           //     return
           //   },
           // ),
-          HeaderPerfilWidget(),
+          const HeaderPerfilWidget(),
           SizedBox(
             height: 10.h,
           ),

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:control_asistencia_app/app/controller/worker_controllers/worker_controller.dart';
+import 'package:control_asistencia_app/app/model/attendance/attendance_model.dart';
 import 'package:control_asistencia_app/app/model/attendance/checkout_model.dart';
 import 'package:control_asistencia_app/app/model/attendance/ckeckin_model.dart';
 import 'package:control_asistencia_app/app/model/user/worker_model.dart';
@@ -14,31 +15,36 @@ class AttendanceController {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final WorkerController _workerController = WorkerController();
 
-  Future<bool> addCheckIn(CheckInModel checkInModel, int numWorker) async {
+  Future<String> addCheckIn(
+      AttendanceModel attendanceModel, int numWorker) async {
     WorkerModel? workerModel = await _workerController.getWorkerData(numWorker);
     if (workerModel == null) {
       debugPrint("Trabajador No encontrado");
-      return false;
+      return "Trabajador";
     }
     try {
-      final checkInMap = checkInModel.toMap();
+      final checkInMap = attendanceModel.toMap();
       final checkInDay = checkInMap["fecha"];
       await _firebaseAuth.signInAnonymously();
       final CollectionReference subColleAttendance = _firestore
           .collection("Trabajador/${workerModel.numTrabajador}/Asistencia");
-      await subColleAttendance
-          .doc(checkInDay)
-          .set({"Entrada": checkInMap, "Salida": null});
+      await subColleAttendance.doc(checkInDay).set({
+        "Entrada": checkInMap,
+        "Salida": {
+          "fecha": null,
+          "hora": null,
+        }
+      });
       await _firebaseAuth.signOut();
-      return true;
+      return "asistencia guardado";
     } catch (e) {
       debugPrint("Error: $e");
-      return false;
+      return "error desconocido";
     }
   }
 
-  Future<String> addCheckOut(
-      CheckOutModel attendanceModel, int numWorker, String fechaEntrada) async {
+  Future<String> addCheckOut(AttendanceModel attendanceModel, int numWorker,
+      String fechaEntrada) async {
     WorkerModel? workerModel = await _workerController.getWorkerData(numWorker);
     if (workerModel == null) {
       debugPrint("Trabajador No encontrado");
@@ -70,6 +76,8 @@ class AttendanceController {
 
   Future<List<AttendanceViewModel>> getListAttendanceViewModel(
       String fecha) async {
+    final checkInstance = CheckInModel.instance();
+    final checkOutInstance = CheckOutModel.instance();
     try {
       final QuerySnapshot querySnapshotWorker = await _firestore
           .collection('Trabajador')
@@ -92,9 +100,9 @@ class AttendanceController {
             final Map<String, dynamic> attendanceData =
                 attendanceQuery.docs.first.data() as Map<String, dynamic>;
             final CheckInModel checkInModel =
-                CheckInModel.fromMap(attendanceData["Entrada"]);
+                checkInstance.fromMap(attendanceData["Entrada"]);
             final CheckOutModel checkOutModel =
-                CheckOutModel.fromMap(attendanceData["Salida"]);
+                checkOutInstance.fromMap(attendanceData["Salida"]);
             AttendanceViewModel attendanceViewModel = AttendanceViewModel(
                 checkInModel: checkInModel,
                 workerModel: workerModel,

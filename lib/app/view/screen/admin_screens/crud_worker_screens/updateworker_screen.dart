@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:after_layout/after_layout.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:control_asistencia_app/app/controller/worker_controllers/worker_controller.dart';
 import 'package:control_asistencia_app/app/model/user/worker_model.dart';
 import 'package:control_asistencia_app/app/packages/packages_pub.dart';

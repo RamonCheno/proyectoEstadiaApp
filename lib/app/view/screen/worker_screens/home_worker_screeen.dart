@@ -1,5 +1,6 @@
 // import 'package:control_asistencia_app/app/view/screen/worker_screens/checkin_method_screens/checkin_fingerprint_screen.dart';
 import 'package:control_asistencia_app/app/packages/packageslocal_view.dart';
+import 'package:control_asistencia_app/app/view/screen/worker_screens/checkin_method_screens/registerattendance_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -39,11 +40,8 @@ class HomeWorkerScreen extends StatelessWidget {
                             ),
                           ),
                           onPressed: () => Navigator.of(context).pushNamed(
-                              MoreOptionsScreen.route,
-                              arguments: <String, dynamic>{
-                                "isEntrance": true,
-                                "title": "entrada"
-                              }),
+                              RegisterAttendanceScreen.route,
+                              arguments: <String, dynamic>{"title": "entrada"}),
                           icon: Icon(Icons.check,
                               color: Colors.white, size: 50.r),
                         ),
@@ -67,11 +65,8 @@ class HomeWorkerScreen extends StatelessWidget {
                             ),
                           ),
                           onPressed: () => Navigator.of(context).pushNamed(
-                              MoreOptionsScreen.route,
-                              arguments: <String, dynamic>{
-                                "isEntrance": false,
-                                "title": "salida"
-                              }),
+                              RegisterAttendanceScreen.route,
+                              arguments: <String, dynamic>{"title": "salida"}),
                           icon: Icon(Icons.close,
                               color: Colors.white, size: 50.r),
                         ),
@@ -94,7 +89,11 @@ class HomeWorkerScreen extends StatelessWidget {
                       Color(0xffC99B25),
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(
+                        RegisterAttendanceScreen.route,
+                        arguments: <String, dynamic>{"title": "comida"});
+                  },
                   icon: Icon(Icons.fastfood_outlined,
                       color: Colors.white, size: 50.r),
                 ),

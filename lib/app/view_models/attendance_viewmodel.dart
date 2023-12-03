@@ -21,12 +21,12 @@ class AttendanceViewModel {
     List<String> lastNameWorkerArray = workerModel.apellido.split(' ');
     _firstNameWorker = firstNameWorkerArray[0];
     _lastNameWorker = lastNameWorkerArray[0];
-    _checkInHour = checkInModel.horaEntrada;
-    _checkOutHour = checkOutModel.horaSalida;
+    _checkInHour = checkInModel.hora;
+    _checkOutHour = checkOutModel.hora;
     _urlPhoto = workerModel.urlPhoto;
   }
 
-  String get checkOutHour => _checkOutHour ?? "";
+  String get checkOutHour => _checkOutHour!;
 
   String get urlPhoto => _urlPhoto!;
 

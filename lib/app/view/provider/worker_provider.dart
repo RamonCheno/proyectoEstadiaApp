@@ -36,11 +36,12 @@ class WorkerProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<WorkerModel> selectWorkerModel(int numWorker) async {
+  Future<WorkerModel?> selectWorkerModel(int numWorker,
+      {bool useAnominoAuth = false}) async {
     WorkerModel? workerModelSelect = await _workerController
-        .getWorkerData(numWorker, useAnonymousAuth: false);
+        .getWorkerData(numWorker, useAnonymousAuth: useAnominoAuth);
     notifyListeners();
-    return workerModelSelect!;
+    return workerModelSelect;
   }
 
   Future<String> updateWorkerProvider(
@@ -52,8 +53,8 @@ class WorkerProvider with ChangeNotifier {
   }
 
   Future<void> setVisibleWorkerProvider(int numWorker, bool working) async {
-    WorkerModel workerModel = await selectWorkerModel(numWorker);
-    await _workerController.setVisibleWorker(numWorker, working, workerModel);
+    WorkerModel? workerModel = await selectWorkerModel(numWorker);
+    await _workerController.setVisibleWorker(numWorker, working, workerModel!);
   }
 
   Future<void> deleteWorkerProvider(

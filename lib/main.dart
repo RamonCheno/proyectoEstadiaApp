@@ -2,6 +2,7 @@ import 'package:control_asistencia_app/app/packages/packages_pub.dart';
 import 'package:control_asistencia_app/app/packages/packageslocal_view.dart';
 import 'package:control_asistencia_app/app/view/provider/perfil_provide.dart';
 import 'package:control_asistencia_app/app/view/screen/admin_screens/crud_admin/edit_info_admin_screen.dart';
+import 'package:control_asistencia_app/app/view/screen/worker_screens/checkin_method_screens/registerattendance_screen.dart';
 import 'package:control_asistencia_app/dev/firebase_options_dev.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -72,6 +73,7 @@ class MyApp extends StatelessWidget {
     UpdateWorkerScreen.route: (_) => const UpdateWorkerScreen(),
     PerfilUserScreen.route: (_) => PerfilUserScreen(),
     EditInfoAdminScreen.route: (_) => const EditInfoAdminScreen(),
+    RegisterAttendanceScreen.route: (_) => const RegisterAttendanceScreen(),
   };
 
   // This widget is the root of your application.

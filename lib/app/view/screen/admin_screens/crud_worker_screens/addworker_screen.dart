@@ -70,7 +70,6 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
           puesto: workerPosition.trim(),
           urlPhoto: urlImage,
           visible: true,
-          // idHuella: idWorker,
         );
         String response = await workerProvider.addWokerProvider(workerModel);
         if (!mounted) return;
