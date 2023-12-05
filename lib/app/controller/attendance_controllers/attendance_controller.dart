@@ -1,18 +1,17 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:control_asistencia_app/app/common/firebase_service_common.dart';
 import 'package:control_asistencia_app/app/controller/worker_controllers/worker_controller.dart';
 import 'package:control_asistencia_app/app/model/attendance/attendance_model.dart';
 import 'package:control_asistencia_app/app/model/attendance/checkout_model.dart';
 import 'package:control_asistencia_app/app/model/attendance/ckeckin_model.dart';
 import 'package:control_asistencia_app/app/model/user/worker_model.dart';
 import 'package:control_asistencia_app/app/view_models/attendance_viewmodel.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class AttendanceController {
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final FirebaseServiceCommon _firebaseServiceCommon = FirebaseServiceCommon();
   final WorkerController _workerController = WorkerController();
 
   Future<String> addCheckIn(
@@ -25,8 +24,9 @@ class AttendanceController {
     try {
       final checkInMap = attendanceModel.toMap();
       final checkInDay = checkInMap["fecha"];
-      await _firebaseAuth.signInAnonymously();
-      final CollectionReference subColleAttendance = _firestore
+      await _firebaseServiceCommon.firebaseAuth.signInAnonymously();
+      final CollectionReference subColleAttendance = _firebaseServiceCommon
+          .firestore
           .collection("Trabajador/${workerModel.numTrabajador}/Asistencia");
       await subColleAttendance.doc(checkInDay).set({
         "Entrada": checkInMap,
@@ -35,7 +35,7 @@ class AttendanceController {
           "hora": null,
         }
       });
-      await _firebaseAuth.signOut();
+      await _firebaseServiceCommon.firebaseAuth.signOut();
       return "asistencia guardado";
     } catch (e) {
       debugPrint("Error: $e");
@@ -52,8 +52,9 @@ class AttendanceController {
     }
     try {
       final checkOutMap = attendanceModel.toMap();
-      await _firebaseAuth.signInAnonymously();
-      final CollectionReference subColleAttendance = _firestore
+      await _firebaseServiceCommon.firebaseAuth.signInAnonymously();
+      final CollectionReference subColleAttendance = _firebaseServiceCommon
+          .firestore
           .collection("Trabajador/${workerModel.numTrabajador}/Asistencia");
 
       DocumentReference documentReference =
@@ -65,7 +66,7 @@ class AttendanceController {
       } else {
         await documentReference.update({"Salida": checkOutMap});
         debugPrint(documentReference.id);
-        await _firebaseAuth.signOut();
+        await _firebaseServiceCommon.firebaseAuth.signOut();
         return "asistencia guardado";
       }
     } catch (e) {
@@ -79,7 +80,8 @@ class AttendanceController {
     final checkInstance = CheckInModel.instance();
     final checkOutInstance = CheckOutModel.instance();
     try {
-      final QuerySnapshot querySnapshotWorker = await _firestore
+      final QuerySnapshot querySnapshotWorker = await _firebaseServiceCommon
+          .firestore
           .collection('Trabajador')
           .orderBy("apellido", descending: false)
           .get();

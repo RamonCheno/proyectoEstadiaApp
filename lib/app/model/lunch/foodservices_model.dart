@@ -1,20 +1,18 @@
 abstract class FoodServicesModel {
   String? _date;
   String? _hour;
-  int? _quantity;
 
   String get date => _date!;
 
   String get hour => _hour!;
 
-  int get quantity => _quantity!;
-
   FoodServicesModel.instance();
 
-  FoodServicesModel(
-      {required String date, required String hour, required int quantity}) {
+  FoodServicesModel({
+    required String date,
+    required String hour,
+  }) {
     _hour = hour;
-    _quantity = quantity;
     _date = date;
   }
 
@@ -22,3 +20,15 @@ abstract class FoodServicesModel {
 
   Map<String, dynamic> toMap();
 }
+
+
+/*
+  desayuno: {
+    hora: 
+  },
+  almuerzo: {
+    hora: 5:00 pm
+  }
+  fecha: 04/12/2023
+
+*/

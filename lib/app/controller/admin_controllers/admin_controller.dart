@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:control_asistencia_app/app/common/firebase_service_common.dart';
 import 'package:control_asistencia_app/app/common/shared_preferences_common.dart';
 import 'package:control_asistencia_app/app/model/user/admin_model.dart';
 import 'package:control_asistencia_app/app/packages/packages_pub.dart';
@@ -9,25 +10,28 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class AdminController {
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
-  FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-  FirebaseStorage firebaseStorage = FirebaseStorage.instance;
-  SharedPreferencesCommon sharedPreferencesCommon = SharedPreferencesCommon();
+  final SharedPreferencesCommon sharedPreferencesCommon =
+      SharedPreferencesCommon();
+  final FirebaseServiceCommon _firebaseServiceCommon = FirebaseServiceCommon();
 
   Future<String> registerAdmin(AdminModel adminModel, String password) async {
     try {
       final adminMap = adminModel.toMap();
       final emailAdmin = adminMap["email"];
-      final userSignInMethod =
-          await firebaseAuth.fetchSignInMethodsForEmail(emailAdmin);
+      final userSignInMethod = await _firebaseServiceCommon.firebaseAuth
+          .fetchSignInMethodsForEmail(emailAdmin);
       if (userSignInMethod.isNotEmpty) {
         return "El correo electrónico ya está registrado";
       } else {
-        UserCredential userCredential =
-            await firebaseAuth.createUserWithEmailAndPassword(
+        UserCredential userCredential = await _firebaseServiceCommon
+            .firebaseAuth
+            .createUserWithEmailAndPassword(
                 email: emailAdmin, password: password);
         User user = userCredential.user!;
-        await firestore.collection("Administrador").doc(user.uid).set(adminMap);
+        await _firebaseServiceCommon.firestore
+            .collection("Administrador")
+            .doc(user.uid)
+            .set(adminMap);
         return "Registro con exito";
       }
     } on FirebaseFirestore catch (e) {
@@ -38,7 +42,7 @@ class AdminController {
 
   Future<String> loginAdmin(String email, String password) async {
     try {
-      UserCredential userCredential = await firebaseAuth
+      UserCredential userCredential = await _firebaseServiceCommon.firebaseAuth
           .signInWithEmailAndPassword(email: email, password: password);
       User user = userCredential.user!;
       String uidAdmin = user.uid;
@@ -65,8 +69,9 @@ class AdminController {
     String firstNameAdmin = firstNameAdminArray[0];
     String lastNameAdmin = lastNameAdminArray[0];
     String nameComplete = "${firstNameAdmin}_$lastNameAdmin";
-    final storageReference =
-        firebaseStorage.ref().child("fotos/RecursosHumanos/$nameComplete.jpg");
+    final storageReference = _firebaseServiceCommon.firebaseStorage
+        .ref()
+        .child("fotos/RecursosHumanos/$nameComplete.jpg");
 
     bool isExist = await checkIfFileExist(storageReference.fullPath);
     if (isExist) {
@@ -80,7 +85,7 @@ class AdminController {
 
   Future<bool> checkIfFileExist(String filePath) async {
     try {
-      final ref = firebaseStorage.ref(filePath);
+      final ref = _firebaseServiceCommon.firebaseStorage.ref(filePath);
       final isExistFile = (await ref.getMetadata()).fullPath.isNotEmpty;
       return isExistFile;
     } catch (e) {
@@ -93,8 +98,9 @@ class AdminController {
     try {
       String uidAdmin = await SharedPreferencesCommon.loadString("uidAdmin");
       final adminMap = adminModel.toMap();
-      final DocumentReference docRef =
-          firestore.collection('Administrador').doc(uidAdmin);
+      final DocumentReference docRef = _firebaseServiceCommon.firestore
+          .collection('Administrador')
+          .doc(uidAdmin);
       await docRef.update(adminMap);
       return "Informacion actualizado";
     } catch (e) {
@@ -105,8 +111,10 @@ class AdminController {
   Future<dynamic> getDataAdmin({bool returnViewModel = false}) async {
     try {
       String uidAdmin = await SharedPreferencesCommon.loadString("uidAdmin");
-      final adminFromMap =
-          await firestore.collection("Administrador").doc(uidAdmin).get();
+      final adminFromMap = await _firebaseServiceCommon.firestore
+          .collection("Administrador")
+          .doc(uidAdmin)
+          .get();
       AdminModel adminModel = AdminModel.fromMap(adminFromMap.data()!);
       if (returnViewModel) {
         AdminViewModel adminViewModel = AdminViewModel(adminModel);
@@ -119,7 +127,7 @@ class AdminController {
   }
 
   void signOut() async {
-    await firebaseAuth.signOut();
+    await _firebaseServiceCommon.firebaseAuth.signOut();
     await SharedPreferencesCommon.clearSheadPreferences("uidAdmin");
   }
 }

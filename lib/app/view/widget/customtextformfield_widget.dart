@@ -97,33 +97,28 @@ class _CustomTextFormWidgetState extends State<CustomTextFormWidget> {
           border: OutlineInputBorder(
             borderRadius: const BorderRadius.all(Radius.circular(15.0)).w,
             borderSide: BorderSide(
-              color: _isFocused
-                  ? const Color(0Xff4caf50)
-                  : const Color(0xffF69100),
+              color: _isFocused ? Colors.black : Colors.red,
             ),
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: const BorderRadius.all(Radius.circular(15.0)).w,
             borderSide: const BorderSide(
-              color: Color(0xffF69100),
+              color: Colors.black,
             ),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: const BorderRadius.all(Radius.circular(15.0)).w,
             borderSide: const BorderSide(
-              color: Color(0Xff4caf50),
+              color: Colors.red,
             ),
           ),
-          prefixIcon: Icon(widget.icon,
-              color: _isFocused
-                  ? const Color(0Xff4caf50)
-                  : const Color(0xffF69100)),
+          prefixIcon:
+              Icon(widget.icon, color: _isFocused ? Colors.red : Colors.black),
           // hintStyle: const TextStyle(color: Color(0xff757575)),
           labelText: widget.hintName,
           labelStyle:
               TextStyle(fontSize: 12.sp, color: const Color(0xff757575)),
-          floatingLabelStyle:
-              TextStyle(color: const Color(0xff4caf50), fontSize: 12.sp),
+          floatingLabelStyle: TextStyle(color: Colors.black, fontSize: 12.sp),
           fillColor: Colors.white,
           filled: true,
         ),

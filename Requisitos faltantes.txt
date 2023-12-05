@@ -5,9 +5,9 @@ Requisitos faltantes
 	- Hacer una busqueda de un numero de treabajador y mostrarlo en la lista y si no existe, 
 		crear un nuevo trabajador (Listo).
 > Crud Comida:
-	- Agregar una nueva subcoleccion para cada trabajador llamado comida.
-	- Tabla comida va a contener como atributo: Desayuno, Comida, Cena.
-	- Cada comida debe contener como id la fecha.
+	- Agregar una nueva subcoleccion para cada trabajador llamado comida. (Listo)
+	- Tabla comida va a contener como atributo: Desayuno, Comida, Cena. (listo)
+	- Cada comida debe contener como id la fecha. (listo)
 > Apartado Reportes
 	- Hacer que se pueda hacer un reporte de asistencias o de comidas y 
 		seleccionar un rango de dia inicial y dia final (reporte diario, semanal o Mensual).

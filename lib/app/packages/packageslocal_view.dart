@@ -5,7 +5,6 @@ export 'package:control_asistencia_app/app/view/screen/admin_screens/login_regis
 export 'package:control_asistencia_app/app/view/screen/admin_screens/crud_admin/register_admin_screen.dart';
 export 'package:control_asistencia_app/app/view/screen/home_screen.dart';
 export 'package:control_asistencia_app/app/view/screen/settings_screen.dart';
-export 'package:control_asistencia_app/app/view/screen/worker_screens/checkin_method_screens/more_options_screen.dart';
 export 'package:control_asistencia_app/app/view/screen/worker_screens/home_worker_screeen.dart';
 export 'package:control_asistencia_app/prod/firebase_options_prod.dart';
 export 'package:control_asistencia_app/app/view/provider/adminprovider.dart';

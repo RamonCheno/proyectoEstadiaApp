@@ -1,6 +1,7 @@
 import 'package:control_asistencia_app/app/packages/packages_pub.dart';
 import 'package:control_asistencia_app/app/packages/packageslocal_view.dart';
 import 'package:control_asistencia_app/app/view/provider/perfil_provide.dart';
+import 'package:control_asistencia_app/app/view/provider/servicefood_provider.dart';
 import 'package:control_asistencia_app/app/view/screen/admin_screens/crud_admin/edit_info_admin_screen.dart';
 import 'package:control_asistencia_app/app/view/screen/worker_screens/checkin_method_screens/registerattendance_screen.dart';
 import 'package:control_asistencia_app/dev/firebase_options_dev.dart';
@@ -43,11 +44,12 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => AttendanceProvider()),
-        ChangeNotifierProvider(create: (context) => ImageProviders()),
-        ChangeNotifierProvider(create: (context) => WorkerProvider()),
-        ChangeNotifierProvider(create: (context) => AdminProvider()),
-        ChangeNotifierProvider(create: (context) => UpdatePerfilProvider()),
+        ChangeNotifierProvider(create: (_) => AttendanceProvider()),
+        ChangeNotifierProvider(create: (_) => ImageProviders()),
+        ChangeNotifierProvider(create: (_) => WorkerProvider()),
+        ChangeNotifierProvider(create: (_) => AdminProvider()),
+        ChangeNotifierProvider(create: (_) => UpdatePerfilProvider()),
+        ChangeNotifierProvider(create: (_) => ServiceFoodProvider()),
       ],
       child: MyApp(),
     ),

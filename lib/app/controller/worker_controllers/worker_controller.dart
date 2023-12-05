@@ -1,28 +1,26 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:control_asistencia_app/app/common/firebase_service_common.dart';
 import 'package:control_asistencia_app/app/model/user/worker_model.dart';
 import 'package:control_asistencia_app/app/view_models/worker_viewmodel.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class WorkerController {
   //Metodos para guardar y obtener trabajados usando cloud firestore
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
-  FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-  FirebaseStorage firebaseStorage = FirebaseStorage.instance;
+  final FirebaseServiceCommon _firebaseServiceCommon = FirebaseServiceCommon();
 
   Future<String> uploadImageToStorage(
       File photoWorker, String nameWorker, String lastNameW) async {
     String response = "";
-    if (firebaseAuth.currentUser != null) {
+    if (_firebaseServiceCommon.firebaseAuth.currentUser != null) {
       List<String> firstNameWorkerArray = nameWorker.split(' ');
       List<String> lastNameWorkerArray = lastNameW.split(' ');
       String firstNameWorker = firstNameWorkerArray[0];
       String lastNameWorker = lastNameWorkerArray[0];
       String nameWorkerComplete = "${firstNameWorker}_$lastNameWorker";
       try {
-        final storageReference = firebaseStorage
+        final storageReference = _firebaseServiceCommon.firebaseStorage
             .ref()
             .child("fotos/trabajadores/$nameWorkerComplete.jpg");
 
@@ -46,8 +44,9 @@ class WorkerController {
       String nameCollection, int numWorker) async {
     String idDocumentWorker = numWorker.toString();
     try {
-      DocumentReference documentWorker =
-          firestore.collection("Trabajador").doc(idDocumentWorker);
+      DocumentReference documentWorker = _firebaseServiceCommon.firestore
+          .collection("Trabajador")
+          .doc(idDocumentWorker);
       CollectionReference subColectionWorker =
           documentWorker.collection(nameCollection);
       QuerySnapshot querySnapshot = await subColectionWorker.get();
@@ -61,7 +60,7 @@ class WorkerController {
 
   Future<bool> checkIfFileExist(String filePath) async {
     try {
-      final ref = firebaseStorage.ref(filePath);
+      final ref = _firebaseServiceCommon.firebaseStorage.ref(filePath);
       final FullMetadata result = await ref.getMetadata();
       String isExistFile = result.fullPath;
       if (isExistFile.isNotEmpty) {
@@ -79,7 +78,10 @@ class WorkerController {
     try {
       final Map<String, dynamic> workerMap = workerModel.toMap();
       final String workerId = workerMap["numTrabajador"].toString();
-      await firestore.collection('Trabajador').doc(workerId).set(workerMap);
+      await _firebaseServiceCommon.firestore
+          .collection('Trabajador')
+          .doc(workerId)
+          .set(workerMap);
       return "Trabajador agregado";
     } on FirebaseFirestore catch (e) {
       debugPrint(e.toString());
@@ -96,8 +98,9 @@ class WorkerController {
   Future<String> updateWorker(int numWorker, WorkerModel workerModel) async {
     try {
       final workeUpdateMap = workerModel.toMap();
-      final DocumentReference docRef =
-          firestore.collection('Trabajador').doc('$numWorker');
+      final DocumentReference docRef = _firebaseServiceCommon.firestore
+          .collection('Trabajador')
+          .doc('$numWorker');
       await docRef.update(workeUpdateMap);
       return "Trabajador actualizado";
     } catch (e) {
@@ -150,7 +153,7 @@ class WorkerController {
 
   Future<List<WorkerViewModel>> getListWokersViewModel(String isWorking) async {
     try {
-      final QuerySnapshot querySnapshot = await firestore
+      final QuerySnapshot querySnapshot = await _firebaseServiceCommon.firestore
           .collection('Trabajador')
           .where("trabajando", isEqualTo: isWorking)
           .orderBy("apellido", descending: false)
@@ -177,9 +180,9 @@ class WorkerController {
       {bool useAnonymousAuth = true}) async {
     try {
       if (useAnonymousAuth) {
-        await firebaseAuth.signInAnonymously();
+        await _firebaseServiceCommon.firebaseAuth.signInAnonymously();
       }
-      QuerySnapshot userSnapshot = await firestore
+      QuerySnapshot userSnapshot = await _firebaseServiceCommon.firestore
           .collection("Trabajador")
           .where("numTrabajador", isEqualTo: numWorker)
           .get();
@@ -189,7 +192,7 @@ class WorkerController {
         Map<String, dynamic> workerData =
             userSnapshot.docs.first.data() as Map<String, dynamic>;
         if (useAnonymousAuth) {
-          await firebaseAuth.signOut();
+          await _firebaseServiceCommon.firebaseAuth.signOut();
         }
         WorkerModel workerModel = WorkerModel.fromMap(workerData);
         return workerModel;
