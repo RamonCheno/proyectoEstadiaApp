@@ -1,13 +1,10 @@
 import 'dart:io';
 
-import 'package:control_asistencia_app/app/model/user/admin_model.dart';
+import 'package:control_asistencia_app/app/packages/packagelocal_model.dart';
+import 'package:control_asistencia_app/app/packages/packagelocal_provider.dart';
+import 'package:control_asistencia_app/app/packages/packagelocal_widgets.dart';
 import 'package:control_asistencia_app/app/packages/packages_pub.dart';
-import 'package:control_asistencia_app/app/view/provider/adminprovider.dart';
-import 'package:control_asistencia_app/app/view/provider/image_provider.dart';
-import 'package:control_asistencia_app/app/view/provider/perfil_provide.dart';
-import 'package:control_asistencia_app/app/view/screen/camera_screen.dart';
-import 'package:control_asistencia_app/app/view/widget/customtextformfield_widget.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:control_asistencia_app/app/packages/packageslocal_view.dart';
 
 class EditInfoAdminScreen extends StatefulWidget {
   const EditInfoAdminScreen({super.key});
@@ -20,7 +17,7 @@ class EditInfoAdminScreen extends StatefulWidget {
 class _EditInfoAdminScreenState extends State<EditInfoAdminScreen> {
   bool isEnable = false;
   bool onlyRead = true;
-  // String? newImgUrl;
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   void editInformation() async {

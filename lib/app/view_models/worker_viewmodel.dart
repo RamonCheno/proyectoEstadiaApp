@@ -1,4 +1,4 @@
-import 'package:control_asistencia_app/app/model/user/worker_model.dart';
+import 'package:control_asistencia_app/app/packages/packagelocal_model.dart';
 
 class WorkerViewModel {
   late String _numWorker;

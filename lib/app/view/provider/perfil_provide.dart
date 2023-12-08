@@ -1,5 +1,5 @@
+import 'package:control_asistencia_app/app/packages/packagelocal_provider.dart';
 import 'package:control_asistencia_app/app/packages/packages_pub.dart';
-import 'package:control_asistencia_app/app/view/provider/adminprovider.dart';
 
 class UpdatePerfilProvider extends ChangeNotifier {
   String? _imagePath;
@@ -31,8 +31,6 @@ class UpdatePerfilProvider extends ChangeNotifier {
   String get email => _email!;
 
   String? get imagePath => _imagePath ?? "";
-
-  // ImageProvider<Object>? get image => _image;
 
   Future<void> getDataPerfil(BuildContext context) async {
     final provider = Provider.of<AdminProvider>(context, listen: false);

@@ -1,11 +1,8 @@
-import 'package:control_asistencia_app/app/controller/admin_controllers/admin_controller.dart';
-import 'package:control_asistencia_app/app/model/user/admin_model.dart';
-import 'package:control_asistencia_app/app/view/widget/customdialog_widget.dart';
-import 'package:control_asistencia_app/app/view/widget/customtextformfield_widget.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import '../login_register_tabbar_screen.dart';
+import 'package:control_asistencia_app/app/packages/packagelocal_controller.dart';
+import 'package:control_asistencia_app/app/packages/packagelocal_model.dart';
+import 'package:control_asistencia_app/app/packages/packagelocal_widgets.dart';
+import 'package:control_asistencia_app/app/packages/packages_pub.dart';
+import 'package:control_asistencia_app/app/packages/packageslocal_view.dart';
 
 class RegisterAdminScreen extends StatefulWidget {
   const RegisterAdminScreen({super.key});
@@ -117,6 +114,7 @@ class _RegisterAdminScreenState extends State<RegisterAdminScreen> {
                 inputType: TextInputType.number,
                 action: TextInputAction.next,
                 soloLeer: false,
+                lengthChar: 8,
               ),
               CustomTextFormWidget(
                 controller: _conFirtNameAdmin,

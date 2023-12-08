@@ -1,14 +1,8 @@
-import 'package:control_asistencia_app/app/controller/admin_controllers/admin_controller.dart';
+import 'package:control_asistencia_app/app/packages/packagelocal_controller.dart';
+import 'package:control_asistencia_app/app/packages/packagelocal_provider.dart';
+import 'package:control_asistencia_app/app/packages/packagelocal_widgets.dart';
 import 'package:control_asistencia_app/app/packages/packages_pub.dart';
-import 'package:control_asistencia_app/app/view/provider/adminprovider.dart';
-import 'package:control_asistencia_app/app/view/provider/image_provider.dart';
-import 'package:control_asistencia_app/app/view/screen/admin_screens/crud_worker_screens/listworker_screen.dart';
-import 'package:control_asistencia_app/app/view/screen/admin_screens/listattendance_screen.dart';
-import 'package:control_asistencia_app/app/view/screen/admin_screens/login_register_tabbar_screen.dart';
-import 'package:control_asistencia_app/app/view/screen/admin_screens/perfile_user_screen.dart';
-import 'package:control_asistencia_app/app/view/screen/settings_screen.dart';
-import 'package:control_asistencia_app/app/view/widget/customdialog_widget.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:control_asistencia_app/app/packages/packageslocal_view.dart';
 
 class HomeAdminScreen extends StatelessWidget {
   HomeAdminScreen({super.key});
@@ -16,14 +10,6 @@ class HomeAdminScreen extends StatelessWidget {
   static const route = "/homeAdminScreen";
 
   final AdminController _adminController = AdminController();
-
-  // String? _imagePath;
-  // void getViewModelAdmin(BuildContext context) async {
-  //   final provider = Provider.of<AdminProvider>(context, listen: false);
-  //   provider.getAdminViewModel(context);
-  //   // setState(() {
-  //   // });
-  // }
 
   void getAssetImageProvider(ImageProviders imageProvider) {
     imageProvider.getAssetPath("assets/images/usuario.png");
@@ -165,34 +151,6 @@ class HomeAdminScreen extends StatelessWidget {
                       ],
                     ),
                     child: const HeaderWidget(),
-                    // FutureBuilder(
-                    //   future: adminProvider.getAdminViewModel(),
-                    //   builder: (context, snapshot) {
-                    //     // final imgProvider =
-                    //     //     Provider.of<ImageProviders>(context, listen: false);
-                    //     if (snapshot.connectionState == ConnectionState.waiting) {
-                    //       return Row(
-                    //         children: [
-                    //           Material(
-                    //             color: const Color(0xffE1E1E1),
-                    //             shape: const CircleBorder(),
-                    //             child: Icon(
-                    //               Icons.person_outline,
-                    //               size: 60.r,
-                    //             ),
-                    //           ),
-                    //           SizedBox(
-                    //             width: 20.w,
-                    //           ),
-                    //           Text("Nombre apellido",
-                    //               style: TextStyle(fontSize: 18.sp)),
-                    //         ],
-                    //       );
-                    //     } else {
-
-                    //     }
-                    //   },
-                    // ),
                   ),
                 ),
                 Row(
@@ -258,8 +216,8 @@ class HomeAdminScreen extends StatelessWidget {
                             ),
                             icon: Icon(Icons.description_outlined,
                                 size: 70.r, color: Colors.white),
-                            onPressed: () =>
-                                debugPrint("Boton reportes presionado"),
+                            onPressed: () => Navigator.of(context)
+                                .pushNamed(ReportsScreen.route),
                           ),
                           Text("Reportes", style: TextStyle(fontSize: 14.sp)),
                         ],

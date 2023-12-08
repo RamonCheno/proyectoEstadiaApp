@@ -1,11 +1,5 @@
 import 'dart:io';
-
-import 'package:camera/camera.dart';
 import 'package:control_asistencia_app/app/packages/packages_pub.dart';
-import 'package:flutter/services.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 
 class ImageProviders with ChangeNotifier {
   CameraController? _controller;

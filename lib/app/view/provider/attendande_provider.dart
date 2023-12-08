@@ -1,8 +1,8 @@
-import 'package:control_asistencia_app/app/controller/attendance_controllers/attendance_controller.dart';
-import 'package:control_asistencia_app/app/model/attendance/attendance_model.dart';
+import 'package:control_asistencia_app/app/packages/packagelocal_controller.dart';
+import 'package:control_asistencia_app/app/packages/packagelocal_model.dart';
+import 'package:control_asistencia_app/app/packages/packagelocal_widgets.dart';
 import 'package:control_asistencia_app/app/packages/packages_pub.dart';
-import 'package:control_asistencia_app/app/view/widget/customdialog_widget.dart';
-import 'package:control_asistencia_app/app/view_models/attendance_viewmodel.dart';
+import 'package:control_asistencia_app/app/packages/packageslocal_view.dart';
 
 class AttendanceProvider with ChangeNotifier {
   final AttendanceController _attendanceController = AttendanceController();

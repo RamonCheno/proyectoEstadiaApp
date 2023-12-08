@@ -1,14 +1,8 @@
-import 'dart:async';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:control_asistencia_app/app/common/firebase_service_common.dart';
-import 'package:control_asistencia_app/app/controller/worker_controllers/worker_controller.dart';
-import 'package:control_asistencia_app/app/model/attendance/attendance_model.dart';
-import 'package:control_asistencia_app/app/model/attendance/checkout_model.dart';
-import 'package:control_asistencia_app/app/model/attendance/ckeckin_model.dart';
-import 'package:control_asistencia_app/app/model/user/worker_model.dart';
-import 'package:control_asistencia_app/app/view_models/attendance_viewmodel.dart';
-import 'package:flutter/material.dart';
+import 'package:control_asistencia_app/app/packages/packagelocal_controller.dart';
+import 'package:control_asistencia_app/app/packages/packagelocal_model.dart';
+import 'package:control_asistencia_app/app/packages/packages_pub.dart';
+import 'package:control_asistencia_app/app/packages/packageslocal_view.dart';
 
 class AttendanceController {
   final FirebaseServiceCommon _firebaseServiceCommon = FirebaseServiceCommon();

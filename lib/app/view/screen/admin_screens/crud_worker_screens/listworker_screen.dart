@@ -1,14 +1,8 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:control_asistencia_app/app/model/user/worker_model.dart';
-import 'package:control_asistencia_app/app/view/provider/worker_provider.dart';
-import 'package:control_asistencia_app/app/view/screen/admin_screens/crud_worker_screens/addworker_screen.dart';
-import 'package:control_asistencia_app/app/view/screen/admin_screens/crud_worker_screens/updateworker_screen.dart';
-import 'package:control_asistencia_app/app/view/widget/customdialog_widget.dart';
-import 'package:control_asistencia_app/app/view/widget/searchfield_widget.dart';
-import 'package:control_asistencia_app/app/view_models/worker_viewmodel.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
+import 'package:control_asistencia_app/app/packages/packagelocal_model.dart';
+import 'package:control_asistencia_app/app/packages/packagelocal_provider.dart';
+import 'package:control_asistencia_app/app/packages/packagelocal_widgets.dart';
+import 'package:control_asistencia_app/app/packages/packages_pub.dart';
+import 'package:control_asistencia_app/app/packages/packageslocal_view.dart';
 
 class ListWorkerScreen extends StatefulWidget {
   const ListWorkerScreen({super.key});
@@ -32,100 +26,51 @@ class _ListWorkerScreenState extends State<ListWorkerScreen> {
     //si no se encontro, dar opcion de agregar un nuevo trabajado.
 
     showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return CustomDialogWidget(
-            iconData: const Icon(Icons.search),
-            messagge: Container(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: Column(
-                children: [
-                  SearchFieldWidget(
-                    workerProvider: workerProvider,
-                    isWorking: 'baja',
-                    action: (numWorker) {
-                      workerProvider.setVisibleWorkerProvider(numWorker, true);
-                      Navigator.pop(context);
-                    },
-                  ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(vertical: 10),
-                    child: Center(
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          elevation: 1,
-                          padding: const EdgeInsets.symmetric(horizontal: 24),
-                          textStyle: const TextStyle(fontSize: 18),
-                          backgroundColor: const Color(0xFFD9D9D9),
-                          foregroundColor: const Color(0xFF000000),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                        ),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                          Navigator.of(context)
-                              .pushNamed(AddWorkerScreen.route);
-                        },
-                        child: const Text(
-                          "Registrar nuevo personal",
-                        ),
+      context: context,
+      builder: (BuildContext context) {
+        return CustomDialogWidget(
+          iconData: const Icon(Icons.search),
+          title: "Buscador de trabajador",
+          messagge: Container(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Column(children: [
+              SearchFieldWidget(
+                workerProvider: workerProvider,
+                isWorking: 'baja',
+                action: (numWorker) {
+                  workerProvider.setVisibleWorkerProvider(numWorker, true);
+                  Navigator.pop(context);
+                },
+              ),
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 10),
+                child: Center(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      elevation: 1,
+                      padding: const EdgeInsets.symmetric(horizontal: 24),
+                      textStyle: const TextStyle(fontSize: 18),
+                      backgroundColor: const Color(0xFFD9D9D9),
+                      foregroundColor: const Color(0xFF000000),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
                       ),
                     ),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pushNamed(AddWorkerScreen.route);
+                    },
+                    child: const Text(
+                      "Registrar nuevo personal",
+                    ),
                   ),
-                ],
+                ),
               ),
-            ),
-          );
-        });
-
-    // showDialog(
-    //   context: context,
-    //   builder: (BuildContext context) {
-    //     return AlertDialog(
-    //       title: const Text("Buscador de personal existente"),
-    //       content: Container(
-    //           padding: const EdgeInsets.symmetric(vertical: 10),
-    //           child: Column(
-    //             children: [
-    //               SearchFieldWidget(
-    //                 workerProvider: workerProvider,
-    //                 isWorking: 'baja',
-    //                 action: (numWorker) {
-    //                   workerProvider.setVisibleWorkerProvider(numWorker, true);
-    //                   Navigator.pop(context);
-    //                 },
-    //               ),
-    //               Container(
-    //                 margin: const EdgeInsets.symmetric(vertical: 10),
-    //                 child: Center(
-    //                   child: ElevatedButton(
-    //                     style: ElevatedButton.styleFrom(
-    //                       elevation: 1,
-    //                       padding: const EdgeInsets.symmetric(horizontal: 24),
-    //                       textStyle: const TextStyle(fontSize: 18),
-    //                       backgroundColor: const Color(0xFFD9D9D9),
-    //                       foregroundColor: const Color(0xFF000000),
-    //                       shape: RoundedRectangleBorder(
-    //                         borderRadius: BorderRadius.circular(20),
-    //                       ),
-    //                     ),
-    //                     onPressed: () {
-    //                       Navigator.of(context).pop();
-    //                       Navigator.of(context)
-    //                           .pushNamed(AddWorkerScreen.route);
-    //                     },
-    //                     child: const Text(
-    //                       "Registrar nuevo personal",
-    //                     ),
-    //                   ),
-    //                 ),
-    //               ),
-    //             ],
-    //           )),
-    //     );
-    //   },
-    // );
+            ]),
+          ),
+        );
+      },
+    );
   }
 
   void deteleWorkerColection(

@@ -1,10 +1,9 @@
 import 'dart:io';
-
-import 'package:control_asistencia_app/app/controller/admin_controllers/admin_controller.dart';
-import 'package:control_asistencia_app/app/model/user/admin_model.dart';
+import 'package:control_asistencia_app/app/packages/packagelocal_controller.dart';
+import 'package:control_asistencia_app/app/packages/packagelocal_model.dart';
+import 'package:control_asistencia_app/app/packages/packagelocal_widgets.dart';
 import 'package:control_asistencia_app/app/packages/packages_pub.dart';
-import 'package:control_asistencia_app/app/view/widget/customdialog_widget.dart';
-import 'package:control_asistencia_app/app/view_models/admin_viewmodel.dart';
+import 'package:control_asistencia_app/app/packages/packageslocal_view.dart';
 
 class AdminProvider extends ChangeNotifier {
   final AdminController _adminController = AdminController();

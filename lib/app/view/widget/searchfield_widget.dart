@@ -1,8 +1,6 @@
-import 'package:control_asistencia_app/app/view/provider/worker_provider.dart';
-import 'package:control_asistencia_app/app/view_models/worker_viewmodel.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:searchfield/searchfield.dart';
+import 'package:control_asistencia_app/app/packages/packagelocal_provider.dart';
+import 'package:control_asistencia_app/app/packages/packages_pub.dart';
+import 'package:control_asistencia_app/app/packages/packageslocal_view.dart';
 
 class SearchFieldWidget extends StatefulWidget {
   final WorkerProvider workerProvider;

@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:control_asistencia_app/app/packages/packages_pub.dart';
 
 class CustomDialogWidget extends StatelessWidget {
   final Widget messagge;

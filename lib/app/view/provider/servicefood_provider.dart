@@ -1,5 +1,5 @@
-import 'package:control_asistencia_app/app/controller/servicesfood_controller/servicefood_controller.dart';
-import 'package:control_asistencia_app/app/model/lunch/foodservices_model.dart';
+import 'package:control_asistencia_app/app/packages/packagelocal_controller.dart';
+import 'package:control_asistencia_app/app/packages/packagelocal_model.dart';
 import 'package:control_asistencia_app/app/packages/packages_pub.dart';
 
 class ServiceFoodProvider extends ChangeNotifier {
@@ -12,8 +12,7 @@ class ServiceFoodProvider extends ChangeNotifier {
     notifyListeners();
     return response;
   }
-
-  Future<void> getListFoodServices() async {
-    await _serviceFoodControllder.getListFoodService();
-  }
+  // Future<void> getListFoodServices() async {
+  //   await _serviceFoodControllder.getListFoodService();
+  // }
 }

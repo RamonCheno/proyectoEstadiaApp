@@ -1,6 +1,5 @@
-import 'package:camera/camera.dart';
+import 'package:control_asistencia_app/app/packages/packagelocal_provider.dart';
 import 'package:control_asistencia_app/app/packages/packages_pub.dart';
-import 'package:control_asistencia_app/app/view/provider/image_provider.dart';
 
 class CameraScreen extends StatefulWidget {
   const CameraScreen({super.key});

@@ -1,11 +1,6 @@
-import 'dart:async';
-
-import 'package:cached_network_image/cached_network_image.dart';
-// import 'package:control_asistencia_app/app/controller/attendance_controllers/attendance_controller.dart';
+import 'package:control_asistencia_app/app/packages/packagelocal_provider.dart';
 import 'package:control_asistencia_app/app/packages/packages_pub.dart';
-import 'package:control_asistencia_app/app/view/provider/attendande_provider.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:control_asistencia_app/app/view_models/attendance_viewmodel.dart';
+import 'package:control_asistencia_app/app/packages/packageslocal_view.dart';
 import 'package:intl/intl.dart';
 
 class ListAttendance extends StatefulWidget {
@@ -17,9 +12,6 @@ class ListAttendance extends StatefulWidget {
 }
 
 class _ListAttendanceState extends State<ListAttendance> {
-  // final AttendanceProvider attendanceProvider = AttendanceProvider();
-  // final AttendanceController _attendanceController = AttendanceController();
-
   final DateFormat dateFormat = DateFormat('dd-MM-yyyy');
   String dateNowText = '';
   int attendancelength = 0;

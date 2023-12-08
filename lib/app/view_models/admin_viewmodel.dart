@@ -1,4 +1,4 @@
-import 'package:control_asistencia_app/app/model/user/admin_model.dart';
+import 'package:control_asistencia_app/app/packages/packagelocal_model.dart';
 
 class AdminViewModel {
   String? _nombre;

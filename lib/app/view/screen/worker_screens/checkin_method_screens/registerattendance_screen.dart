@@ -1,19 +1,8 @@
-import 'package:after_layout/after_layout.dart';
 import 'package:control_asistencia_app/app/common/shared_preferences_common.dart';
-import 'package:control_asistencia_app/app/model/attendance/attendance_model.dart';
-import 'package:control_asistencia_app/app/model/attendance/checkout_model.dart';
-import 'package:control_asistencia_app/app/model/attendance/ckeckin_model.dart';
-import 'package:control_asistencia_app/app/model/lunch/breakfase_model.dart';
-import 'package:control_asistencia_app/app/model/lunch/dinner_model.dart';
-import 'package:control_asistencia_app/app/model/lunch/foodservices_model.dart';
-import 'package:control_asistencia_app/app/model/lunch/lunch_model.dart';
-import 'package:control_asistencia_app/app/model/user/worker_model.dart';
+import 'package:control_asistencia_app/app/packages/packagelocal_model.dart';
+import 'package:control_asistencia_app/app/packages/packagelocal_provider.dart';
+import 'package:control_asistencia_app/app/packages/packagelocal_widgets.dart';
 import 'package:control_asistencia_app/app/packages/packages_pub.dart';
-import 'package:control_asistencia_app/app/view/provider/attendande_provider.dart';
-import 'package:control_asistencia_app/app/view/provider/servicefood_provider.dart';
-import 'package:control_asistencia_app/app/view/provider/worker_provider.dart';
-import 'package:control_asistencia_app/app/view/widget/customtextformfield_widget.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
 class RegisterAttendanceScreen extends StatefulWidget {

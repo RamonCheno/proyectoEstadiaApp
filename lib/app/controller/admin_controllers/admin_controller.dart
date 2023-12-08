@@ -1,13 +1,9 @@
 import 'dart:io';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:control_asistencia_app/app/common/firebase_service_common.dart';
 import 'package:control_asistencia_app/app/common/shared_preferences_common.dart';
-import 'package:control_asistencia_app/app/model/user/admin_model.dart';
+import 'package:control_asistencia_app/app/packages/packagelocal_model.dart';
 import 'package:control_asistencia_app/app/packages/packages_pub.dart';
-import 'package:control_asistencia_app/app/view_models/admin_viewmodel.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+import 'package:control_asistencia_app/app/packages/packageslocal_view.dart';
 
 class AdminController {
   final SharedPreferencesCommon sharedPreferencesCommon =

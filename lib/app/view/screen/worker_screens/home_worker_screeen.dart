@@ -1,6 +1,5 @@
-import 'package:control_asistencia_app/app/view/screen/worker_screens/checkin_method_screens/registerattendance_screen.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:control_asistencia_app/app/packages/packages_pub.dart';
+import 'package:control_asistencia_app/app/packages/packageslocal_view.dart';
 
 class HomeWorkerScreen extends StatelessWidget {
   const HomeWorkerScreen({super.key});

@@ -1,10 +1,5 @@
-// import 'package:control_asistencia_app/app/view/screen/admin_screens/login_admin_screen.dart';
-import 'package:control_asistencia_app/app/view/screen/worker_screens/home_worker_screeen.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import 'admin_screens/login_register_tabbar_screen.dart';
-// import 'scan_devices_bluetooth_screen.dart';
+import 'package:control_asistencia_app/app/packages/packages_pub.dart';
+import 'package:control_asistencia_app/app/packages/packageslocal_view.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

@@ -1,10 +1,8 @@
 import 'dart:io';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:control_asistencia_app/app/common/firebase_service_common.dart';
-import 'package:control_asistencia_app/app/model/user/worker_model.dart';
-import 'package:control_asistencia_app/app/view_models/worker_viewmodel.dart';
-import 'package:flutter/material.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+import 'package:control_asistencia_app/app/packages/packagelocal_model.dart';
+import 'package:control_asistencia_app/app/packages/packages_pub.dart';
+import 'package:control_asistencia_app/app/packages/packageslocal_view.dart';
 
 class WorkerController {
   //Metodos para guardar y obtener trabajados usando cloud firestore
@@ -108,48 +106,6 @@ class WorkerController {
       return "Error en actualizar trabajador, Verifique datos de guardado";
     }
   }
-
-  // Future<List<WorkerModel>> getListWokersModel() async {
-  //   final QuerySnapshot querySnapshot = await firestore
-  //       .collection('Trabajador')
-  //       .orderBy("apellido", descending: false)
-  //       .get();
-  //   List<WorkerModel> workerList = [];
-  //   if (querySnapshot.docs.isNotEmpty) {
-  //     for (var worker in querySnapshot.docs) {
-  //       WorkerModel workerModel =
-  //           WorkerModel.fromMap(worker.data() as Map<String, dynamic>);
-  //       workerList.add(workerModel);
-  //     }
-  //     return workerList;
-  //   } else {
-  //     return [];
-  //   }
-  // }
-
-  // Future<List<dynamic>> getListDataWorkers(
-  //     {bool returnViewModel = false}) async {
-  //   final QuerySnapshot querySnapshot = await firestore
-  //       .collection('Trabajador')
-  //       .orderBy("apellido", descending: false)
-  //       .get();
-  //   List<dynamic> workerList = [];
-  //   if (querySnapshot.docs.isNotEmpty) {
-  //     for (var worker in querySnapshot.docs) {
-  //       WorkerModel workerModel =
-  //           WorkerModel.fromMap(worker.data() as Map<String, dynamic>);
-  //       if (returnViewModel) {
-  //         WorkerViewModel workerViewModel = WorkerViewModel(workerModel);
-  //         workerList.add(workerViewModel);
-  //       } else {
-  //         workerList.add(workerModel);
-  //       }
-  //     }
-  //     return workerList;
-  //   } else {
-  //     return [];
-  //   }
-  // }
 
   Future<List<WorkerViewModel>> getListWokersViewModel(String isWorking) async {
     try {
