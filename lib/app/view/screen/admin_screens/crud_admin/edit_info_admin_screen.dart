@@ -31,40 +31,39 @@ class _EditInfoAdminScreenState extends State<EditInfoAdminScreen> {
       perfilProvider.setNewImagePath(assetPath);
     }
     final FormState? form = _formKey.currentState;
-    final int numAdmin = int.parse(perfilProvider.conNumWorker.text);
-    final String firstName = perfilProvider.conFirstNameWorker.text;
-    final String lastName = perfilProvider.conLastNameWorker.text;
-    final String rfcAdmin = perfilProvider.conRFCWorker.text.toUpperCase();
-    final String curp = perfilProvider.conCurpWorker.text.toUpperCase();
-    final int imss = int.parse(perfilProvider.conIMSSWorker.text);
-    final String position = perfilProvider.conAdminPosition.text.trim();
-    await adminProvider.getUrlImage(
-        File(perfilProvider.imagePath!), firstName, lastName);
-    final String imagePath = adminProvider.urlPhoto!;
-    if (form != null) {
-      if (form.validate()) {
-        form.save();
-        AdminModel adminModel = AdminModel(
-          numTrabajador: numAdmin,
-          nombre: firstName.trim(),
-          apellido: lastName.trim(),
-          curp: curp.trim(),
-          rfc: rfcAdmin.trim(),
-          numImss: imss,
-          email: perfilProvider.email,
-          puesto: position.trim(),
-          urlPhoto: perfilProvider.imagePath!.startsWith("https")
-              ? perfilProvider.imagePath!
-              : imagePath,
-        );
-        adminProvider.updateInfoProvider(adminModel).then((response) {
-          if (response == "Informacion actualizado") {
-            adminProvider.showResponseDialog(context, response,
-                updateInfo: true);
-          } else {
-            adminProvider.showResponseDialog(context, response);
-          }
-        });
+    if (form != null && form.validate()) {
+      form.save();
+      final int numAdmin = int.parse(perfilProvider.conNumWorker.text);
+      final String firstName = perfilProvider.conFirstNameWorker.text;
+      final String lastName = perfilProvider.conLastNameWorker.text;
+      final String rfcAdmin = perfilProvider.conRFCWorker.text.toUpperCase();
+      final String curp = perfilProvider.conCurpWorker.text.toUpperCase();
+      final int imss = int.parse(perfilProvider.conIMSSWorker.text);
+      final String position = perfilProvider.conAdminPosition.text.trim();
+      await adminProvider.getUrlImage(
+          File(perfilProvider.imagePath!), firstName, lastName);
+      final String imagePath = adminProvider.urlPhoto!;
+      AdminModel adminModel = AdminModel(
+        numTrabajador: numAdmin,
+        nombre: firstName.trim(),
+        apellido: lastName.trim(),
+        curp: curp.trim(),
+        rfc: rfcAdmin.trim(),
+        numImss: imss,
+        email: perfilProvider.email,
+        puesto: position.trim(),
+        urlPhoto: perfilProvider.imagePath!.startsWith("https")
+            ? perfilProvider.imagePath!
+            : imagePath,
+      );
+      String response = await adminProvider.updateInfoProvider(adminModel);
+      if (!mounted) return;
+      if (response == "Informacion actualizado") {
+        adminProvider.showResponseDialog(context, response, updateInfo: true);
+        await Provider.of<AdminProvider>(context, listen: false)
+            .getAdminViewModel();
+      } else {
+        adminProvider.showResponseDialog(context, response);
       }
     }
   }

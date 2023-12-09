@@ -6,8 +6,6 @@ import 'package:control_asistencia_app/app/packages/packageslocal_view.dart';
 
 class AttendanceProvider with ChangeNotifier {
   final AttendanceController _attendanceController = AttendanceController();
-  // late String _dateNowText;
-  // String get dateNowText => _dateNowText;
 
   List<AttendanceViewModel> _attendanceViewModelList = [];
   List<AttendanceViewModel> get attendanceViewModelList =>

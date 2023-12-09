@@ -16,8 +16,6 @@ class RegisterAttendanceScreen extends StatefulWidget {
 
 class _RegisterAttendanceScreenState extends State<RegisterAttendanceScreen>
     with AfterLayoutMixin<RegisterAttendanceScreen> {
-  //TODO: Rehacer el apartado de registro utilizando providers
-
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _conSearchNumWorker = TextEditingController();
   String selectedOption = "";

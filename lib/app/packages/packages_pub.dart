@@ -15,3 +15,4 @@ export 'package:image_picker/image_picker.dart';
 export 'package:path_provider/path_provider.dart';
 export 'package:cached_network_image/cached_network_image.dart';
 export 'package:camera/camera.dart';
+export 'package:progress_dialog2/progress_dialog2.dart';

@@ -21,10 +21,11 @@ class DropDownMenuCustomWidget extends StatelessWidget {
           title,
           style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
         ),
-        SizedBox(width: 30.w),
+        // SizedBox(width: 30.w),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 20),
-          width: 169.w,
+          margin: const EdgeInsets.symmetric(horizontal: 20),
+          width: 170.w,
           color: Colors.white,
           child: DropdownButton(
             isExpanded: true,

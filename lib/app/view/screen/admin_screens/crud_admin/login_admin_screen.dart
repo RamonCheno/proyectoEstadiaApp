@@ -1,4 +1,5 @@
 import 'package:control_asistencia_app/app/packages/packagelocal_controller.dart';
+import 'package:control_asistencia_app/app/packages/packagelocal_provider.dart';
 import 'package:control_asistencia_app/app/packages/packagelocal_widgets.dart';
 import 'package:control_asistencia_app/app/packages/packages_pub.dart';
 import 'package:control_asistencia_app/app/packages/packageslocal_view.dart';
@@ -16,12 +17,24 @@ class _LoginAdminScreenState extends State<LoginAdminScreen> {
   late TextEditingController _conPass;
   AdminController adminController = AdminController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  late final ProgressDialog pr;
 
   @override
   void initState() {
     super.initState();
     _conEmailAdmin = TextEditingController();
     _conPass = TextEditingController();
+    initProgressDialog();
+  }
+
+  void initProgressDialog() {
+    pr = ProgressDialog(context,
+        type: ProgressDialogType.Normal, isDismissible: false);
+    pr.style(
+      message: 'Espere un momento...',
+      progressWidget: const CircularProgressIndicator(),
+      maxProgress: 100.0,
+    );
   }
 
   @override
@@ -32,6 +45,7 @@ class _LoginAdminScreenState extends State<LoginAdminScreen> {
   }
 
   void login() async {
+    await pr.show();
     final FormState? form = _formKey.currentState;
     if (form != null) {
       if (form.validate()) {
@@ -40,6 +54,7 @@ class _LoginAdminScreenState extends State<LoginAdminScreen> {
         String response = await adminController
             .loginAdmin(email, pass)
             .then((responseMessagge) => responseMessagge);
+        await pr.hide();
         if (response == "Sesion iniciada") {
           if (!mounted) return;
           showDialog(
@@ -61,6 +76,8 @@ class _LoginAdminScreenState extends State<LoginAdminScreen> {
               );
             },
           );
+          await Provider.of<AdminProvider>(context, listen: false)
+              .getAdminViewModel();
         } else {
           if (!mounted) return;
           showDialog(
@@ -85,6 +102,7 @@ class _LoginAdminScreenState extends State<LoginAdminScreen> {
           );
         }
       }
+      await pr.hide();
     }
   }
 

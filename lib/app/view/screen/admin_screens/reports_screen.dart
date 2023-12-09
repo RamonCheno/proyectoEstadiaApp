@@ -38,6 +38,8 @@ class _ReportsScreenState extends State<ReportsScreen> {
     return picked;
   }
 
+  void generateReport() {}
+
   @override
   void dispose() {
     super.dispose();
@@ -60,6 +62,22 @@ class _ReportsScreenState extends State<ReportsScreen> {
         backgroundColor: const Color(0xffEBEBEB),
       ),
       backgroundColor: const Color(0xffEBEBEB),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButton: SizedBox(
+        height: 60.h,
+        child: FittedBox(
+          child: FloatingActionButton(
+            shape: const CircleBorder(),
+            backgroundColor: const Color(0xFFC8C8C8),
+            onPressed: null,
+            child: Icon(
+              Icons.save_outlined,
+              size: 30.r,
+              color: Colors.black,
+            ),
+          ),
+        ),
+      ),
       body: Container(
         margin: const EdgeInsets.symmetric(horizontal: 10),
         child: Column(
@@ -69,16 +87,19 @@ class _ReportsScreenState extends State<ReportsScreen> {
               padding: const EdgeInsets.symmetric(vertical: 15.0),
               child: Text(
                 "Seleccione el tipo de reporte y periodo que desee generar",
-                style: TextStyle(fontSize: 16.sp),
+                style: TextStyle(
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.bold,
+                ),
                 textAlign: TextAlign.center,
               ),
             ),
             Container(
               width: 340.w,
-              height: 295.h,
+              // height: 295.h,
               margin: const EdgeInsets.symmetric(horizontal: 10),
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
-              color: const Color(0xffD9D9D9),
+              color: const Color(0xFFC8C8C8),
               child: Column(
                 children: [
                   DropDownMenuCustomWidget(
@@ -99,91 +120,59 @@ class _ReportsScreenState extends State<ReportsScreen> {
                     onChanged: (value) {
                       setState(() {
                         _selectPeriod = value!;
+                        if (_selectPeriod == "rango de fechas") {
+                          _isVisible = true;
+                        } else {
+                          _isVisible = false;
+                        }
                       });
                     },
                   ),
-                  SizedBox(height: 45.h),
-                  DateCustomWidget(
-                    title: "Fecha Inicial:",
-                    initDate: _initDate,
-                    onPressed: () async {
-                      DateTime? selectedDate =
-                          await _selectedInitialDay(context);
-                      if (selectedDate != null) {
-                        setState(() {
-                          _initDate = formatoFecha.format(selectedDate);
-                        });
-                      }
-                    },
-                  ),
-                  SizedBox(height: 45.h),
-                  DateCustomWidget(
-                    title: "Fecha final:",
-                    initDate: _finishtDate,
-                    onPressed: () async {
-                      DateTime? selectedDate =
-                          await _selectedInitialDay(context);
-                      if (selectedDate != null) {
-                        setState(() {
-                          _finishtDate = formatoFecha.format(selectedDate);
-                        });
-                      }
-                    },
-                  ),
+                  if (_isVisible)
+                    Column(children: [
+                      SizedBox(height: 23.h),
+                      Text(
+                        "Seleccione fecha de inicio y final",
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      SizedBox(height: 23.h),
+                      DateCustomWidget(
+                        title: "inicial:",
+                        initDate: _initDate,
+                        onPressed: () async {
+                          DateTime? selectedDate =
+                              await _selectedInitialDay(context);
+                          if (selectedDate != null) {
+                            setState(() {
+                              _initDate = formatoFecha.format(selectedDate);
+                            });
+                          }
+                        },
+                      ),
+                      SizedBox(height: 45.h),
+                      DateCustomWidget(
+                        title: "final: ",
+                        initDate: _finishtDate,
+                        onPressed: () async {
+                          DateTime? selectedDate =
+                              await _selectedInitialDay(context);
+                          if (selectedDate != null) {
+                            setState(() {
+                              _finishtDate = formatoFecha.format(selectedDate);
+                            });
+                          }
+                        },
+                      ),
+                    ]),
                 ],
               ),
             )
           ],
         ),
       ),
-    );
-  }
-}
-
-class DateCustomWidget extends StatelessWidget {
-  const DateCustomWidget(
-      {super.key,
-      required this.title,
-      required this.initDate,
-      required this.onPressed});
-
-  final String title;
-  final String initDate;
-  final Function() onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(title,
-            style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold)),
-        SizedBox(width: 32.w),
-        Container(
-          // margin: const EdgeInsets.symmetric(horizontal: 20),
-          padding: const EdgeInsets.fromLTRB(20, 0, 10, 0),
-          width: 169.w,
-          color: Colors.white,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                initDate,
-                style: TextStyle(
-                  fontSize: 14.sp,
-                ),
-              ),
-              IconButton(
-                onPressed: onPressed,
-                icon: const Icon(
-                  Icons.date_range,
-                  color: Color(0xffF69100),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
     );
   }
 }

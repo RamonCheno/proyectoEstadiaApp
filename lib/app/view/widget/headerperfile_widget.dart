@@ -14,24 +14,22 @@ class _HeaderPerfilWidgetState extends State<HeaderPerfilWidget> {
     super.initState();
   }
 
-  void getAdminVModel() async {
-    await Provider.of<AdminProvider>(context, listen: false)
-        .getAdminViewModel();
-    setState(() {});
-  }
+  // void getAdminVModel() async {
+  //   await Provider.of<AdminProvider>(context, listen: false)
+  //       .getAdminViewModel();
+  //   setState(() {});
+  // }
 
-  @override
-  void didUpdateWidget(covariant HeaderPerfilWidget oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    getAdminVModel();
-  }
+  // @override
+  // void didUpdateWidget(covariant HeaderPerfilWidget oldWidget) {
+  //   super.didUpdateWidget(oldWidget);
+  //   getAdminVModel();
+  // }
 
   @override
   Widget build(BuildContext context) {
-    // getAdminVModel();
     return Consumer<AdminProvider>(
       builder: (context, adminProvider, child) {
-        // final imgProvider = Provider.of<ImageProviders>(context, listen: false);
         return Column(
           children: [
             Consumer<ImageProviders>(

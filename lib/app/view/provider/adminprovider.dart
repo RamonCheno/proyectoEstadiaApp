@@ -14,8 +14,6 @@ class AdminProvider extends ChangeNotifier {
   bool get isLoading => _isLoading;
   bool _isLoading = true;
 
-  // set setIsLoading(bool value) => _isLoading = value;
-
   int get numHumanResource => _numHumanResource;
   String get firstNameProvider => _firstNameProvider;
   String get lastNameProvider => _lastNameProvider;

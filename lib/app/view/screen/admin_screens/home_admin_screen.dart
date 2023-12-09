@@ -11,10 +11,6 @@ class HomeAdminScreen extends StatelessWidget {
 
   final AdminController _adminController = AdminController();
 
-  void getAssetImageProvider(ImageProviders imageProvider) {
-    imageProvider.getAssetPath("assets/images/usuario.png");
-  }
-
   @override
   Widget build(BuildContext context) {
     Size media = MediaQuery.of(context).size;
@@ -281,29 +277,33 @@ class HeaderWidget extends StatefulWidget {
 }
 
 class _HeaderWidgetState extends State<HeaderWidget> {
-  @override
-  void initState() {
-    super.initState();
-    // getAdminVModel();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  // }
 
-  void getAdminVModel(AdminProvider adminProvider) async {
-    await adminProvider.getAdminViewModel();
-    // setState(() {});
-  }
+  // void getAdminVModel() async {
+  //   await Provider.of<AdminProvider>(context, listen: false)
+  //       .getAdminViewModel();
+  //   setState(() {});
+  // }
+
+  // @override
+  // void didChangeDependencies() {
+  //   super.didChangeDependencies();
+  //   getAdminVModel();
+  // }
 
   // @override
   // void didUpdateWidget(covariant HeaderWidget oldWidget) {
+  //   // TODO: implement didUpdateWidget
   //   super.didUpdateWidget(oldWidget);
-  //   // getAdminVModel();
   // }
 
   @override
   Widget build(BuildContext context) {
-    // getAdminVModel();
     return Consumer<AdminProvider>(
       builder: (context, adminProvider, child) {
-        getAdminVModel(adminProvider);
         if (adminProvider.isLoading) {
           return Row(
             children: [
