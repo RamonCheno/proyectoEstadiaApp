@@ -1,4 +1,4 @@
-import 'package:control_asistencia_app/app/common/shared_preferences_common.dart';
+import 'package:control_asistencia_app/app/packages/packagelocal_common.dart';
 import 'package:control_asistencia_app/app/packages/packagelocal_model.dart';
 import 'package:control_asistencia_app/app/packages/packagelocal_provider.dart';
 import 'package:control_asistencia_app/app/packages/packagelocal_widgets.dart';
@@ -46,6 +46,8 @@ class _RegisterAttendanceScreenState extends State<RegisterAttendanceScreen>
   }
 
   void registerAttendance() async {
+    await ProgresseDialogCommon.progressDialog.show();
+    if (!mounted) return;
     final FormState? from = _formKey.currentState;
     String titleMayus = toBeginningOfSentenceCase(_title)!;
     final WorkerProvider workerProvider =
@@ -90,6 +92,7 @@ class _RegisterAttendanceScreenState extends State<RegisterAttendanceScreen>
             response = await attendanceProvider.addCheckOutProvider(
                 attendanceModel, foundWorker.numTrabajador, fechaEntrada!);
           }
+          await ProgresseDialogCommon.progressDialog.hide();
           if (mounted) {
             if (response == "asistencia guardado") {
               attendanceProvider.showResponseDialog(
@@ -139,6 +142,7 @@ class _RegisterAttendanceScreenState extends State<RegisterAttendanceScreen>
           }
           response = await serviceFoodProvider.addBreakFastProvider(
               foodServiceModel, foundWorker.numTrabajador);
+          await ProgresseDialogCommon.progressDialog.hide();
           if (mounted) {
             if (response == "comida guardado") {
               attendanceProvider.showResponseDialog(

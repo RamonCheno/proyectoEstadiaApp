@@ -41,10 +41,8 @@ class AdminProvider extends ChangeNotifier {
     return dataAdmin;
   }
 
-  Future<void> getUrlImage(
-      File image, String firstName, String lastName) async {
-    _urlPhoto =
-        await _adminController.uploadImageToStorage(image, firstName, lastName);
+  Future<void> getUrlImage(File image, String numWorker) async {
+    _urlPhoto = await _adminController.uploadImageToStorage(image, numWorker);
   }
 
   Future<String> updateInfoProvider(AdminModel adminModel) async {

@@ -10,10 +10,13 @@ class AttendanceProvider with ChangeNotifier {
   List<AttendanceViewModel> _attendanceViewModelList = [];
   List<AttendanceViewModel> get attendanceViewModelList =>
       _attendanceViewModelList;
+  int _attendanceCount = 0;
+  int get attendanceCount => _attendanceCount;
 
   Future<void> getListAttendance(String dateNowText) async {
     _attendanceViewModelList =
         await _attendanceController.getListAttendanceViewModel(dateNowText);
+    _attendanceCount = _attendanceViewModelList.length;
     notifyListeners();
   }
 

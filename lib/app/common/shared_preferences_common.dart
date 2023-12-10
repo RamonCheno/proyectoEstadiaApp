@@ -1,4 +1,4 @@
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:control_asistencia_app/app/packages/packages_pub.dart';
 
 class SharedPreferencesCommon {
   static final Future<SharedPreferences> _prefs =

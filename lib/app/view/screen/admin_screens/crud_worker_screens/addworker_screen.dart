@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:control_asistencia_app/app/packages/packagelocal_common.dart';
 import 'package:control_asistencia_app/app/packages/packagelocal_controller.dart';
 import 'package:control_asistencia_app/app/packages/packagelocal_model.dart';
 import 'package:control_asistencia_app/app/packages/packagelocal_provider.dart';
@@ -26,52 +27,49 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   WorkerController workerController = WorkerController();
   String? _imagePath;
-  final picker = ImagePicker();
-  // BluetoothController bluetoothController = BluetoothController();
-  // int idWorker = 0;
 
   void addWorker() async {
+    await ProgresseDialogCommon.progressDialog.show();
     final FormState? form = _formKey.currentState;
+    if (!mounted) return;
     WorkerProvider workerProvider =
         Provider.of<WorkerProvider>(context, listen: false);
-    if (form != null) {
-      if (form.validate()) {
-        if (_imagePath == null) {
-          String assetPath =
-              await Provider.of<ImageProviders>(context, listen: false)
-                  .getAssetPath("assets/images/usuario.png");
-          _imagePath = assetPath;
-          // workerProvider.showResponseDialog(context, "Agregar una foto");
-        }
-        form.save();
-        int numWorker = int.parse(_conNumWorker.text);
-        String firstNameWorker = _conFirstNameWorker.text;
-        String lastNameWorker = _conLastNameWorker.text;
-        String rfcWorker = _conRFCWorker.text.toUpperCase();
-        String curpWorker = _conCurpWorker.text.toUpperCase();
-        int numIMSSWorker = int.parse(_conIMSSWorker.text);
-        String workerPosition = _conworkerPosition.text;
-        String? urlImage;
-        urlImage = await workerProvider.getUrlImage(
-            File(_imagePath!), firstNameWorker, lastNameWorker);
-        WorkerModel workerModel = WorkerModel(
-          numTrabajador: numWorker,
-          nombre: firstNameWorker.trim(),
-          apellido: lastNameWorker.trim(),
-          curp: curpWorker.trim(),
-          rfc: rfcWorker.trim(),
-          numImss: numIMSSWorker,
-          puesto: workerPosition.trim(),
-          urlPhoto: urlImage,
-          visible: true,
-        );
-        String response = await workerProvider.addWokerProvider(workerModel);
-        if (!mounted) return;
-        if (response == "Trabajador agregado") {
-          workerProvider.showResponseDialog(context, response, addWorker: true);
-        } else {
-          workerProvider.showResponseDialog(context, response);
-        }
+    if (form != null && form.validate()) {
+      if (_imagePath == null) {
+        String assetPath =
+            await Provider.of<ImageProviders>(context, listen: false)
+                .getAssetPath("assets/images/usuario.png");
+        _imagePath = assetPath;
+      }
+      form.save();
+      int numWorker = int.parse(_conNumWorker.text);
+      String firstNameWorker = _conFirstNameWorker.text;
+      String lastNameWorker = _conLastNameWorker.text;
+      String rfcWorker = _conRFCWorker.text.toUpperCase();
+      String curpWorker = _conCurpWorker.text.toUpperCase();
+      int numIMSSWorker = int.parse(_conIMSSWorker.text);
+      String workerPosition = _conworkerPosition.text;
+      String? urlImage;
+      urlImage = await workerProvider.getUrlImage(
+          File(_imagePath!), numWorker.toString());
+      WorkerModel workerModel = WorkerModel(
+        numTrabajador: numWorker,
+        nombre: firstNameWorker.trim(),
+        apellido: lastNameWorker.trim(),
+        curp: curpWorker.trim(),
+        rfc: rfcWorker.trim(),
+        numImss: numIMSSWorker,
+        puesto: workerPosition.trim(),
+        urlPhoto: urlImage,
+        visible: true,
+      );
+      String response = await workerProvider.addWokerProvider(workerModel);
+      await ProgresseDialogCommon.progressDialog.hide();
+      if (!mounted) return;
+      if (response == "Trabajador agregado") {
+        workerProvider.showResponseDialog(context, response, addWorker: true);
+      } else {
+        workerProvider.showResponseDialog(context, response);
       }
     }
   }
@@ -137,12 +135,8 @@ class _AddWorkerScreenState extends State<AddWorkerScreen> {
     _conCurpWorker = TextEditingController();
     _conIMSSWorker = TextEditingController();
     _conworkerPosition = TextEditingController();
-    // loadMacAddress();
+    ProgresseDialogCommon.initProgressDialog(context);
   }
-
-  // void loadMacAddress() async {
-  //   await bluetoothController.loadDeviceMacAddress();
-  // }
 
   @override
   void dispose() {

@@ -1,3 +1,4 @@
+import 'package:control_asistencia_app/app/packages/packagelocal_common.dart';
 import 'package:control_asistencia_app/app/packages/packagelocal_controller.dart';
 import 'package:control_asistencia_app/app/packages/packagelocal_model.dart';
 import 'package:control_asistencia_app/app/packages/packagelocal_widgets.dart';
@@ -24,72 +25,96 @@ class _RegisterAdminScreenState extends State<RegisterAdminScreen> {
   final AdminController adminController = AdminController();
 
   void register() async {
+    await ProgresseDialogCommon.progressDialog.show();
+    if (!mounted) return;
     final FormState? form = _formKey.currentState;
-    String numWorkerAdmin = _conNumWorkerAdmin.text;
-    String firstName = _conFirtNameAdmin.text;
-    String lastName = _conLastNameAdmin.text;
-    String emailAdmin = _conEmailAdmin.text;
-    String password = _conPassAdmin.text;
-    String confirmPassword = _conConfirmPassAdmin.text;
-
-    if (form != null) {
-      if (form.validate()) {
-        if (password != confirmPassword) {
-        } else {
-          AdminModel adminModel = AdminModel(
-            numTrabajador: int.parse(numWorkerAdmin),
-            nombre: firstName,
-            apellido: lastName,
-            email: emailAdmin,
+    if (form != null && form.validate()) {
+      String numWorkerAdmin = _conNumWorkerAdmin.text;
+      String firstName = _conFirtNameAdmin.text;
+      String lastName = _conLastNameAdmin.text;
+      String emailAdmin = _conEmailAdmin.text;
+      String password = _conPassAdmin.text;
+      String confirmPassword = _conConfirmPassAdmin.text;
+      if (password != confirmPassword) {
+        showDialog(
+          context: context,
+          builder: (context) {
+            Future.delayed(
+              const Duration(seconds: 2),
+              () {
+                Navigator.of(context).pop();
+              },
+            );
+            return const CustomDialogWidget(
+              messagge: Text("Contraseña no coincide"),
+              iconData: Icon(
+                Icons.cancel_outlined,
+                color: Colors.red,
+              ),
+            );
+          },
+        );
+      } else {
+        AdminModel adminModel = AdminModel(
+          numTrabajador: int.parse(numWorkerAdmin),
+          nombre: firstName,
+          apellido: lastName,
+          email: emailAdmin,
+        );
+        String response = await adminController
+            .registerAdmin(adminModel, password)
+            .then((methodResponse) => methodResponse);
+        await ProgresseDialogCommon.progressDialog.hide();
+        if (!mounted) return;
+        if (response == "Registro con exito") {
+          showDialog(
+            context: context,
+            builder: (context) {
+              Future.delayed(
+                const Duration(seconds: 2),
+                () {
+                  Navigator.of(context).pop();
+                  Navigator.of(context)
+                      .pushReplacementNamed(TabBarLoginRegisterScreen.route);
+                },
+              );
+              return CustomDialogWidget(
+                messagge: Text(response),
+                iconData: const Icon(
+                  Icons.check_circle,
+                  color: Colors.green,
+                ),
+              );
+            },
           );
-          String response = await adminController
-              .registerAdmin(adminModel, password)
-              .then((methodResponse) => methodResponse);
-          if (!mounted) return;
-          if (response == "Registro con exito") {
-            showDialog(
-              context: context,
-              builder: (context) {
-                Future.delayed(
-                  const Duration(seconds: 2),
-                  () {
-                    Navigator.of(context).pop();
-                    Navigator.of(context)
-                        .pushReplacementNamed(TabBarLoginRegisterScreen.route);
-                  },
-                );
-                return CustomDialogWidget(
-                  messagge: Text(response),
-                  iconData: const Icon(
-                    Icons.check_circle,
-                    color: Colors.green,
-                  ),
-                );
-              },
-            );
-          } else {
-            showDialog(
-              context: context,
-              builder: (context) {
-                Future.delayed(
-                  const Duration(seconds: 2),
-                  () {
-                    Navigator.of(context).pop();
-                  },
-                );
-                return CustomDialogWidget(
-                  messagge: Text(response),
-                  iconData: const Icon(
-                    Icons.cancel_outlined,
-                    color: Colors.red,
-                  ),
-                );
-              },
-            );
-          }
+        } else {
+          showDialog(
+            context: context,
+            builder: (context) {
+              Future.delayed(
+                const Duration(seconds: 2),
+                () {
+                  Navigator.of(context).pop();
+                },
+              );
+              return CustomDialogWidget(
+                messagge: Text(response),
+                iconData: const Icon(
+                  Icons.cancel_outlined,
+                  color: Colors.red,
+                ),
+              );
+            },
+          );
         }
       }
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    ProgresseDialogCommon.initProgressDialog(context);
   }
 
   @override

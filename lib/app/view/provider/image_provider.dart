@@ -72,13 +72,25 @@ class ImageProviders with ChangeNotifier {
         ImageProvider imgNetwork = CachedNetworkImageProvider(imgPath);
         image = imgNetwork;
       } else {
-        image = FileImage(File(imgPath));
+        File file = File(imgPath);
+        if (file.existsSync()) {
+          image = FileImage(file);
+        } else {
+          debugPrint('El archivo no existe: $imgPath');
+        }
       }
-      // notifyListeners();
     } else {
       getAssetFile();
-      image = FileImage(File(_assetFilePath));
+      File file = File(_assetFilePath);
+      if (file.existsSync()) {
+        image = FileImage(file);
+      } else {
+        // Manejar el caso en el que el archivo no existe.
+        debugPrint('El archivo no existe: $_assetFilePath');
+        // Puedes cargar una imagen predeterminada o manejarlo de otra manera.
+      }
     }
+
     return image;
   }
 

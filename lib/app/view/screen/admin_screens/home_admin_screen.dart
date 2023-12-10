@@ -11,6 +11,11 @@ class HomeAdminScreen extends StatelessWidget {
 
   final AdminController _adminController = AdminController();
 
+  void getDatVMAdmin(BuildContext context) async {
+    await Provider.of<AdminProvider>(context, listen: false)
+        .getAdminViewModel();
+  }
+
   @override
   Widget build(BuildContext context) {
     Size media = MediaQuery.of(context).size;
@@ -129,6 +134,7 @@ class HomeAdminScreen extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () {
+                    getDatVMAdmin(context);
                     Navigator.of(context).pushNamed(PerfilUserScreen.route);
                   },
                   child: Container(
@@ -304,57 +310,38 @@ class _HeaderWidgetState extends State<HeaderWidget> {
   Widget build(BuildContext context) {
     return Consumer<AdminProvider>(
       builder: (context, adminProvider, child) {
-        if (adminProvider.isLoading) {
-          return Row(
-            children: [
-              Material(
-                color: const Color(0xffE1E1E1),
-                shape: const CircleBorder(),
-                child: Icon(
-                  Icons.person_outline,
-                  size: 60.r,
-                ),
-              ),
-              SizedBox(
-                width: 20.w,
-              ),
-              Text("Nombre apellido", style: TextStyle(fontSize: 18.sp)),
-            ],
-          );
-        } else {
-          return Row(
-            children: [
-              Consumer<ImageProviders>(
-                builder: (context, imgProvider, child) {
-                  if (adminProvider.urlPhoto != "") {
-                    return CircleAvatar(
-                      radius: 30.r,
-                      backgroundColor: const Color(0xffE1E1E1),
-                      foregroundImage: imgProvider
-                          .imageInternetLocal(adminProvider.urlPhoto),
-                    );
-                  } else {
-                    return Material(
-                      color: const Color(0xffE1E1E1),
-                      shape: const CircleBorder(),
-                      child: Icon(
-                        Icons.person_outline,
-                        size: 60.r,
-                      ),
-                    );
-                  }
-                },
-              ),
-              SizedBox(
-                width: 20.w,
-              ),
-              Text(
-                "${adminProvider.firstNameProvider} ${adminProvider.lastNameProvider}",
-                style: TextStyle(fontSize: 18.sp),
-              ),
-            ],
-          );
-        }
+        return Row(
+          children: [
+            Consumer<ImageProviders>(
+              builder: (context, imgProvider, child) {
+                // if (adminProvider.urlPhoto != "") {
+                return CircleAvatar(
+                  radius: 30.r,
+                  backgroundColor: const Color(0xffE1E1E1),
+                  foregroundImage:
+                      imgProvider.imageInternetLocal(adminProvider.urlPhoto),
+                );
+                // } else {
+                //   return Material(
+                //     color: const Color(0xffE1E1E1),
+                //     shape: const CircleBorder(),
+                //     child: Icon(
+                //       Icons.person_outline,
+                //       size: 60.r,
+                //     ),
+                //   );
+                // }
+              },
+            ),
+            SizedBox(
+              width: 20.w,
+            ),
+            Text(
+              "${adminProvider.firstNameProvider} ${adminProvider.lastNameProvider}",
+              style: TextStyle(fontSize: 18.sp),
+            ),
+          ],
+        );
       },
     );
   }

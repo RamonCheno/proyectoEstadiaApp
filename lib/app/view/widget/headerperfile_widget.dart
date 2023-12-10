@@ -14,18 +14,6 @@ class _HeaderPerfilWidgetState extends State<HeaderPerfilWidget> {
     super.initState();
   }
 
-  // void getAdminVModel() async {
-  //   await Provider.of<AdminProvider>(context, listen: false)
-  //       .getAdminViewModel();
-  //   setState(() {});
-  // }
-
-  // @override
-  // void didUpdateWidget(covariant HeaderPerfilWidget oldWidget) {
-  //   super.didUpdateWidget(oldWidget);
-  //   getAdminVModel();
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Consumer<AdminProvider>(
@@ -34,33 +22,17 @@ class _HeaderPerfilWidgetState extends State<HeaderPerfilWidget> {
           children: [
             Consumer<ImageProviders>(
               builder: (context, imgProvider, child) {
-                if (adminProvider.urlPhoto != "") {
-                  return Center(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: CircleAvatar(
-                        radius: 50.r,
-                        backgroundColor: const Color(0xffE1E1E1),
-                        foregroundImage: imgProvider
-                            .imageInternetLocal(adminProvider.urlPhoto),
-                      ),
+                return Center(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: CircleAvatar(
+                      radius: 50.r,
+                      backgroundColor: const Color(0xffE1E1E1),
+                      foregroundImage: imgProvider
+                          .imageInternetLocal(adminProvider.urlPhoto),
                     ),
-                  );
-                } else {
-                  return Center(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: Material(
-                        color: const Color(0xffE1E1E1),
-                        shape: const CircleBorder(),
-                        child: Icon(
-                          Icons.person_outline,
-                          size: 60.r,
-                        ),
-                      ),
-                    ),
-                  );
-                }
+                  ),
+                );
               },
             ),
             Text(

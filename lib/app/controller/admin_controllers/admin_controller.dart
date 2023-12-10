@@ -1,6 +1,6 @@
 import 'dart:io';
-import 'package:control_asistencia_app/app/common/firebase_service_common.dart';
-import 'package:control_asistencia_app/app/common/shared_preferences_common.dart';
+
+import 'package:control_asistencia_app/app/packages/packagelocal_common.dart';
 import 'package:control_asistencia_app/app/packages/packagelocal_model.dart';
 import 'package:control_asistencia_app/app/packages/packages_pub.dart';
 import 'package:control_asistencia_app/app/packages/packageslocal_view.dart';
@@ -58,16 +58,11 @@ class AdminController {
   }
 
   Future<String> uploadImageToStorage(
-      File photoWorker, String name, String lastName) async {
+      File photoWorker, String numWorker) async {
     String response = "";
-    List<String> firstNameAdminArray = name.split(' ');
-    List<String> lastNameAdminArray = lastName.split(' ');
-    String firstNameAdmin = firstNameAdminArray[0];
-    String lastNameAdmin = lastNameAdminArray[0];
-    String nameComplete = "${firstNameAdmin}_$lastNameAdmin";
     final storageReference = _firebaseServiceCommon.firebaseStorage
         .ref()
-        .child("fotos/RecursosHumanos/$nameComplete.jpg");
+        .child("fotos/RecursosHumanos/$numWorker.jpg");
 
     bool isExist = await checkIfFileExist(storageReference.fullPath);
     if (isExist) {
@@ -82,8 +77,8 @@ class AdminController {
   Future<bool> checkIfFileExist(String filePath) async {
     try {
       final ref = _firebaseServiceCommon.firebaseStorage.ref(filePath);
-      final isExistFile = (await ref.getMetadata()).fullPath.isNotEmpty;
-      return isExistFile;
+      final metadata = await ref.getMetadata();
+      return metadata.fullPath.isNotEmpty;
     } catch (e) {
       debugPrint("$e");
       return false;

@@ -86,10 +86,9 @@ class WorkerProvider with ChangeNotifier {
     );
   }
 
-  Future<String> getUrlImage(
-      File image, String firstName, String lastName) async {
-    String urlPhoto = await _workerController.uploadImageToStorage(
-        image, firstName, lastName);
+  Future<String> getUrlImage(File image, String numWorker) async {
+    String urlPhoto =
+        await _workerController.uploadImageToStorage(image, numWorker);
     return urlPhoto;
   }
 }

@@ -41,7 +41,7 @@ class _EditInfoAdminScreenState extends State<EditInfoAdminScreen> {
       final int imss = int.parse(perfilProvider.conIMSSWorker.text);
       final String position = perfilProvider.conAdminPosition.text.trim();
       await adminProvider.getUrlImage(
-          File(perfilProvider.imagePath!), firstName, lastName);
+          File(perfilProvider.imagePath!), numAdmin.toString());
       final String imagePath = adminProvider.urlPhoto!;
       AdminModel adminModel = AdminModel(
         numTrabajador: numAdmin,

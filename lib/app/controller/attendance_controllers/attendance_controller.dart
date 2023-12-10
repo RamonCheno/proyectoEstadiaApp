@@ -1,4 +1,4 @@
-import 'package:control_asistencia_app/app/common/firebase_service_common.dart';
+import 'package:control_asistencia_app/app/packages/packagelocal_common.dart';
 import 'package:control_asistencia_app/app/packages/packagelocal_controller.dart';
 import 'package:control_asistencia_app/app/packages/packagelocal_model.dart';
 import 'package:control_asistencia_app/app/packages/packages_pub.dart';

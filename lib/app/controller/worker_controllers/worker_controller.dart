@@ -1,5 +1,6 @@
 import 'dart:io';
-import 'package:control_asistencia_app/app/common/firebase_service_common.dart';
+
+import 'package:control_asistencia_app/app/packages/packagelocal_common.dart';
 import 'package:control_asistencia_app/app/packages/packagelocal_model.dart';
 import 'package:control_asistencia_app/app/packages/packages_pub.dart';
 import 'package:control_asistencia_app/app/packages/packageslocal_view.dart';
@@ -9,32 +10,18 @@ class WorkerController {
   final FirebaseServiceCommon _firebaseServiceCommon = FirebaseServiceCommon();
 
   Future<String> uploadImageToStorage(
-      File photoWorker, String nameWorker, String lastNameW) async {
+      File photoWorker, String numWorker) async {
     String response = "";
-    if (_firebaseServiceCommon.firebaseAuth.currentUser != null) {
-      List<String> firstNameWorkerArray = nameWorker.split(' ');
-      List<String> lastNameWorkerArray = lastNameW.split(' ');
-      String firstNameWorker = firstNameWorkerArray[0];
-      String lastNameWorker = lastNameWorkerArray[0];
-      String nameWorkerComplete = "${firstNameWorker}_$lastNameWorker";
-      try {
-        final storageReference = _firebaseServiceCommon.firebaseStorage
-            .ref()
-            .child("fotos/trabajadores/$nameWorkerComplete.jpg");
-
-        bool isExist = await checkIfFileExist(storageReference.fullPath);
-        if (isExist) {
-          await storageReference.delete();
-        }
-        UploadTask uploadTask = storageReference.putFile(photoWorker);
-        await uploadTask.whenComplete(() {});
-        response = await storageReference.getDownloadURL();
-      } catch (e) {
-        response = "$e";
-      }
-    } else {
-      response = "Usuario no autorizado";
+    final storageReference = _firebaseServiceCommon.firebaseStorage
+        .ref()
+        .child("fotos/trabajadores/$numWorker.jpg");
+    bool isExist = await checkIfFileExist(storageReference.fullPath);
+    if (isExist) {
+      await storageReference.delete();
     }
+    UploadTask uploadTask = storageReference.putFile(photoWorker);
+    await uploadTask.whenComplete(() {});
+    response = await storageReference.getDownloadURL();
     return response;
   }
 
@@ -59,16 +46,12 @@ class WorkerController {
   Future<bool> checkIfFileExist(String filePath) async {
     try {
       final ref = _firebaseServiceCommon.firebaseStorage.ref(filePath);
-      final FullMetadata result = await ref.getMetadata();
-      String isExistFile = result.fullPath;
-      if (isExistFile.isNotEmpty) {
-        return true;
-      } else {
-        return false;
-      }
+      final metadata = await ref.getMetadata();
+      return metadata.fullPath
+          .isNotEmpty; // El archivo existe si los metadatos tienen una ruta no vacía
     } catch (e) {
-      debugPrint("Error: $e");
-      return false;
+      debugPrint("$e");
+      return false; // Si hay una excepción, asumimos que el archivo no existe
     }
   }
 

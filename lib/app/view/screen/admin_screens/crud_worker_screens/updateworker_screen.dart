@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:control_asistencia_app/app/packages/packagelocal_controller.dart';
+import 'package:control_asistencia_app/app/packages/packagelocal_common.dart';
 import 'package:control_asistencia_app/app/packages/packagelocal_model.dart';
 import 'package:control_asistencia_app/app/packages/packagelocal_provider.dart';
 import 'package:control_asistencia_app/app/packages/packagelocal_widgets.dart';
@@ -25,62 +25,52 @@ class _UpdateWorkerScreenState extends State<UpdateWorkerScreen>
   final TextEditingController _conIMSSWorker = TextEditingController();
   final TextEditingController _conworkerPosition = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  WorkerController workerController = WorkerController();
-  FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   Map<String, dynamic> _args = {};
   WorkerModel? workerModelSelect;
   int? numWorkerSelect;
   String? _imagePath;
-  final picker = ImagePicker();
   bool isEnable = false;
   bool onlyRead = true;
+  late final ProgressDialog pr;
 
   Future<void> updateWorker() async {
+    await ProgresseDialogCommon.progressDialog.show();
     final FormState? form = _formKey.currentState;
+    if (!mounted) return;
     final WorkerProvider workerProvider =
         Provider.of<WorkerProvider>(context, listen: false);
-    // ImageProviders imageProvider =
-    //     Provider.of<ImageProviders>(context, listen: false);
-    if (form != null) {
-      if (form.validate()) {
-        // if (_imagePath == null) {
-        //   String assetPath =
-        //       await imageProvider.getAssetPath("assets/images/usuario.png");
-        //   _imagePath = assetPath;
-        //   // workerProvider.showResponseDialog(context, "Agregar una foto");
-        // }
-        form.save();
-        String firstNameWorker = _conFirstNameWorker.text;
-        String lastNameWorker = _conLastNameWorker.text;
-        String rfcWorker = _conRFCWorker.text.toUpperCase();
-        String curpWorker = _conCurpWorker.text.toUpperCase();
-        int numIMSSWorker = int.parse(_conIMSSWorker.text);
-        String workerPosition = _conworkerPosition.text.toUpperCase();
-        String urlImage = await workerProvider.getUrlImage(
-            File(_imagePath!), firstNameWorker, lastNameWorker);
-        WorkerModel workerModel = WorkerModel(
-          numTrabajador: numWorkerSelect,
-          nombre: firstNameWorker.trim(),
-          apellido: lastNameWorker.trim(),
-          curp: curpWorker.trim(),
-          rfc: rfcWorker.trim(),
-          numImss: numIMSSWorker,
-          puesto: workerPosition.trim(),
-          urlPhoto: _imagePath!.startsWith("https") ? _imagePath! : urlImage,
-          visible: true,
-          // idHuella: idWorker,
-        );
-        workerProvider
-            .updateWorkerProvider(workerModel, numWorkerSelect!)
-            .then((response) {
-          if (response == "Trabajador actualizado") {
-            workerProvider.showResponseDialog(context, response,
-                addWorker: true);
-          } else {
-            workerProvider.showResponseDialog(context, response);
-          }
-        });
-      }
+    if (form != null && form.validate()) {
+      form.save();
+      String firstNameWorker = _conFirstNameWorker.text;
+      String lastNameWorker = _conLastNameWorker.text;
+      String rfcWorker = _conRFCWorker.text.toUpperCase();
+      String curpWorker = _conCurpWorker.text.toUpperCase();
+      int numIMSSWorker = int.parse(_conIMSSWorker.text);
+      String workerPosition = _conworkerPosition.text.toUpperCase();
+      String urlImage = await workerProvider.getUrlImage(
+          File(_imagePath!), numWorkerSelect!.toString());
+      WorkerModel workerModel = WorkerModel(
+        numTrabajador: numWorkerSelect,
+        nombre: firstNameWorker.trim(),
+        apellido: lastNameWorker.trim(),
+        curp: curpWorker.trim(),
+        rfc: rfcWorker.trim(),
+        numImss: numIMSSWorker,
+        puesto: workerPosition.trim(),
+        urlPhoto: _imagePath!.startsWith("https") ? _imagePath! : urlImage,
+        visible: true,
+      );
+      workerProvider
+          .updateWorkerProvider(workerModel, numWorkerSelect!)
+          .then((response) async {
+        await ProgresseDialogCommon.progressDialog.hide();
+        if (!mounted) return;
+        if (response == "Trabajador actualizado") {
+          workerProvider.showResponseDialog(context, response, addWorker: true);
+        } else {
+          workerProvider.showResponseDialog(context, response);
+        }
+      });
     }
   }
 
@@ -135,6 +125,12 @@ class _UpdateWorkerScreenState extends State<UpdateWorkerScreen>
         );
       },
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    ProgresseDialogCommon.initProgressDialog(context);
   }
 
   @override

@@ -28,15 +28,10 @@ class _ListAttendanceState extends State<ListAttendance> {
     return picked;
   }
 
-  void refreshAttendance(AttendanceProvider attendanceProvider) async {
-    await attendanceProvider.getListAttendance(dateNowText).then((value) {
-      int lengthAttendance = attendanceProvider.attendanceViewModelList.length;
-      if (mounted) {
-        setState(() {
-          attendancelength = lengthAttendance;
-        });
-      }
-    });
+  void refreshAttendance() async {
+    final attendanceProvider = Provider.of<AttendanceProvider>(context);
+    attendanceProvider.getListAttendance(dateNowText);
+    attendancelength = attendanceProvider.attendanceCount;
   }
 
   void selectDay() async {
@@ -127,7 +122,7 @@ class _ListAttendanceState extends State<ListAttendance> {
           Expanded(
             child: Consumer<AttendanceProvider>(
               builder: (context, attednanceProvider, child) {
-                refreshAttendance(attednanceProvider);
+                refreshAttendance();
                 List<AttendanceViewModel> attendanceVMList =
                     attednanceProvider.attendanceViewModelList;
                 return attendanceVMList.isEmpty
@@ -151,9 +146,6 @@ class _ListAttendanceState extends State<ListAttendance> {
                               attendanceVMList[index];
                           String checkInHour =
                               "Entrada: ${attendanceViewModel.checkInHour}";
-                          // ( != "")
-                          //     ? "- ${attendanceViewModel.checkInHour}"
-                          // : "";
                           String checkOutHour = (attendanceViewModel
                                       .checkOutHour !=
                                   "")
