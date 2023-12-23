@@ -1,6 +1,7 @@
 import 'package:control_asistencia_app/app/packages/packagelocal_model.dart';
 
 class AttendanceViewModel {
+  String? _numberWorker;
   String? _firstNameWorker;
 
   String? _lastNameWorker;
@@ -10,11 +11,16 @@ class AttendanceViewModel {
   String? _urlPhoto;
 
   String? _checkOutHour;
+  String? _dayEntrance;
+  String? _dayFinish;
+
+  AttendanceViewModel.instance();
 
   AttendanceViewModel(
       {required WorkerModel workerModel,
       required CheckInModel checkInModel,
       required CheckOutModel checkOutModel}) {
+    _numberWorker = workerModel.numTrabajador.toString();
     List<String> firstNameWorkerArray = workerModel.nombre.split(' ');
     List<String> lastNameWorkerArray = workerModel.apellido.split(' ');
     _firstNameWorker = firstNameWorkerArray[0];
@@ -22,15 +28,23 @@ class AttendanceViewModel {
     _checkInHour = checkInModel.hora;
     _checkOutHour = checkOutModel.hora;
     _urlPhoto = workerModel.urlPhoto;
+    _dayEntrance = checkInModel.fecha;
+    _dayFinish = checkOutModel.fecha;
   }
 
-  String get checkOutHour => _checkOutHour!;
+  String get numberWorker => _numberWorker!;
 
   String get urlPhoto => _urlPhoto!;
-
-  String get checkInHour => _checkInHour!;
 
   String get firstNameWorker => _firstNameWorker!;
 
   String get lastNameWorker => _lastNameWorker!;
+
+  String? get checkInHour => _checkInHour;
+
+  String? get checkOutHour => _checkOutHour;
+
+  String get dayEntrance => _dayEntrance ?? "";
+
+  String get dayFinish => _dayFinish ?? "";
 }

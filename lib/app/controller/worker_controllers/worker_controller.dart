@@ -1,12 +1,11 @@
 import 'dart:io';
 
-import 'package:control_asistencia_app/app/packages/packagelocal_common.dart';
-import 'package:control_asistencia_app/app/packages/packagelocal_model.dart';
-import 'package:control_asistencia_app/app/packages/packages_pub.dart';
+import 'package:control_asistencia_app/app/packages/packagelocal_common.dart' show FirebaseServiceCommon;
+import 'package:control_asistencia_app/app/packages/packagelocal_model.dart' show WorkerModel;
+import 'package:control_asistencia_app/app/packages/packages_pub.dart' show CollectionReference, DocumentReference, FirebaseFirestore, QueryDocumentSnapshot, QuerySnapshot, UploadTask, debugPrint;
 import 'package:control_asistencia_app/app/packages/packageslocal_view.dart';
 
 class WorkerController {
-  //Metodos para guardar y obtener trabajados usando cloud firestore
   final FirebaseServiceCommon _firebaseServiceCommon = FirebaseServiceCommon();
 
   Future<String> uploadImageToStorage(
@@ -51,7 +50,7 @@ class WorkerController {
           .isNotEmpty; // El archivo existe si los metadatos tienen una ruta no vacía
     } catch (e) {
       debugPrint("$e");
-      return false; // Si hay una excepción, asumimos que el archivo no existe
+      return false;
     }
   }
 

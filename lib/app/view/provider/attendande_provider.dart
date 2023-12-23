@@ -20,6 +20,12 @@ class AttendanceProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> getListAttendanceForRangeDay(
+      String initDay, String finishDay) async {
+    _attendanceViewModelList = await _attendanceController
+        .getListAttendanceVMDayRange(initDay, finishDay);
+  }
+
   Future<String> addCheckInProvider(
       AttendanceModel attendanceModel, int numTrabajador) async {
     AttendanceModel checkInModel = attendanceModel;

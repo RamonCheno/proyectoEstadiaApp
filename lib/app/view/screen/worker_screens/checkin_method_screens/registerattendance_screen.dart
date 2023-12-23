@@ -34,6 +34,7 @@ class _RegisterAttendanceScreenState extends State<RegisterAttendanceScreen>
     nowTimeText = formatoHora.format(
       DateTime(1, 1, 1, TimeOfDay.now().hour, TimeOfDay.now().minute),
     );
+    ProgresseDialogCommon.initProgressDialog(context);
   }
 
   @override
@@ -62,6 +63,7 @@ class _RegisterAttendanceScreenState extends State<RegisterAttendanceScreen>
       WorkerModel? foundWorker = await workerProvider
           .selectWorkerModel(int.parse(searchNumWorker), useAnominoAuth: true);
       if (foundWorker == null) {
+        ProgresseDialogCommon.progressDialog.hide();
         if (mounted) {
           attendanceProvider.showResponseDialog(context,
               [const Text("Trabajador no encontrado")], _conSearchNumWorker,

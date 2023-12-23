@@ -69,6 +69,57 @@ class AttendanceController {
     }
   }
 
+  Future<List<AttendanceViewModel>> getListAttendanceVMDayRange(
+      String initDay, String finishDay) async {
+    final checkInstance = CheckInModel.instance();
+    final checkOutInstance = CheckOutModel.instance();
+    try {
+      final QuerySnapshot querySnapshotWorker = await _firebaseServiceCommon
+          .firestore
+          .collection('Trabajador')
+          .orderBy("apellido", descending: false)
+          .get();
+
+      final workersDocs = querySnapshotWorker.docs;
+
+      List<AttendanceViewModel> attendanceViewModelList = [];
+      if (workersDocs.isNotEmpty) {
+        for (var workerDoc in workersDocs) {
+          WorkerModel workerModel =
+              WorkerModel.fromMap(workerDoc.data() as Map<String, dynamic>);
+          final attendanceCollection =
+              workerDoc.reference.collection("Asistencia");
+          QuerySnapshot attendanceQuery = await attendanceCollection
+              .where("Entrada.fecha", isGreaterThanOrEqualTo: initDay)
+              .where("Entrada.fecha", isLessThanOrEqualTo: finishDay)
+              .get();
+          if (attendanceQuery.docs.isNotEmpty) {
+            for (var attendance in attendanceQuery.docs) {
+              final Map<String, dynamic> attendanceData =
+                  attendance.data() as Map<String, dynamic>;
+              final CheckInModel checkInModel =
+                  checkInstance.fromMap(attendanceData["Entrada"]);
+              final CheckOutModel checkOutModel =
+                  checkOutInstance.fromMap(attendanceData["Salida"]);
+              AttendanceViewModel attendanceViewModel = AttendanceViewModel(
+                  checkInModel: checkInModel,
+                  workerModel: workerModel,
+                  checkOutModel: checkOutModel);
+              attendanceViewModelList.add(attendanceViewModel);
+            }
+          }
+        }
+        return attendanceViewModelList;
+      } else {
+        debugPrint("No hay trabajador con asistecia");
+        return [];
+      }
+    } catch (e) {
+      debugPrint("$e");
+      return [];
+    }
+  }
+
   Future<List<AttendanceViewModel>> getListAttendanceViewModel(
       String fecha) async {
     final checkInstance = CheckInModel.instance();
@@ -90,7 +141,7 @@ class AttendanceController {
           final attendanceCollection =
               workerDoc.reference.collection("Asistencia");
           QuerySnapshot attendanceQuery = await attendanceCollection
-              .where("Entrada.fecha", isEqualTo: fecha)
+              .where(FieldPath.documentId, isEqualTo: fecha)
               .get();
           if (attendanceQuery.docs.isNotEmpty) {
             final Map<String, dynamic> attendanceData =
@@ -113,7 +164,6 @@ class AttendanceController {
       }
     } catch (e) {
       debugPrint("$e");
-
       return [];
     }
   }

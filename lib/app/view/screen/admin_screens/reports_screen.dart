@@ -1,6 +1,9 @@
+import 'package:control_asistencia_app/app/packages/packagelocal_provider.dart';
 import 'package:control_asistencia_app/app/packages/packagelocal_widgets.dart';
 import 'package:control_asistencia_app/app/packages/packages_pub.dart';
+import 'package:control_asistencia_app/app/view/provider/permissionprovider.dart';
 import 'package:intl/intl.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class ReportsScreen extends StatefulWidget {
   const ReportsScreen({super.key});
@@ -38,7 +41,44 @@ class _ReportsScreenState extends State<ReportsScreen> {
     return picked;
   }
 
-  void generateReport() {}
+  void generateReport(BuildContext context) async {
+    final reportsProvider =
+        Provider.of<ReportsProvider>(context, listen: false);
+    String? pathFile = "";
+    switch (_selectedOptionReport) {
+      case "Asistencia":
+        await permissionCheck();
+        if (!mounted) return;
+        pathFile = await reportsProvider.generateReportAttendancePDF(
+            context, _selectPeriod, _initDate, _finishtDate);
+        showDialogMethod(reportsProvider, pathFile);
+        break;
+      case "Comedor":
+        if (!mounted) return;
+        showDialogMethod(reportsProvider, pathFile);
+        break;
+      default:
+        showDialogMethod(reportsProvider, "Seleccione una opcion valida");
+    }
+  }
+
+  Future<void> permissionCheck() async {
+    final permissionProvider =
+        Provider.of<PermissionProvider>(context, listen: false);
+    await permissionProvider.permissionCheckProvider(Permission.storage);
+    bool statusPermission = permissionProvider.statusPermision;
+    if (!statusPermission) {
+      if (!mounted) return;
+      permissionProvider.showStoragePermissionErrorDialog(context);
+    }
+  }
+
+  void showDialogMethod(ReportsProvider reportsProvider, String? response) {
+    if (response != null && response == "Seleccione una opcion valida") {
+      reportsProvider.showDialogResponse(context, "Error",
+          [const Text("Seleccione una opcion valida")], false);
+    }
+  }
 
   @override
   void dispose() {
@@ -69,7 +109,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
           child: FloatingActionButton(
             shape: const CircleBorder(),
             backgroundColor: const Color(0xFFC8C8C8),
-            onPressed: null,
+            onPressed: () => generateReport(context),
             child: Icon(
               Icons.save_outlined,
               size: 30.r,

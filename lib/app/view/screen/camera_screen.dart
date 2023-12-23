@@ -1,5 +1,7 @@
 import 'package:control_asistencia_app/app/packages/packagelocal_provider.dart';
 import 'package:control_asistencia_app/app/packages/packages_pub.dart';
+import 'package:control_asistencia_app/app/view/provider/permissionprovider.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class CameraScreen extends StatefulWidget {
   const CameraScreen({super.key});
@@ -10,10 +12,26 @@ class CameraScreen extends StatefulWidget {
 }
 
 class _CameraScreenState extends State<CameraScreen> {
+  void permissionCheck() async {
+    final permissionProvider =
+        Provider.of<PermissionProvider>(context, listen: false);
+    await permissionProvider.permissionCheckProvider(Permission.camera);
+    bool statusPermission = permissionProvider.statusPermision;
+    if (!statusPermission) {
+      if (!mounted) return;
+      permissionProvider.showStoragePermissionErrorDialog(context);
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    permissionCheck();
+  }
+
   @override
   Widget build(BuildContext context) {
     final cameraProvider = Provider.of<ImageProviders>(context, listen: false);
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Captura de Cámara'),

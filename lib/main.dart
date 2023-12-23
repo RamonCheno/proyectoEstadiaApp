@@ -2,6 +2,7 @@ import 'package:control_asistencia_app/app/packages/packagelocal_provider.dart';
 import 'package:control_asistencia_app/app/packages/packages_pub.dart';
 import 'package:control_asistencia_app/app/packages/packageslocal_view.dart';
 import 'package:control_asistencia_app/app/routers.dart';
+import 'package:control_asistencia_app/app/view/provider/permissionprovider.dart';
 import 'package:control_asistencia_app/dev/firebase_options_dev.dart';
 import 'package:control_asistencia_app/prod/firebase_options_prod.dart';
 
@@ -41,6 +42,8 @@ void main() async {
         ChangeNotifierProvider(create: (_) => AdminProvider()),
         ChangeNotifierProvider(create: (_) => UpdatePerfilProvider()),
         ChangeNotifierProvider(create: (_) => ServiceFoodProvider()),
+        ChangeNotifierProvider(create: (_) => ReportsProvider()),
+        ChangeNotifierProvider(create: (_) => PermissionProvider())
       ],
       child: MyApp(),
     ),

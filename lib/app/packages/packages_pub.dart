@@ -17,3 +17,5 @@ export 'package:progress_dialog2/progress_dialog2.dart';
 export 'package:provider/provider.dart';
 export 'package:searchfield/searchfield.dart';
 export 'package:shared_preferences/shared_preferences.dart';
+export 'package:open_file/open_file.dart';
+export 'package:external_path/external_path.dart';
