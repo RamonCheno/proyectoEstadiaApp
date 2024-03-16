@@ -1,7 +1,7 @@
 import 'package:control_asistencia_app/app/packages/packages_pub.dart';
 
 class SettingsScreen extends StatefulWidget {
-  const SettingsScreen({Key? key}) : super(key: key);
+  const SettingsScreen({super.key});
   static const route = "/settings";
 
   @override
