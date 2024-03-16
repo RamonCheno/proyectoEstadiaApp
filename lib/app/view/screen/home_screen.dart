@@ -10,13 +10,6 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xffEBEBEB),
-        // actions: [
-        //   IconButton(
-        //     onPressed: () =>
-        //         Navigator.of(context).pushNamed(CameraScreen.route),
-        //     icon: const Icon(Icons.camera, size: 34),
-        //   ),
-        // ],
       ),
       backgroundColor: const Color(0xffEBEBEB),
       body: Center(

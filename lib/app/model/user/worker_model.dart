@@ -8,25 +8,16 @@ class WorkerModel extends UserModel {
   set setIsVisible(bool isVisible) => _isVisible = isVisible;
 
   WorkerModel({
-    int? numTrabajador,
-    required String nombre,
-    required String apellido,
-    required String curp,
-    required int numImss,
-    required String rfc,
-    required String puesto,
-    String? urlPhoto,
+    super.numTrabajador,
+    required super.nombre,
+    required super.apellido,
+    required String super.curp,
+    required int super.numImss,
+    required String super.rfc,
+    required String super.puesto,
+    super.urlPhoto,
     required bool visible,
-  }) : super(
-          numTrabajador: numTrabajador,
-          nombre: nombre,
-          apellido: apellido,
-          curp: curp,
-          numImss: numImss,
-          puesto: puesto,
-          rfc: rfc,
-          urlPhoto: urlPhoto,
-        ) {
+  }) {
     _isVisible = visible;
   }
 

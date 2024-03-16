@@ -6,25 +6,16 @@ class AdminModel extends UserModel {
   String get email => _email;
 
   AdminModel({
-    int? numTrabajador,
-    required String nombre,
-    required String apellido,
-    String? curp,
-    int? numImss,
-    String? rfc,
-    String? puesto,
+    super.numTrabajador,
+    required super.nombre,
+    required super.apellido,
+    super.curp,
+    super.numImss,
+    super.rfc,
+    super.puesto,
     required String email,
-    String? urlPhoto,
-  }) : super(
-          numTrabajador: numTrabajador,
-          nombre: nombre,
-          apellido: apellido,
-          curp: curp,
-          numImss: numImss,
-          puesto: puesto,
-          rfc: rfc,
-          urlPhoto: urlPhoto,
-        ) {
+    super.urlPhoto,
+  }) {
     _email = email;
   }
 

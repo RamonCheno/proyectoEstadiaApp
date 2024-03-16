@@ -8,7 +8,7 @@ import 'package:flutter/foundation.dart'
 ///
 /// Example:
 /// ```dart
-/// import 'firebase_options_prod.dart';
+/// import 'firebase_options.dart';
 /// // ...
 /// await Firebase.initializeApp(
 ///   options: DefaultFirebaseOptions.currentPlatform,
@@ -54,7 +54,7 @@ class DefaultFirebaseOptionsProd {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyAKnmSzMcM_ekBqR9NH331mcQ5xHPkuJdw',
-    appId: '1:121348689070:android:f1783d7515e6e02778313f',
+    appId: '1:121348689070:android:776df964d482ef7b78313f',
     messagingSenderId: '121348689070',
     projectId: 'controlasistenciaapp-302ff',
     storageBucket: 'controlasistenciaapp-302ff.appspot.com',

@@ -123,148 +123,135 @@ class HomeAdminScreen extends StatelessWidget {
             )),
       ),
       body: SingleChildScrollView(
-        child: Stack(
+        child: Column(
           children: [
-            Container(
-              width: media.width,
-              height: media.height,
-              color: const Color(0xffD9D9D9),
+            GestureDetector(
+              onTap: () {
+                getDatVMAdmin(context);
+                Navigator.of(context).pushNamed(PerfilUserScreen.route);
+              },
+              child: Container(
+                margin: EdgeInsets.all(15.w),
+                padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
+                width: media.width,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15).w,
+                  color: const Color(0XFFF4F4F4),
+                  boxShadow: const [
+                    BoxShadow(
+                        color: Colors.black26,
+                        offset: Offset(0.0, 4.0),
+                        blurRadius: 5.0),
+                  ],
+                ),
+                child: const HeaderWidget(),
+              ),
             ),
-            Column(
+            Row(
               children: [
-                GestureDetector(
-                  onTap: () {
-                    getDatVMAdmin(context);
-                    Navigator.of(context).pushNamed(PerfilUserScreen.route);
-                  },
-                  child: Container(
-                    margin: EdgeInsets.all(15.w),
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
-                    width: media.width,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15).w,
-                      color: const Color(0XFFF4F4F4),
-                      boxShadow: const [
-                        BoxShadow(
-                            color: Colors.black26,
-                            offset: Offset(0.0, 4.0),
-                            blurRadius: 5.0),
-                      ],
-                    ),
-                    child: const HeaderWidget(),
+                Container(
+                  height: 145.h,
+                  width: 145.w,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15).w,
+                    color: const Color(0XFFF4F4F4),
+                    boxShadow: const [
+                      BoxShadow(
+                          color: Colors.black26,
+                          offset: Offset(0.0, 4.0),
+                          blurRadius: 5.0),
+                    ],
+                  ),
+                  margin:
+                      EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.h),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
+                  child: Column(
+                    children: [
+                      IconButton(
+                        style: const ButtonStyle(
+                          backgroundColor: MaterialStatePropertyAll<Color>(
+                            Color(0xff990303),
+                          ),
+                        ),
+                        icon: Icon(Icons.list, size: 70.r, color: Colors.white),
+                        onPressed: () => Navigator.of(context)
+                            .pushNamed(ListAttendance.route),
+                      ),
+                      Text("Asistencia", style: TextStyle(fontSize: 14.sp)),
+                    ],
                   ),
                 ),
-                Row(
-                  children: [
-                    Container(
-                      height: 145.h,
-                      width: 145.w,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15).w,
-                        color: const Color(0XFFF4F4F4),
-                        boxShadow: const [
-                          BoxShadow(
-                              color: Colors.black26,
-                              offset: Offset(0.0, 4.0),
-                              blurRadius: 5.0),
-                        ],
-                      ),
-                      margin: EdgeInsets.symmetric(
-                          horizontal: 20.w, vertical: 15.h),
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 15.w, vertical: 10.h),
-                      child: Column(
-                        children: [
-                          IconButton(
-                            style: const ButtonStyle(
-                              backgroundColor: MaterialStatePropertyAll<Color>(
-                                Color(0xff990303),
-                              ),
-                            ),
-                            icon: Icon(Icons.list,
-                                size: 70.r, color: Colors.white),
-                            onPressed: () => Navigator.of(context)
-                                .pushNamed(ListAttendance.route),
+                Container(
+                  height: 145.h,
+                  width: 145.w,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15).w,
+                    color: const Color(0XFFF4F4F4),
+                    boxShadow: const [
+                      BoxShadow(
+                          color: Colors.black26,
+                          offset: Offset(0.0, 4.0),
+                          blurRadius: 5.0),
+                    ],
+                  ),
+                  margin: EdgeInsets.symmetric(horizontal: 15.w, vertical: 5.h),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
+                  child: Column(
+                    children: [
+                      IconButton(
+                        style: const ButtonStyle(
+                          backgroundColor: MaterialStatePropertyAll<Color>(
+                            Color(0xff990303),
                           ),
-                          Text("Asistencia", style: TextStyle(fontSize: 14.sp)),
-                        ],
+                        ),
+                        icon: Icon(Icons.description_outlined,
+                            size: 70.r, color: Colors.white),
+                        onPressed: () => Navigator.of(context)
+                            .pushNamed(ReportsScreen.route),
                       ),
-                    ),
-                    Container(
-                      height: 145.h,
-                      width: 145.w,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15).w,
-                        color: const Color(0XFFF4F4F4),
-                        boxShadow: const [
-                          BoxShadow(
-                              color: Colors.black26,
-                              offset: Offset(0.0, 4.0),
-                              blurRadius: 5.0),
-                        ],
-                      ),
-                      margin:
-                          EdgeInsets.symmetric(horizontal: 15.w, vertical: 5.h),
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 15.w, vertical: 10.h),
-                      child: Column(
-                        children: [
-                          IconButton(
-                            style: const ButtonStyle(
-                              backgroundColor: MaterialStatePropertyAll<Color>(
-                                Color(0xff990303),
-                              ),
-                            ),
-                            icon: Icon(Icons.description_outlined,
-                                size: 70.r, color: Colors.white),
-                            onPressed: () => Navigator.of(context)
-                                .pushNamed(ReportsScreen.route),
-                          ),
-                          Text("Reportes", style: TextStyle(fontSize: 14.sp)),
-                        ],
-                      ),
-                    ),
-                  ],
+                      Text("Reportes", style: TextStyle(fontSize: 14.sp)),
+                    ],
+                  ),
                 ),
-                Row(
-                  children: [
-                    Container(
-                      height: 145.h,
-                      width: 145.w,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15).w,
-                        color: const Color(0XFFF4F4F4),
-                        boxShadow: const [
-                          BoxShadow(
-                              color: Colors.black26,
-                              offset: Offset(0.0, 4.0),
-                              blurRadius: 5.0),
-                        ],
-                      ),
-                      margin: EdgeInsets.symmetric(
-                          horizontal: 20.w, vertical: 15.h),
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 15.w, vertical: 10.h),
-                      child: Column(
-                        children: [
-                          IconButton(
-                            style: const ButtonStyle(
-                              backgroundColor: MaterialStatePropertyAll<Color>(
-                                Color(0xff990303),
-                              ),
-                            ),
-                            icon: Icon(Icons.groups_outlined,
-                                size: 70.r, color: Colors.white),
-                            onPressed: () => Navigator.of(context)
-                                .pushNamed(ListWorkerScreen.route),
+              ],
+            ),
+            Row(
+              children: [
+                Container(
+                  height: 145.h,
+                  width: 145.w,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15).w,
+                    color: const Color(0XFFF4F4F4),
+                    boxShadow: const [
+                      BoxShadow(
+                          color: Colors.black26,
+                          offset: Offset(0.0, 4.0),
+                          blurRadius: 5.0),
+                    ],
+                  ),
+                  margin:
+                      EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.h),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
+                  child: Column(
+                    children: [
+                      IconButton(
+                        style: const ButtonStyle(
+                          backgroundColor: MaterialStatePropertyAll<Color>(
+                            Color(0xff990303),
                           ),
-                          Text("Trabajadores",
-                              style: TextStyle(fontSize: 14.sp)),
-                        ],
+                        ),
+                        icon: Icon(Icons.groups_outlined,
+                            size: 70.r, color: Colors.white),
+                        onPressed: () => Navigator.of(context)
+                            .pushNamed(ListWorkerScreen.route),
                       ),
-                    ),
-                  ],
+                      Text("Trabajadores", style: TextStyle(fontSize: 14.sp)),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -283,29 +270,6 @@ class HeaderWidget extends StatefulWidget {
 }
 
 class _HeaderWidgetState extends State<HeaderWidget> {
-  // @override
-  // void initState() {
-  //   super.initState();
-  // }
-
-  // void getAdminVModel() async {
-  //   await Provider.of<AdminProvider>(context, listen: false)
-  //       .getAdminViewModel();
-  //   setState(() {});
-  // }
-
-  // @override
-  // void didChangeDependencies() {
-  //   super.didChangeDependencies();
-  //   getAdminVModel();
-  // }
-
-  // @override
-  // void didUpdateWidget(covariant HeaderWidget oldWidget) {
-  //   // TODO: implement didUpdateWidget
-  //   super.didUpdateWidget(oldWidget);
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Consumer<AdminProvider>(
@@ -314,23 +278,12 @@ class _HeaderWidgetState extends State<HeaderWidget> {
           children: [
             Consumer<ImageProviders>(
               builder: (context, imgProvider, child) {
-                // if (adminProvider.urlPhoto != "") {
                 return CircleAvatar(
                   radius: 30.r,
                   backgroundColor: const Color(0xffE1E1E1),
                   foregroundImage:
                       imgProvider.imageInternetLocal(adminProvider.urlPhoto),
                 );
-                // } else {
-                //   return Material(
-                //     color: const Color(0xffE1E1E1),
-                //     shape: const CircleBorder(),
-                //     child: Icon(
-                //       Icons.person_outline,
-                //       size: 60.r,
-                //     ),
-                //   );
-                // }
               },
             ),
             SizedBox(

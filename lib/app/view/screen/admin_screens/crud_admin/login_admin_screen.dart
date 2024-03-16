@@ -27,16 +27,6 @@ class _LoginAdminScreenState extends State<LoginAdminScreen> {
     ProgresseDialogCommon.initProgressDialog(context);
   }
 
-  // void initProgressDialog() {
-  //   pr = ProgressDialog(context,
-  //       type: ProgressDialogType.Normal, isDismissible: false);
-  //   pr.style(
-  //     message: 'Espere un momento...',
-  //     progressWidget: const CircularProgressIndicator(),
-  //     maxProgress: 100.0,
-  //   );
-  // }
-
   @override
   void dispose() {
     super.dispose();

@@ -108,6 +108,8 @@ class _RegisterAdminScreenState extends State<RegisterAdminScreen> {
           );
         }
       }
+    } else {
+      await ProgresseDialogCommon.progressDialog.hide();
     }
   }
 
