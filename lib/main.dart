@@ -5,8 +5,10 @@ import 'package:control_asistencia_app/app/routers.dart';
 import 'package:control_asistencia_app/app/view/provider/permissionprovider.dart';
 import 'package:control_asistencia_app/dev/firebase_options_dev.dart';
 import 'package:control_asistencia_app/prod/firebase_options_prod.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async {
+  await dotenv.load(fileName: ".env");
   await ScreenUtil.ensureScreenSize();
   if (kDebugMode || kProfileMode) {
     debugPrint("Aplicacion ejecutado en depuracion");

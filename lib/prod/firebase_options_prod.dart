@@ -3,6 +3,7 @@
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
@@ -52,11 +53,11 @@ class DefaultFirebaseOptionsProd {
     }
   }
 
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAKnmSzMcM_ekBqR9NH331mcQ5xHPkuJdw',
-    appId: '1:121348689070:android:776df964d482ef7b78313f',
-    messagingSenderId: '121348689070',
-    projectId: 'controlasistenciaapp-302ff',
-    storageBucket: 'controlasistenciaapp-302ff.appspot.com',
+  static FirebaseOptions android = FirebaseOptions(
+    apiKey: dotenv.env['APIKEY_PROD']!,
+    appId: dotenv.env['APIID_PROD']!,
+    messagingSenderId: dotenv.env['MESSAGINGSENDERID_PROD']!,
+    projectId: dotenv.env['PROJECTID_PROD']!,
+    storageBucket: dotenv.env['STORAGEBUCKET_PROD']!,
   );
 }
